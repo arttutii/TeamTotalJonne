@@ -1,6 +1,8 @@
-# image-editor
+# TotalMedia
 
-## Build & development
+## This repository contains the code for the media sharing service project.
 
-Run `grunt` for building and `grunt serve` for preview.
+
+
+
 
