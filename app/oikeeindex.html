@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="myApp">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,19 +9,19 @@
     <title>TotalMedia</title>
     <!-- Bootstrap -->
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-  </head>
-  <body>
+</head>
+
+<body>
     <div class="container-fluid">
-     <div class="row">
-      <div class="col-xs-12">
-          <header class="cst-header"></header>
-      </div>
-      <div class="col-md-8">
-       <div ng-controller="ContentController as contentCtrl" id="yea" >
-        <pre >{{contentCtrl.content}}</pre>
-       </div>
-      </div>
-     </div>
+        <header class="cst-header">
+            <nav>
+                nav content
+            </nav>
+        </header>
+        <main>
+            main content
+        </main>
+    </div>
     </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
@@ -29,10 +30,11 @@
 
     <!-- Include angular files & plugins -->
     <script src="../bower_components/angular/angular.js"></script>
-    
+
     <!-- Include My App's JS file(s)-->
     <script src="app.js"></script>
     <script src="my-module.js"></script>
 
-  </body>
+</body>
+
 </html>
