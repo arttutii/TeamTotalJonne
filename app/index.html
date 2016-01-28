@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myApp">
+<html lang="en" >
   <head>
     <meta charset="utf-8">
 <head>
@@ -9,17 +9,21 @@
     <title>TotalMedia</title>
     <!-- Bootstrap -->
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
   </head>
-  <body ng-controller="GreetingsController as greetingsCtrl"> 
+  <body ng-app="theApp"> 
     
-    <div class="container-fluid" >
+    <div class="container-fluid header">
+    <div class="container" ng-controller="contentCtrl as content">
      <div class="row ">
-      <div class="col-md-2">
-      </div>
       <div class="col-md-8">
-       
+       <pre id="jee">{{ content.content}} </pre>
+       </div>
+       <div class="col-md-8" >
+       </div>
       </div>
      </div>
+     
     </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
@@ -30,8 +34,7 @@
     <script src="../bower_components/angular/angular.js"></script>
     
     <!-- Include My App's JS file(s)-->
-    <script src="app.js"></script>
-    <script src="my-module.js"></script>
+    <script src="script.js"></script>
 
   </body>
 </html>
