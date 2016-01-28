@@ -13,7 +13,7 @@ angular.module('theApp', [])
                 jotain.content = jotain.content + 
                 "pic " + (i+1) + ": " + response.data[i].title 
                 + "\n " 
-                //+ angular.element(document.getElementById('jee')).append("<img width='100' height='100' src='http://util.mw.metropolia.fi/uploads/"+  response.data[i].path + "''>");
+                + angular.element(document.getElementById('jee')).append("<img width='100' height='100' src='http://util.mw.metropolia.fi/uploads/"+  response.data[i].path + "''>");
                 + "\n";
             }
         }, function errorCallback(response) {
