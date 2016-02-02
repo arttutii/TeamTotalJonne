@@ -16,10 +16,11 @@
         <div class="container" ng-controller="contentCtrl as content">
 
             <!-- Navigation bar start-->
-            <nav class="navbar navbar-default navbar-fixed-top">
+            <nav class="navbar navbar-default navbar-fixed-top " >
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" id="hamburger">
                             <span class="sr-only">Toggle navigation</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
@@ -30,8 +31,8 @@
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="#">Home</a></li>
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Contact</a></li>
+                            <li><a><input type="text" placeholder="Search.."></a></li>
+                            <li><a href="#" id="uploadbtn">Upload</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
@@ -44,11 +45,11 @@
                                     <li><a href="#">One more separated link</a></li>
                                 </ul>
                             </li>
+
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="active"><a href="#">Jooo <span class="sr-only">(current)</span></a></li>
-                            <li><a href="#">Ketä äijät</a></li>
-                            <li><a href="#">Mikä buugi</a></li>
+                            <li class="active"><a href="#">Sign in/register<span class="sr-only">(current)</span></a></li>
+                            <li><a href="#">About TotalMedia</a></li>
                         </ul>
                     </div>
                     <!--/.nav-collapse -->
@@ -56,16 +57,57 @@
                 <!--/.container-fluid -->
             </nav>
             <!--Navigation end -->
+            <!-- Alerts -->
+            <div class="alert alert-success" id="upSuccess">
+              <strong>Upload successful!</strong> 
+            </div>
 
-            <div class="row ">
-                <div class="col-md-8">
-
-                    <!--<pre id="jee">{{ content.content}} </pre>-->
+            <div class="alert alert-danger" id="upFailed">
+              <strong>Upload failed!</strong> Please check that all the inputs are proper. 
+            </div>
+          <!-- Start of the content container-->
+            <div class="container-fluid" >
+            <div class="container" id="contentArea">
+              <div class="row " >
+                <div class="col-md-8" id="jee">
+                  
+                  <!-- Images inserted by javascript to this div </p>-->
                 </div>
+                <button type="button" class="btn btn-primary btn-block" ng-click="showMore()">Show 10 more images </button>
+              </div>
+            </div>
+            
             </div>
         </div>
 
     </div>
+
+    <!-- Popup Modal content -->
+    <!-- Upload pop-up -->
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-controller="uploadCtrl">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+         <form id="uploadForm">
+           <input type="file" name="file" onchange="angular.element(this).scope().setMediaFile(this)"><br>
+           <input type="text" name="title" placeholder="Title" ><br>
+           <input type="text" name="description" placeholder="Description"><br>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <!--Empty -->
+        <button  class="btn btn-default" ng-click="uploadImage()" data-dismiss="modal">Upload</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- PopupModal content end-->
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
