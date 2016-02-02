@@ -1,28 +1,28 @@
 angular.module('theApp', [])
 
 .controller('contentCtrl', function ($scope, $http) {
-    this.content = "";
-    var jotain = this;
     var imagesCount = 0;
 
-   
-    $http({
-        method: 'GET',
-        url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/files'
-    }).then(function successCallback(response) {
-        console.log(response.data);
- angular.element(document.getElementById('jee')).append("<Strong>Gallery size: " + response.data.length + "<Strong> <br>");
-        for (var i = 0; i < 10; i++) {
-            imagesCount += 1;
-            angular.element(document.getElementById('jee')).append("<img width='100%' height='100%' src='http://util.mw.metropolia.fi/uploads/" + response.data[i].path + "''>" + "<br>" +
-                "<p class='imgTitle'>img " + (i + 1) + ": " + response.data[i].title + "</p>");
-        }
+    showImages = function() {
 
-    }, function errorCallback(response) {
-        jotain.content = "apuva \n";
-        angular.element(document.getElementById('jee')).append(response.data);
-    });
+        $http({
+            method: 'GET',
+            url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/files'
+        }).then(function successCallback(response) {
+            console.log(response.data);
+     angular.element(document.getElementById('jee')).append("<Strong>Gallery size: " + response.data.length + "<Strong> <br>");
+            for (var i = 0; i < 10; i++) {
+                imagesCount += 1;
+                angular.element(document.getElementById('jee')).append("<img width='100%' height='100%' src='http://util.mw.metropolia.fi/uploads/" + response.data[i].path + "''>" + "<br>" +
+                    "<p class='imgTitle'>img " + (i + 1) + ": " + response.data[i].title + "</p>");
+            }
 
+        }, function errorCallback(response) {
+            jotain.content = "apuva \n";
+            angular.element(document.getElementById('jee')).append(response.data);
+        });
+
+    }
     $scope.showMore = function() {
 
         $http({
@@ -31,7 +31,10 @@ angular.module('theApp', [])
     }).then(function successCallback(response) {
         console.log("10 more images shown");
 
-        for (var i = imagesCount; i < (imagesCount+10); i++) {    
+        var newValue = imagesCount + 10;
+
+        for (var i = imagesCount; i < newValue; i++) {
+        imagesCount +=1;
         angular.element(document.getElementById('jee')).append("<img width='100%' height='100%' src='http://util.mw.metropolia.fi/uploads/" + response.data[i].path + "''>" + "<br>" +
          "<p class='imgTitle'>img " + (i + 1) + ": " + response.data[i].title + "</p>");
         }
@@ -81,6 +84,7 @@ angular.module('theApp', [])
 $(document).ready(function(){
     /* Hiding some stuff */
     $('#upSuccess, #upFailed').hide();
+    $('.registration').hide();
 
     /*
         Button click function to open a pop-up window
@@ -88,38 +92,19 @@ $(document).ready(function(){
     $("#uploadbtn").click(function(){
         $("#uploadModal").modal();
     });
+    $("#loginbtn").click(function(){
+        $("#loginModal").modal();
+    });
+    $("#regislink").click(function(){
+        $('.registration').fadeIn();
+        $('.login').hide();
+    });
+    $("#loginlink").click(function(){
+        $('.registration').hide();
+        $('.login').fadeIn();
+    });
+    /* Executing show images*/
+    showImages();
 
 
 });
-
-var didScroll;
-var lastScrollTop = 0;
-var delta = 5;
-var navbarHeight = $('.navbar').outerHeight();
-console.log(navbarHeight);
-console.debug(navbarHeight);
-
-$(window).scroll(function () {
-    if (didScroll) {
-        hasScrolled();
-        didScroll = false;
-    }
-}, 250);
-
-function hasScrolled() {
-    var st = $(this).scrollTop;
-
-    // Make sure scroll is more than delta
-    if (Math.abs(lastScrollTop - st) <= delta)
-        return;
-
-    if (st > lastScrollTop && st > navbarHeight) {
-        $('.navbar').removeClass('nav-down').addClass('nav-up');
-    } else {
-        // Scroll up
-        if (st + $(window).height() < $(document).height()) {
-            $('.navbar').removeClass('nav-up').addClass('nav-down');
-        }
-    }
-    lastScrollTop = st;
-}
