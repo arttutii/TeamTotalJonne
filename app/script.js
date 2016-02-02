@@ -72,7 +72,11 @@ angular.module('theApp', [])
             request.then(function (response) {
                 $('#upSuccess').show();
                 $('#hamburger').click();
-                console.log("success?: " + response);
+                angular.element(document.getElementById('jee')).empty();
+                showImages();
+                
+
+                console.log("success?: \n" + response.data);
             }, function (error) {
                 console.log("oh dog: " + error);
             });
