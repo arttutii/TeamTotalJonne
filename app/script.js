@@ -18,10 +18,10 @@ angular.module('theApp', [])
         angular.element(document.getElementById('yea')).append(response.data);
     });
 
-
-
+    $scope.onScroll = function (offset) {
+        console.log('scrolling', offset)
+    }
 })
-
 
 .controller('uploadCtrl', function ($scope, $http) {
     this.content = "";
@@ -53,39 +53,19 @@ angular.module('theApp', [])
     }, function errorCallback(response) {
         jotain.content = "someding bad happen \n" + response;
     });
+})
 
-
-
+.directive('scroll', function ($window) {
+    return function (scope, elem, attrs) {
+        angular.element($window).bind('scroll', function () {
+            if (this.pageYOffset >= 100) {
+                scope.boolChangeClass = true;
+                console.log('scrolled down');
+            } else {
+                scope.boolChangeClass = false;
+                console.log('header is in view');
+            }
+            scope.$apply();
+        });
+    };
 });
-
-var didScroll;
-var lastScrollTop = 0;
-var delta = 5;
-var navbarHeight = $('.navbar').outerHeight();
-console.log(navbarHeight);
-console.debug(navbarHeight);
-
-$(window).scroll(function () {
-    if (didScroll) {
-        hasScrolled();
-        didScroll = false;
-    }
-}, 250);
-
-function hasScrolled() {
-    var st = $(this).scrollTop;
-
-    // Make sure scroll is more than delta
-    if (Math.abs(lastScrollTop - st) <= delta)
-        return;
-
-    if (st > lastScrollTop && st > navbarHeight) {
-        $('.navbar').removeClass('nav-down').addClass('nav-up');
-    } else {
-        // Scroll up
-        if (st + $(window).height() < $(document).height()) {
-            $('.navbar').removeClass('nav-up').addClass('nav-down');
-        }
-    }
-    lastScrollTop = st;
-}
