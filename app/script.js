@@ -13,8 +13,22 @@ angular.module('theApp', [])
      angular.element(document.getElementById('jee')).append("<Strong>Gallery size: " + response.data.length + "<Strong> <br>");
             for (var i = 0; i < 10; i++) {
                 imagesCount += 1;
-                angular.element(document.getElementById('jee')).append("<img width='100%' height='100%' src='http://util.mw.metropolia.fi/uploads/" + response.data[i].path + "''>" + "<br>" +
-                    "<p class='imgTitle'>img " + (i + 1) + ": " + response.data[i].title + "</p>");
+
+                if (response.data[i] == null){
+                    /*Do this check only that console doesn't notify null values :D */
+                    break;
+                } else if(response.data[i].type == 'image'){
+                    angular.element(document.getElementById('jee')).append("<img width='100%' height='100%' src='http://util.mw.metropolia.fi/uploads/" + response.data[i].path + "''> <br>" +
+                    "<p class='imgTitle'>" + (i + 1) + ": " + response.data[i].title + "</p>");
+                } else if (response.data[i].type == 'video'){
+                    angular.element(document.getElementById('jee')).append("<video width='100%' height='100%' controls><br> <source src='http://util.mw.metropolia.fi/uploads/" + response.data[i].path + "' type='"+ response.data[i].mimeType + "' > </video><br>" +
+                    "<p class='imgTitle'>" + (i + 1) + ": " + response.data[i].title + "</p>");
+                } else if (response.data[i].type == 'audio'){
+                    angular.element(document.getElementById('jee')).append("<audio controls><br> <source src='http://util.mw.metropolia.fi/uploads/" + response.data[i].path + "' type='" + response.data[i].mimeType + "'' > </audio><br>" +
+                    "<p class='imgTitle'>" + (i + 1) + ": " + response.data[i].title + "</p>");
+                } 
+
+                
             }
 
         }, function errorCallback(response) {
@@ -78,7 +92,8 @@ angular.module('theApp', [])
 
                 console.log("success?: \n" + response.data);
             }, function (error) {
-                console.log("oh dog: " + error);
+                $('#upFailed').show();
+                console.log("oh dog: " + error.data);
             });
         };
 
