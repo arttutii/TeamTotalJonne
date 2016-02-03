@@ -11,12 +11,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body ng-controller="contentCtrl as content" scroll ng-class="{min:boolChangeClass}">
+<body ng-controller="contentCtrl as content" scroll-detector>
     <div class="container-fluid header">
         <div class="container">
 
             <!-- Navigation bar start-->
-            <nav class="navbar navbar-default navbar-fixed-top ">
+            <nav class="navbar navbar-default navbar-fixed-top" ng-hide="hideNav">
                 <div class="container-fluid">
                     <div class="navbar-header">
 

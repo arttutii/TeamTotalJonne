@@ -49,16 +49,32 @@ angular.module('theApp', [])
     }
 })
 
-.directive('scroll', function ($window) {
+.directive('scrollDetector', function ($window) {
     /* Scroll detector */
-    return function (scope, elem, attrs) {
+    return function (scope) {
+        scope.hideNav = false;
+        var position = $(window).scrollTop();
+        console.log("position: " + position);
         angular.element($window).bind('scroll', function () {
-            if (this.pageYOffset >= 100) {
-                scope.boolChangeClass = true;
-                console.log('scrolled down');
+
+            /* Detect scroll direction: */
+            var scroll = $(window).scrollTop();
+            console.log("scroll: " + scroll);
+
+            if (scroll > position) {
+                console.log("scrolling down");
+                scope.hideNav = true;
             } else {
-                scope.boolChangeClass = false;
-                console.log('header is in view');
+                console.log("scrolling up");
+                scope.hideNav = false;
+            }
+            position = scroll;
+
+            /* Detect scroll offset: */
+            if (this.pageYOffset >= 100) {
+                /*  */
+            } else {
+                /*  */
             }
             scope.$apply();
         });
@@ -88,9 +104,9 @@ angular.module('theApp', [])
         request.then(function (response) {
             $('#upSuccess').show();
             $('#hamburger').click();
-            console.log("success?: " + response);
+            console.log("success?: " + response.data);
         }, function (error) {
-            console.log("oh dog: " + error);
+            console.log("oh dog: " + error.data);
         });
     };
 
