@@ -1,14 +1,29 @@
 
+/* Navigation bar location and color */
 body {
   min-height: 2000px;
   padding-top: 60px;
   background-color: #222222;
 }
 
+/* Hiding some stuff */
+#upSuccess {
+  display:none;
+}
+#upFailed {
+  display:none;
+}
+#outofpics {
+  display:none;
+}
+.registration {
+  display:none;
+}
+/* Modifications of some elements */
+
 audio {
   width: 100%;
 }
-
 
 #modebtn {
   height: 35px;
@@ -24,6 +39,8 @@ audio {
   background-color: #222222;
 }
 
+
+/* cool animation for the nightmode button :D; */
 .btn-outline {
   background-color: transparent;
   color: white; 

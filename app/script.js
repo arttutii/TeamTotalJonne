@@ -119,10 +119,6 @@ angular.module('theApp', [])
 });
 
 $(document).ready(function(){
-    /* Hiding some stuff */
-    $('#upSuccess, #upFailed, #outofpics').hide();
-    $('.registration').hide();
-
     /*
         Click functions
     */
