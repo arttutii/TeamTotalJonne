@@ -61,16 +61,16 @@
             </nav>
             <!--Navigation end -->
             <!-- Alerts -->
-            <div class="alert alert-success" id="upSuccess">
+            <div class="alert alert-success fade in " data-dismiss="alert" id="upSuccess">
               <strong>Upload successful!</strong> 
             </div>
 
-            <div class="alert alert-danger" id="upFailed">
+            <div class="alert alert-danger fade in " data-dismiss="alert" id="upFailed">
               <strong>Upload failed!</strong> Please check that all the inputs are proper. 
             </div>
 
-            <div class="alert alert-info fade in" data-dismiss="alert" id="outofpics">
-              <strong>There is no more pictures!</strong> Check for new content later!
+            <div class="alert alert-info fade in navbar-fixed-top" data-dismiss="alert" id="outofpics">
+              <strong>There are no more pictures!</strong> Check for new content later!
             </div>
           <!-- Start of the content container-->
             <div class="container-fluid" >
@@ -80,7 +80,7 @@
                   
                   <!-- Images inserted by javascript to this div </p>-->
                 </div>
-                <button type="button" class="btn btn-primary btn-block" ng-click="showMore()">Show 10 more images </button><br>
+                <button type="button" class="btn btn-primary btn-block" ng-click="showMore()" id="showMore">Show 10 more images </button><br>
               </div>
             </div>
             

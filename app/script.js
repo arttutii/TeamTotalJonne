@@ -18,7 +18,7 @@ angular.module('theApp', [])
                     /*Do this check only that console doesn't notify null values :D */
                     break;
                 } else if(response.data[i].type == 'image'){
-                    angular.element(document.getElementById('contents')).append("<img width='100%' height='100%' src='http://util.mw.metropolia.fi/uploads/" + response.data[i].path + "''> <br>" +
+                    angular.element(document.getElementById('contents')).append('<img width="100%" height="100%" src="http://util.mw.metropolia.fi/uploads/' + response.data[i].path + '"> <br>' +
                     "<p class='imgTitle'>" + (i + 1) + ": " + response.data[i].title + "</p>");
                 } else if (response.data[i].type == 'video'){
                     angular.element(document.getElementById('contents')).append("<video width='100%' height='100%' controls><br> <source src='http://util.mw.metropolia.fi/uploads/" + response.data[i].path + "' type='"+ response.data[i].mimeType + "' > </video><br>" +
@@ -48,7 +48,7 @@ angular.module('theApp', [])
         imagesCount +=1;
         if (response.data[i] == null){
                 $('#outofpics').show();
-                 $("html, body").animate({ scrollTop: 0 }, "slow"); 
+                $('#showMore').hide();
                 break;
             } else if(response.data[i].type == 'image'){
                 angular.element(document.getElementById('contents')).append("<img width='100%' height='100%' src='http://util.mw.metropolia.fi/uploads/" + response.data[i].path + "''> <br>" +
@@ -93,6 +93,8 @@ angular.module('theApp', [])
                 }
             });
             request.then(function (response) {
+
+                if (response.data)
                 $('#upSuccess').show();
                 $('#hamburger').click();
                 angular.element(document.getElementById('contents')).empty();
