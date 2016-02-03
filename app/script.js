@@ -1,63 +1,178 @@
 angular.module('theApp', [])
 
 .controller('contentCtrl', function ($scope, $http) {
-    this.content = "";
-    var jotain = this;
-    $http({
-          method: 'GET',
-          url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/files'
+    var imagesCount = 0;
+
+    showImages = function() {
+
+        $http({
+            method: 'GET',
+            url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/files'
         }).then(function successCallback(response) {
             console.log(response.data);
+     angular.element(document.getElementById('contents')).append("<Strong>Gallery size: " + response.data.length + "<Strong> <br>");
+            for (var i = 0; i < 10; i++) {
+                imagesCount += 1;
 
-             for(var i = 0; i<response.data.length; i++){
-                jotain.content = jotain.content + 
-                "pic " + (i+1) + ": " + response.data[i].title 
-                + "\n " 
-                + angular.element(document.getElementById('jee')).append("<img width='100' height='100' src='http://util.mw.metropolia.fi/uploads/"+  response.data[i].path + "''>");
-                + "\n";
+                if (response.data[i] == null){
+                    /*Do this check only that console doesn't notify null values :D */
+                    break;
+                } else if(response.data[i].type == 'image'){
+                    angular.element(document.getElementById('contents')).append('<img width="100%" height="100%" src="http://util.mw.metropolia.fi/uploads/' + response.data[i].path + '"> <br>' +
+                    "<p class='imgTitle'>" + (i + 1) + ": " + response.data[i].title + "</p>");
+                } else if (response.data[i].type == 'video'){
+                    angular.element(document.getElementById('contents')).append("<video width='100%' height='100%' controls><br> <source src='http://util.mw.metropolia.fi/uploads/" + response.data[i].path + "' type='"+ response.data[i].mimeType + "' > </video><br>" +
+                    "<p class='imgTitle'>" + (i + 1) + ": " + response.data[i].title + "</p>");
+                } else if (response.data[i].type == 'audio'){
+                    angular.element(document.getElementById('contents')).append("<audio controls><br> <source src='http://util.mw.metropolia.fi/uploads/" + response.data[i].path + "' type='" + response.data[i].mimeType + "'' > </audio><br>" +
+                    "<p class='imgTitle'>" + (i + 1) + ": " + response.data[i].title + "</p>");
+                }     
             }
+
         }, function errorCallback(response) {
             jotain.content = "apuva \n";
-            angular.element(document.getElementById('yea')).append(response.data);
-          });
+            angular.element(document.getElementById('contents')).append(response.data);
+        });
 
+    }
+    $scope.showMore = function() {
 
+        $http({
+        method: 'GET',
+        url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/files'
+    }).then(function successCallback(response) {
+        var newValue = imagesCount + 10;
+
+        for (var i = imagesCount; i < newValue; i++) {
+
+        imagesCount +=1;
+        if (response.data[i] == null){
+                $('#outofpics').show();
+                $('#showMore').hide();
+                break;
+            } else if(response.data[i].type == 'image'){
+                angular.element(document.getElementById('contents')).append("<img width='100%' height='100%' src='http://util.mw.metropolia.fi/uploads/" + response.data[i].path + "''> <br>" +
+                "<p class='imgTitle'>" + (i + 1) + ": " + response.data[i].title + "</p>");
+            } else if (response.data[i].type == 'video'){
+                angular.element(document.getElementById('contents')).append("<video width='100%' height='100%' controls><br> <source src='http://util.mw.metropolia.fi/uploads/" + response.data[i].path + "' type='"+ response.data[i].mimeType + "' > </video><br>" +
+                "<p class='imgTitle'>" + (i + 1) + ": " + response.data[i].title + "</p>");
+            } else if (response.data[i].type == 'audio'){
+                angular.element(document.getElementById('contents')).append("<audio controls><br> <source src='http://util.mw.metropolia.fi/uploads/" + response.data[i].path + "' type='" + response.data[i].mimeType + "'' > </audio><br>" +
+                "<p class='imgTitle'>" + (i + 1) + ": " + response.data[i].title + "</p>");
+            }
+        } 
+
+    }, function errorCallback(response) {
+        jotain.content = "apuva \n";
+        angular.element(document.getElementById('contents')).append(response.data);
+    });
+
+    }
 
 })
 
 
 .controller('uploadCtrl', function ($scope, $http) {
-    this.content = "";
-    var jotain = this;
-    $http({
-          method: 'POST',
-          url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/upload'
-        }).then(function successCallback(response) {
-            /*
-        Upload a file
 
-        POST api/v2/upload
+        /* Get the file type */
+        $scope.setMediaFile = function (element) {
+            $scope.mimeType = element.files[0].type;
+            $scope.type = $scope.mimeType.substr(0,5);
+        };
 
-        request content-type: multipart/form-data
+        $scope.uploadImage = function () {
+            
+            var fd = new FormData(document.getElementById('uploadForm'));
+            fd.append('user', 6);
+            fd.append('type', $scope.type);
+            fd.append('mime-type', $scope.mimeType);
+            var request = $http.post('http://util.mw.metropolia.fi/ImageRekt/api/v2/upload', fd, {
+                transformRequest: angular.identity,
+                headers: {
+                    'Content-Type': undefined
+                }
+            });
+            request.then(function (response) {
 
-        Required parameters:
+                if (response.data)
+                $('#upSuccess').show();
+                $('#hamburger').click();
+                angular.element(document.getElementById('contents')).empty();
+                showImages();
+                
 
-        file: the file itself
-        user: user id
-        title: file title text
-        description: file description text
-        type: file type text (image/video/audio)
-        Response: file id if success, example:
+                console.log("success?: \n" + response.data);
+            }, function (error) {
+                $('#upFailed').show();
+                console.log("oh dog: " + error.data);
+            });
+        };
 
-        {"file_id": "69"}
 
-            */
+})
 
-        }, function errorCallback(response) {
-            jotain.content = "someding bad happen \n" + response;
-        });
 
+.controller('loginCtrl', function ($scope, $http) {
+/* content TBA */
 
 
 });
 
+$(document).ready(function(){
+    /* Hiding some stuff */
+    $('#upSuccess, #upFailed, #outofpics').hide();
+    $('.registration').hide();
+
+    /*
+        Click functions
+    */
+    $("#uploadbtn").click(function(){
+        $("#uploadModal").modal();
+    });
+    $("#loginbtn").click(function(){
+        $("#loginModal").modal();
+    });
+    $("#regislink").click(function(){
+        $('.registration').fadeIn();
+        $('.login').hide();
+    });
+    $("#loginlink").click(function(){
+        $('.registration').hide();
+        $('.login').fadeIn();
+    });
+
+    /* variable for nightmode button*/
+    var clicked = false;
+
+    $('#modebtn').click(function(){
+        if (clicked == false) {
+            $('#navi').attr("class","navbar navbar-default navbar-fixed-top ");
+            $("body").css("background-color", "white");
+            $('#contentArea').css("background-color", "#ebebeb");
+            $('#contentArea').css("color", "black");
+            $('#modebtn').css("color", "#888888");
+            $('#contents').css("background-color", "#ebebeb");
+            $('#contentsrow').css("background-color", "#ebebeb");
+            $('#contents').css("color", "black");
+            $('#thePage').css("background-color", "white");
+            clicked = true;
+        } else {
+            $('#navi').attr("class","navbar navbar-default navbar-inverse navbar-fixed-top ");
+            $('body').css("background-color", "#222222");
+            $('#contentArea').css("background-color", "#383838");
+            $('#contentArea').css("color", "white");
+            $('#modebtn').css("color", "white");
+            $('#contents').css("background-color", "#383838");
+            $('#contentsrow').css("background-color", "#383838");
+            $('#contents').css("color", "white");
+            $('#thePage').css("background-color", "#222222");
+            clicked = false;
+        }
+        
+          });
+
+    /* Executing show images*/
+    showImages();
+
+
+});
