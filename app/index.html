@@ -101,7 +101,7 @@
       <div class="modal-body">
          <form id="uploadForm">
            <input type="file" name="file" onchange="angular.element(this).scope().setMediaFile(this)"><br>
-           <input type="text" name="title" placeholder="Title" ><br>
+           <input type="text" name="title" maxlength="25" placeholder="Title" ><br>
            <input type="text" name="description" placeholder="Description"><br>
         </form>
       </div>
@@ -124,17 +124,15 @@
       </div>
       <div class="modal-body">
         <div id="login" class="login">
-           <form id="uploadForm">
-             <input type="file" name="file" onchange=""><br>
-             <input type="text" name="title" placeholder="Title" ><br>
-             <input type="text" name="description" placeholder="Description"><br>
+           <form id="loginForm">
+             <input type="text" name="username" value="" placeholder="Username" ><br>
+             <input type="password" name="password" value="" placeholder="Password"><br>
           </form>
         </div>
          <div id="register" class="registration">
-           <form id="uploadForm">
-             <input type="file" name="file" onchange=""><br>
-             <input type="text" name="title" placeholder="Title" ><br>
-             <input type="text" name="description" placeholder="Description"><br>
+           <form id="registerForm">
+             <input type="text" name="username" value="" placeholder="Username" ><br>
+             <input type="password" name="password" value="" placeholder="Password"><br>
           </form>
         </div>
       </div>
