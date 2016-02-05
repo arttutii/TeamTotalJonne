@@ -25,8 +25,9 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
+
                         <button type="button" class="btn btn-default btn-outline navbar-toggle" id="modebtn">
-                            <span class="glyphicon glyphicon-adjust"> </span>
+                          <span class="glyphicon glyphicon-adjust" > </span>
                         </button>
                         <a class="navbar-brand" href="#">TotalMedia</a>
 
@@ -34,12 +35,7 @@
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="#">Home</a></li>
-
-                            <li>
-                                <a>
-                                    <input type="text" placeholder="Search..">
-                                </a>
-                            </li>
+                            <li><a><input type="text" placeholder="Search.."></a></li>
                             <li><a href="#" id="uploadbtn">Upload</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -67,28 +63,31 @@
             <!--Navigation end -->
             <!-- Alerts -->
             <div class="alert alert-success fade in " data-dismiss="alert" id="upSuccess">
-                <strong>Upload successful!</strong>
+              <strong>Upload successful!</strong>
             </div>
 
             <div class="alert alert-danger fade in " data-dismiss="alert" id="upFailed">
-                <strong>Upload failed!</strong> Please check that all the inputs are proper.
+              <strong>Upload failed!</strong> Please check that all the inputs are proper.
+            </div>
+
+            <div class="alert alert-success fade in " data-dismiss="alert" id="registerSuccess">
+              <strong>User created!</strong> You are now logged in!
             </div>
 
             <div class="alert alert-info fade in navbar-fixed-top" data-dismiss="alert" id="outofpics">
-                <strong>There are no more pictures!</strong> Check for new content later!
+              <strong>There are no more pictures!</strong> Check for new content later!
             </div>
-            <!-- Start of the content container-->
-            <div class="container-fluid">
-                <div class="container" id="contentArea">
-                    <div class="row " id="contentsrow">
-                        <div class="col-md-12" id="contents">
+          <!-- Start of the content container-->
+            <div class="container-fluid" >
+            <div class="container" id="contentArea">
+              <div class="row " id="contentsrow">
+                <div class="col-md-12" id="contents">
 
-                            <!-- Images inserted by javascript to this div </p>-->
-                        </div>
-                        <button type="button" class="btn btn-primary btn-block" ng-click="showMore()" id="showMore">Show 10 more images </button>
-                        <br>
-                    </div>
+                  <!-- Images inserted by javascript to this div </p>-->
                 </div>
+                <button type="button" class="btn btn-primary btn-block" ng-click="showMore()" id="showMore">Show 10 more images </button><br>
+              </div>
+            </div>
             </div>
         </div>
 
@@ -96,67 +95,61 @@
 
     <!-- Popup Modal content -->
     <!-- Upload pop-up -->
-    <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-controller="uploadCtrl">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Upload a file</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="uploadForm">
-                        <input type="file" name="file" onchange="angular.element(this).scope().setMediaFile(this)">
-                        <br>
-                        <input type="text" name="title" maxlength="25" placeholder="Title">
-                        <br>
-                        <input type="text" name="description" placeholder="Description">
-                        <br>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <!--Empty -->
-                    <button class="btn btn-default" ng-click="uploadImage()" data-dismiss="modal">Upload</button>
-                </div>
-            </div>
-        </div>
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-controller="uploadCtrl">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Upload a file</h4>
+      </div>
+      <div class="modal-body">
+         <form id="uploadForm">
+           <input type="file" name="file" onchange="angular.element(this).scope().setMediaFile(this)"><br>
+           <input type="text" name="title" maxlength="25" placeholder="Title" ><br>
+           <input type="text" name="description" placeholder="Description"><br>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <!--Empty -->
+        <button  class="btn btn-default" ng-click="uploadImage()" data-dismiss="modal">Upload</button>
+      </div>
     </div>
+  </div>
+</div>
 
     <!-- Login popup -->
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-controller="loginCtrl">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title login" id="myModalLabel">Sign in</h4>
-                    <h4 class="modal-title registration" id="myModalLabel">Register user</h4>
-                </div>
-                <div class="modal-body">
-                    <div id="login" class="login">
-                        <form id="loginForm">
-                            <input type="text" name="username" value="" placeholder="Username">
-                            <br>
-                            <input type="password" name="password" value="" placeholder="Password">
-                            <br>
-                        </form>
-                    </div>
-                    <div id="register" class="registration">
-                        <form id="registerForm">
-                            <input type="text" name="username" value="" placeholder="Username">
-                            <br>
-                            <input type="password" name="password" value="" placeholder="Password">
-                            <br>
-                        </form>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a href="#" class="login pull-left" id="regislink"> Don't have an account yet? Click here to register! </a>
-                    <a href="#" class="registration pull-left" id="loginlink"> Already have an account? Sign in here! </a>
-                    <button class="btn btn-default registration" ng-click="" data-dismiss="modal">Register</button>
-                    <button class="btn btn-default login" ng-click="" data-dismiss="modal">Sign in</button>
-                </div>
-            </div>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title login" id="myModalLabel">Sign in</h4>
+        <h4 class="modal-title registration" id="myModalLabel">Register user</h4>
+      </div>
+      <div class="modal-body">
+        <div id="login" class="login">
+           <form id="loginForm">
+             <input type="text" name="username" value="" placeholder="Username" ><br>
+             <input type="password" name="password" value="" placeholder="Password"><br>
+          </form>
         </div>
+         <div id="register" class="registration">
+           <form id="registerForm">
+             <input type="text" name="username" value="" placeholder="Username" id="rusername"><br>
+             <input type="password" name="password" value="" placeholder="Password" id="rpassword"><br>
+             <input type="text" name="email" value="" placeholder="E-mail address" id="remail">
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="login pull-left" id="regislink"> Don't have an account yet? Click here to register! </a>
+        <a href="#" class="registration pull-left" id="loginlink"> Already have an account? Sign in here! </a>
+        <button  class="btn btn-default registration" ng-click="registerUser()" data-dismiss="modal">Register</button>
+        <button  class="btn btn-default login" ng-click="signIn()" data-dismiss="modal">Sign in</button>
+      </div>
     </div>
+  </div>
+</div>
 
     <!-- PopupModal content end-->
 

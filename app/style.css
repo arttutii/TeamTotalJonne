@@ -1,11 +1,10 @@
-/* Navigation bar location and color */
+/* Navigation bar location and color  */
 
 body {
     min-height: 2000px;
     padding-top: 60px;
     background-color: #222222;
 }
-
 
 /* Hiding some stuff */
 
@@ -14,6 +13,10 @@ body {
 }
 
 #upFailed {
+    display: none;
+}
+
+#registerSuccess {
     display: none;
 }
 
@@ -45,7 +48,6 @@ audio {
 #thePage {
     background-color: #222222;
 }
-
 
 /* cool animation for the nightmode button :D; */
 

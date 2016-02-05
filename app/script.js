@@ -32,10 +32,8 @@ angular.module('theApp', [])
         }, function errorCallback(response) {
             angular.element(document.getElementById('contents')).append(response.data);
         });
-
-    }
+    };
     $scope.showMore = function () {
-
         $http({
             method: 'GET',
             url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/files'
@@ -66,7 +64,7 @@ angular.module('theApp', [])
 
         });
 
-    }
+    };
 
 })
 
@@ -76,28 +74,19 @@ angular.module('theApp', [])
     return function (scope) {
         scope.hideNav = false;
         var position = $(window).scrollTop();
-        console.log("position: " + position);
+        //console.log("position: " + position);
         angular.element($window).bind('scroll', function () {
 
             /* Detect scroll direction: */
             var scroll = $(window).scrollTop();
-            console.log("scroll: " + scroll);
-
             if (scroll > position) {
-                console.log("scrolling down");
                 scope.hideNav = true;
             } else {
-                console.log("scrolling up");
                 scope.hideNav = false;
             }
             position = scroll;
-
             /* Detect scroll offset: */
-            if (this.pageYOffset >= 100) {
-                /*  */
-            } else {
-                /*  */
-            }
+            if (this.pageYOffset >= 100) {} else {}
             scope.$apply();
         });
     };
@@ -125,7 +114,7 @@ angular.module('theApp', [])
         });
         request.then(function (response) {
 
-            if (response.data)
+            if (response.data) /* equals to object or some other shit tbd --> success } else --> uploadfail*/
                 $('#upSuccess').show();
             $('#hamburger').click();
             angular.element(document.getElementById('contents')).empty();
@@ -138,15 +127,57 @@ angular.module('theApp', [])
             console.log("oh dog: " + error.data);
         });
     };
-
-
 })
 
 
-.controller('loginCtrl', function ($scope, $http) {
-    /* content TBA */
+.controller('loginCtrl', function ($scope, $http, $httpParamSerializer) {
 
+    $scope.registerUser = function () {
 
+        $http({
+            method: 'POST',
+            url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/register',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: $httpParamSerializer({
+                username: $('#rusername').val(),
+                email: $('#remail').val(),
+                password: $('#rpassword').val()
+            })
+        }).then(function (response) {
+            $scope.signIn($('#rusername').val(), $('#rpassword').val());
+            $('#registerSuccess').show();
+            $('#hamburger').click();
+
+            console.log("Registration success?: \n" + response.data);
+        }, function (error) {
+            console.log("oh dog: " + error.data);
+        });
+    };
+    $scope.signIn = function (uName, pWord) {
+
+        $http({
+            method: 'POST',
+            url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/login',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: $httpParamSerializer({
+                username: uName,
+                password: pWord
+            })
+        }).then(function (response) {
+
+            localStorage.setItem("userID", response.data.userId);
+            localStorage.setItem("username", $('#rusername').val());
+            $('#hamburger').click();
+
+            console.log("Login success?: \n" + response.data);
+        }, function (error) {
+            console.log("oh dog: " + error.data);
+        });
+    };
 });
 
 $(document).ready(function () {
