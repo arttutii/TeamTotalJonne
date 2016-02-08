@@ -1,4 +1,4 @@
-/* Navigation bar location and color  */
+/* Navigation bar location and color  */ 
 
 body {
     min-height: 2000px;
@@ -31,6 +31,10 @@ body {
 
 
 /* Modifications of some elements */
+
+#showMore {
+  
+}
 
 audio {
     width: 100%;

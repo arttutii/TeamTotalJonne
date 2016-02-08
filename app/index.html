@@ -8,7 +8,7 @@
     <title>TotalMedia</title>
     <!-- Bootstrap -->
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/style.css">
 
 </head>
 
@@ -32,6 +32,7 @@
                           <span class="glyphicon glyphicon-adjust" > </span>
                         </button>
                         <a class="navbar-brand" href="#">TotalMedia</a>
+                        <p id="loggedin"></p>
 
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
@@ -87,7 +88,7 @@
                   
                   <!-- Images inserted by javascript to this div </p>-->
                 </div>
-                <button type="button" class="btn btn-primary btn-block" ng-click="showMore()" id="showMore">Show 10 more images </button><br>
+                <button type="button" class="btn btn-primary btn-block container-fluid" ng-click="showMore()" id="showMore">Show 10 more images </button><br>
               </div>
             </div>
             
@@ -133,8 +134,8 @@
       <div class="modal-body">
         <div id="login" class="login">
            <form id="loginForm">
-             <input type="text" name="username" value="" placeholder="Username" ><br>
-             <input type="password" name="password" value="" placeholder="Password"><br>
+             <input type="text" name="username"  id="lusername" value="" placeholder="Username" ><br>
+             <input type="password" name="password" id="lpassword" value="" placeholder="Password"><br>
           </form>
         </div>
          <div id="register" class="registration">
@@ -166,7 +167,14 @@
     <script src="../bower_components/angular/angular.js"></script>
 
     <!-- Include My App's JS file(s)-->
-    <script src="script.js"></script>
+    <script src="scripts/script.js"></script>
+    <script src="scripts/controllers/contentController.js"></script>
+    <script src="scripts/controllers/loginController.js"></script>
+    <script src="scripts/controllers/uploadController.js"></script>
+
+    <!-- Directives -->
+    <script src="scripts/directives/scrollDetector.js"></script>
+
 
 </body>
 
