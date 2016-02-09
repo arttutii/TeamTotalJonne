@@ -1,6 +1,10 @@
 angular.module('theApp', [])
 
 $(document).ready(function () {
+    // Hide some things
+
+    $('#logoutbtn').hide();
+
     // Click functions
 
     $("#uploadbtn").click(function () {
@@ -8,6 +12,10 @@ $(document).ready(function () {
     });
     $("#loginbtn").click(function () {
         $("#loginModal").modal();
+    });
+    $("#logoutbtn").click(function () {
+        localStorage.clear();
+        location.reload();
     });
     $("#regislink").click(function () {
         $('.registration').fadeIn();
@@ -18,10 +26,20 @@ $(document).ready(function () {
         $('.login').fadeIn();
     });
 
+    $(".loginputs").keyup(function(event){
+    if(event.keyCode == 13){
+        console.log("weqwe");
+        $("#signinbtn").click();
+    }
+    });
+
+
     // Check if user is logged in
 
     if (localStorage.getItem("userID") != null) {
         $('#loggedin').append('logged in as: ' + localStorage.getItem("username"));
+        $('#loginbtn').hide();
+        $('#logoutbtn').show();
         console.log("user logged in");
     } else {
         console.log("user not logged in");
@@ -58,9 +76,9 @@ $(document).ready(function () {
         }
 
     });
-
-    /* Executing show images*/
+    // Get all the users from database
     $.getUsers();
+    /* Executing show images*/
     $.showImages();
 
 

@@ -56,6 +56,7 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="active"><a href="#" id="loginbtn">Sign in/register<span class="sr-only">(current)</span></a></li>
+                            <li class="active"><a href="#" id="logoutbtn">Logout<span class="sr-only">(current)</span></a></li>
                             <li><a href="#">About TotalMedia</a></li>
                         </ul>
                     </div>
@@ -88,6 +89,7 @@
                   
                   <!-- Images inserted by javascript to this div </p>-->
                 </div>
+
                 <button type="button" class="btn btn-primary btn-block container-fluid" ng-click="showMore()" id="showMore">Show 10 more images </button><br>
               </div>
             </div>
@@ -134,23 +136,23 @@
       <div class="modal-body">
         <div id="login" class="login">
            <form id="loginForm">
-             <input type="text" name="username"  id="lusername" value="" placeholder="Username" ><br>
-             <input type="password" name="password" id="lpassword" value="" placeholder="Password"><br>
+             <input class="loginputs" type="text" name="username"  id="lusername" value="" placeholder="Username" ><br>
+             <input class="loginputs" type="password" name="password" id="lpassword" value="" placeholder="Password"><br>
           </form>
         </div>
          <div id="register" class="registration">
            <form id="registerForm">
-             <input type="text" name="username" value="" placeholder="Username" id="rusername"><br>
-             <input type="password" name="password" value="" placeholder="Password" id="rpassword"><br>
-             <input type="text" name="email" value="" placeholder="E-mail address" id="remail">
+             <input class="reginputs" type="text" name="username" value="" placeholder="Username" id="rusername"><br>
+             <input class="reginputs" type="password" name="password" value="" placeholder="Password" id="rpassword"><br>
+             <input class="reginputs" type="text" name="email" value="" placeholder="E-mail address" id="remail">
           </form>
         </div>
       </div>
       <div class="modal-footer">
         <a href="#" class="login pull-left" id="regislink"> Don't have an account yet? Click here to register! </a>
         <a href="#" class="registration pull-left" id="loginlink"> Already have an account? Sign in here! </a> 
-        <button  class="btn btn-default registration" ng-click="registerUser()" data-dismiss="modal">Register</button>
-        <button  class="btn btn-default login" ng-click="signIn()" data-dismiss="modal">Sign in</button>
+        <button id="registerbtn" class="btn btn-default registration" ng-click="registerUser()" data-dismiss="modal">Register</button>
+        <button id="signinbtn" class="btn btn-default login" ng-click="signIn()" data-dismiss="modal">Sign in</button>
       </div>
     </div>
   </div>

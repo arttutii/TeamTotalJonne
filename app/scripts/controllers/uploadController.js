@@ -26,9 +26,11 @@ angular.module('theApp')
             }
         }).then(function (response) {
 
-            if (response.data) /* equals to object or some other shit tbd --> success } else --> uploadfail*/
-                $('#upSuccess').show();
-                setTimeout($('#upSuccess').click(), 8000);
+            //if (response.data) /* equals to object or some other shit tbd --> success } else --> uploadfail*/
+                $('#upSuccess').fadeIn();
+                setTimeout(function(){
+                    $('#upSuccess').click();
+                }, 6000);
             $('#hamburger').click();
             angular.element(document.getElementById('contents')).empty();
             $.showImages();

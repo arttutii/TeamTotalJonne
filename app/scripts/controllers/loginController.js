@@ -60,7 +60,7 @@ angular.module('theApp')
 	                        
 	                        localStorage.setItem("userID", response.data.userId);
 	                        localStorage.setItem("username", uName);
-	                        $('#hamburger').click();
+	                        location.reload();
 
 	                        console.log("Login success?: " + JSON.stringify(response.data));
 	                    }, function (error) {
