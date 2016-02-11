@@ -80,7 +80,7 @@
 
             <div class="alert alert-info fade in navbar-fixed-top" data-dismiss="alert" id="outofpics">
               <strong>There are no more pictures!</strong> Check for new content later!
-            </div>
+            </div> 
           <!-- Start of the content container-->
           <div class="container-fluid" >
             <div class="container" id="contentArea">
@@ -94,10 +94,11 @@
                     <p> {{$index +1}}. {{ pic.title }}</p>
                     <p>uploader: {{pic.uploader}} </p>
                   </div>
-                  <div ng-if="pic-type == 'video'">
+                  <div ng-if="pic.type == 'video'">
                     <video width='100%' height='100%' controls>
-                     <source ng-src='{{ pic.path }}' type='{{ pic.type }}'>
+                     <source ng-src='{{ trustSrc(pic.path) }}' type='{{ pic.mimeType }}'>
                     </video>
+
                     <p>{{$index +1}}. {{ pic.title }}</p>
                     <p>uploader: {{pic.uploader}} </p>
                   </div>

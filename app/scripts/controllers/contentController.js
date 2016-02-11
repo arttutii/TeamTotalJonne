@@ -1,7 +1,7 @@
 'use strict'; 
 
 angular.module('theApp')
-	.controller('contentCtrl', function ($scope, $http) {
+	.controller('contentCtrl', function ($scope, $http, $sce) {
     // variable to use in counting images, how many to show at once
     var imagesCount = 0;
     // array for having the usernames of media uploaders at hand 
@@ -10,6 +10,10 @@ angular.module('theApp')
     $scope.images = [];
     // gallery size to show on site
     $scope.gallerySize = 0;
+
+    $scope.trustSrc = function(src) {
+    return $sce.trustAsResourceUrl(src);
+  }
 
     $.showImages = function () {
 
@@ -31,11 +35,13 @@ angular.module('theApp')
                     path: 'http://util.mw.metropolia.fi/uploads/' + response.data[i].path,
                     title: response.data[i].title,
                     type: response.data[i].type,
+                    mimetype: response.data[i].mimeType,
                     uploader: userArray[response.data[i].userId]
                     };
                     $scope.images.push(imgobj);
                 } 
             }
+            //console.log(response.data);
             //console.log($scope.images);
 
         }, function errorCallback(response) {
