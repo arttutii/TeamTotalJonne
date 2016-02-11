@@ -4,7 +4,7 @@ angular.module('theApp')
 	.controller('loginCtrl', function ($scope, $http, $httpParamSerializer) {
 	    $scope.user = $('#lusername').val();
 	    $scope.pass = $('#lpassword').val();
-	    
+
 	    $scope.registerUser = function () {
 
 	        $http({
@@ -74,5 +74,35 @@ angular.module('theApp')
 	            });
 
 	    };
+
+	    // variable and function for showing signin/register
+	    var clicked = true;
+	    $scope.hideRegis = function(){
+	    	
+	    	if (clicked) {
+	    		$('.registration').fadeIn();
+       			$('.login').hide();
+       			clicked = false;
+	    	} else {
+	    		$('.registration').hide();
+        		$('.login').fadeIn();
+        		clicked = true;
+	    	}
+
+	    }
+
+    $(".loginputs").keyup(function(event){
+    if(event.keyCode == 13){
+        console.log("weqwe");
+        $("#signinbtn").click();
+    }
+    });
+
+    $(".reginputs").keyup(function(event){
+    if(event.keyCode == 13){
+        console.log("weqwe");
+        $("#registerbtn").click();
+    }
+    });
 
 	});

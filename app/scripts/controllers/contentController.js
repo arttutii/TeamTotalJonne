@@ -6,7 +6,10 @@ angular.module('theApp')
     var imagesCount = 0;
     // array for having the usernames of media uploaders at hand 
     var userArray = [];
-    var imageArray  = [];
+    // array for images to show on site
+    $scope.images = [];
+    // gallery size to show on site
+    $scope.gallerySize = 0;
 
     $.showImages = function () {
 
@@ -14,28 +17,26 @@ angular.module('theApp')
             method: 'GET',
             url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/files'
         }).then(function successCallback(response) { 
-            angular.element(document.getElementById('contents')).append("<Strong>Gallery size: " + response.data.length + "<Strong> <br>");
+            $scope.gallerySize = response.data.length;
+            
             for (var i = 0; i < 10; i++) {
                 imagesCount += 1;
 
                 if (response.data[i] == null) {
                     // break out of the if-else when no media files are found
                     break;
-                } else if (response.data[i].type == 'image') {
-                    imageArray.push('http://util.mw.metropolia.fi/uploads/' + response.data[i].path);
-                    angular.element(document.getElementById('contents')).append('<img width="100%" height="100%" src="http://util.mw.metropolia.fi/uploads/' + response.data[i].path + '"> <br>' +
-                        "<p class='imgTitle'>" + (i + 1) + ": " + response.data[i].title + "</p>" +
-                        "<p class='uploader'>" + "uploader: " + userArray[response.data[i].userId] + "</p>") ;
-                } else if (response.data[i].type == 'video') {
-                    angular.element(document.getElementById('contents')).append("<video width='100%' height='100%' controls><br> <source src='http://util.mw.metropolia.fi/uploads/" + response.data[i].path + "' type='" + response.data[i].mimeType + "' > </video><br>" +
-                        "<p class='imgTitle'>" + (i + 1) + ": " + response.data[i].title + "</p>"+
-                        "<p class='uploader'>" + "uploader: " + userArray[response.data[i].userId] + "</p>") ;
-                } else if (response.data[i].type == 'audio') {
-                    angular.element(document.getElementById('contents')).append("<audio controls><br> <source src='http://util.mw.metropolia.fi/uploads/" + response.data[i].path + "' type='" + response.data[i].mimeType + "'' > </audio><br>" +
-                        "<p class='imgTitle'>" + (i + 1) + ": " + response.data[i].title + "</p>"+
-                        "<p class='uploader'>" + "uploader: " + userArray[response.data[i].userId] + "</p>") ;
-                }
+                } else {
+                    // create an image object which holds data for each image
+                    var imgobj = {
+                    path: 'http://util.mw.metropolia.fi/uploads/' + response.data[i].path,
+                    title: response.data[i].title,
+                    type: response.data[i].type,
+                    uploader: userArray[response.data[i].userId]
+                    };
+                    $scope.images.push(imgobj);
+                } 
             }
+            //console.log($scope.images);
 
         }, function errorCallback(response) {
             angular.element(document.getElementById('contents')).append(response.data);
@@ -57,19 +58,18 @@ angular.module('theApp')
                 if (response.data[i] == null) {
                     $('#outofpics').show();
                     $('#showMore').hide();
+                    setTimeout(function(){
+                        $('#outofpics').click();
+                    }, 6000);
                     break;
-                } else if (response.data[i].type == 'image') {
-                    angular.element(document.getElementById('contents')).append('<img width="100%" height="100%" src="http://util.mw.metropolia.fi/uploads/' + response.data[i].path + '"> <br>' +
-                        "<p class='imgTitle'>" + (i + 1) + ": " + response.data[i].title + "</p>" +
-                        "<p class='uploader'>" + "uploader: " + userArray[response.data[i].userId] + "</p>") ;
-                } else if (response.data[i].type == 'video') {
-                    angular.element(document.getElementById('contents')).append("<video width='100%' height='100%' controls><br> <source src='http://util.mw.metropolia.fi/uploads/" + response.data[i].path + "' type='" + response.data[i].mimeType + "' > </video><br>" +
-                        "<p class='imgTitle'>" + (i + 1) + ": " + response.data[i].title + "</p>"+
-                        "<p class='uploader'>" + "uploader: " + userArray[response.data[i].userId] + "</p>") ;
-                } else if (response.data[i].type == 'audio') {
-                    angular.element(document.getElementById('contents')).append("<audio controls><br> <source src='http://util.mw.metropolia.fi/uploads/" + response.data[i].path + "' type='" + response.data[i].mimeType + "'' > </audio><br>" +
-                        "<p class='imgTitle'>" + (i + 1) + ": " + response.data[i].title + "</p>"+
-                        "<p class='uploader'>" + "uploader: " + userArray[response.data[i].userId] + "</p>") ;
+                } else {
+                    var imgobj = {
+                    path: 'http://util.mw.metropolia.fi/uploads/' + response.data[i].path,
+                    title: response.data[i].title,
+                    type: response.data[i].type,
+                    uploader: userArray[response.data[i].userId]
+                    };
+                    $scope.images.push(imgobj);
                 }
             }
 

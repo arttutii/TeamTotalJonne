@@ -10,20 +10,13 @@ $(document).ready(function () {
     $("#uploadbtn").click(function () {
         $("#uploadModal").modal();
     });
+
     $("#loginbtn").click(function () {
         $("#loginModal").modal();
     });
     $("#logoutbtn").click(function () {
         localStorage.clear();
         location.reload();
-    });
-    $("#regislink").click(function () {
-        $('.registration').fadeIn();
-        $('.login').hide();
-    });
-    $("#loginlink").click(function () {
-        $('.registration').hide();
-        $('.login').fadeIn();
     });
 
     $(".loginputs").keyup(function(event){

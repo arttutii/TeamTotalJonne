@@ -14,9 +14,7 @@ angular.module('theApp')
         var fd = new FormData(document.getElementById('uploadForm'));
         if (localStorage.getItem('username') != null){
             fd.append('user', (localStorage.getItem('userID')-1));
-        } else {
-            console.log("user not logged in, can't upload media");
-        }
+        
         fd.append('type', $scope.type);
         fd.append('mime-type', $scope.mimeType);
         $http.post('http://util.mw.metropolia.fi/ImageRekt/api/v2/upload', fd, {
@@ -40,6 +38,9 @@ angular.module('theApp')
             $('#upFailed').show();
             console.log("oh dog: " + error.data);
         });
+        }else {
+            console.log("user not logged in, can't upload media");
+        };
     };
 
 

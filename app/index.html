@@ -82,83 +82,46 @@
               <strong>There are no more pictures!</strong> Check for new content later!
             </div>
           <!-- Start of the content container-->
-            <div class="container-fluid" >
+          <div class="container-fluid" >
             <div class="container" id="contentArea">
               <div class="row " id="contentsrow">
-                <div class="col-md-12" id="contents">
-                  
-                  <!-- Images inserted by javascript to this div </p>-->
+
+                 <strong ng-model="gallerySize"> Gallery size:{{ gallerySize }}</strong>
+                <div class="col-md-12" id="contents" ng-repeat="pic in images track by $index" >
+                  <div ng-if="pic.type == 'image'">
+                    <img ng-src="{{ pic.path }}" width="100%" height="100%">
+                   
+                    <p> {{$index +1}}. {{ pic.title }}</p>
+                    <p>uploader: {{pic.uploader}} </p>
+                  </div>
+                  <div ng-if="pic-type == 'video'">
+                    <video width='100%' height='100%' controls>
+                     <source ng-src='{{ pic.path }}' type='{{ pic.type }}'>
+                    </video>
+                    <p>{{$index +1}}. {{ pic.title }}</p>
+                    <p>uploader: {{pic.uploader}} </p>
+                  </div>
+                  <div ng-if="pic-type == 'audio'">
+                    <audio controls> 
+                     <source ng-src='{{ pic.path }}' type='{{ pic.type }}' >
+                    </audio>
+                    <p> {{$index +1}}. {{ pic.title }}</p>
+                    <p>uploader: {{pic.uploader}} </p>
+                  </div>
                 </div>
+
 
                 <button type="button" class="btn btn-primary btn-block container-fluid" ng-click="showMore()" id="showMore">Show 10 more images </button><br>
               </div>
             </div>
-            
-
-            </div>
+          </div>
         </div>
 
     </div>
 
-    <!-- Popup Modal content -->
-    <!-- Upload pop-up -->
-<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-controller="uploadCtrl">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Upload a file</h4>
-      </div>
-      <div class="modal-body">
-         <form id="uploadForm">
-           <input type="file" name="file" onchange="angular.element(this).scope().setMediaFile(this)"><br>
-           <input type="text" name="title" maxlength="25" placeholder="Title" ><br>
-           <input type="text" name="description" placeholder="Description"><br>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <!--Empty -->
-        <button  class="btn btn-default" ng-click="uploadImage()" data-dismiss="modal">Upload</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-    <!-- Login popup -->
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-controller="loginCtrl">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title login" id="myModalLabel">Sign in</h4>
-        <h4 class="modal-title registration" id="myModalLabel">Register user</h4>
-      </div>
-      <div class="modal-body">
-        <div id="login" class="login">
-           <form id="loginForm">
-             <input class="loginputs" type="text" name="username"  id="lusername" value="" placeholder="Username" ><br>
-             <input class="loginputs" type="password" name="password" id="lpassword" value="" placeholder="Password"><br>
-          </form>
-        </div>
-         <div id="register" class="registration">
-           <form id="registerForm">
-             <input class="reginputs" type="text" name="username" value="" placeholder="Username" id="rusername"><br>
-             <input class="reginputs" type="password" name="password" value="" placeholder="Password" id="rpassword"><br>
-             <input class="reginputs" type="text" name="email" value="" placeholder="E-mail address" id="remail">
-          </form>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <a href="#" class="login pull-left" id="regislink"> Don't have an account yet? Click here to register! </a>
-        <a href="#" class="registration pull-left" id="loginlink"> Already have an account? Sign in here! </a> 
-        <button id="registerbtn" class="btn btn-default registration" ng-click="registerUser()" data-dismiss="modal">Register</button>
-        <button id="signinbtn" class="btn btn-default login" ng-click="signIn()" data-dismiss="modal">Sign in</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-    <!-- PopupModal content end-->
+    <!-- Direct the modals -->
+    <login-Modal> </login-Modal>
+    <upload-Modal> </upload-Modal>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
@@ -170,12 +133,16 @@
 
     <!-- Include My App's JS file(s)-->
     <script src="scripts/script.js"></script>
+
+     <!-- Controllers -->
     <script src="scripts/controllers/contentController.js"></script>
     <script src="scripts/controllers/loginController.js"></script>
     <script src="scripts/controllers/uploadController.js"></script>
 
     <!-- Directives -->
     <script src="scripts/directives/scrollDetector.js"></script>
+    <script src="scripts/directives/uploadModal.js"></script>
+    <script src="scripts/directives/loginModal.js"></script>
 
 
 </body>
