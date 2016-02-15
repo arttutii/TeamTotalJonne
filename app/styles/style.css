@@ -49,7 +49,12 @@ audio {
     background-color: #222222;
 }
 
+<<<<<<< HEAD:app/style.css
 /* cool animation for the nightmode button :D; */
+=======
+
+/* cool animation for the nightmode button :D */
+>>>>>>> origin/ArtunBranch:app/styles/style.css
 
 .btn-outline {
     background-color: transparent;

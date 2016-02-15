@@ -1,23 +1,43 @@
 angular.module('theApp', []);
 
 $(document).ready(function () {
-    /*
-        Click functions
-    */
+    // Hide some things
+
+    $('#logoutbtn').hide();
+
+    // Click functions
+
     $("#uploadbtn").click(function () {
         $("#uploadModal").modal();
     });
+
     $("#loginbtn").click(function () {
         $("#loginModal").modal();
     });
-    $("#regislink").click(function () {
-        $('.registration').fadeIn();
-        $('.login').hide();
+    $("#logoutbtn").click(function () {
+        localStorage.clear();
+        location.reload();
     });
-    $("#loginlink").click(function () {
-        $('.registration').hide();
-        $('.login').fadeIn();
+
+    $(".loginputs").keyup(function (event) {
+        if (event.keyCode == 13) {
+            console.log("weqwe");
+            $("#signinbtn").click();
+        }
     });
+
+
+    // Check if user is logged in
+
+    if (localStorage.getItem("userID") !== null) {
+        $('#loggedin').append('logged in as: ' + localStorage.getItem("username"));
+        $('#loginbtn').hide();
+        $('#logoutbtn').show();
+        console.log("user logged in");
+    } else {
+        console.log("user not logged in");
+    }
+
 
     /* variable for nightmode button*/
     var clicked = false;
@@ -48,8 +68,9 @@ $(document).ready(function () {
         }
 
     });
-
+    // Get all the users from database
+    $.getUsers();
     /* Executing show images*/
-    showImages();
+    $.showImages();
 
 });

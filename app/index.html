@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Compatible" content="text/html;charset=ISO-8859-1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>TotalMedia</title>
     <!-- Bootstrap -->
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 
-<body ng-app="theApp" scroll-detector>
+<body ng-app="theApp" >
     <div class="container-fluid header" id="thePage">
         <div class="container" ng-controller="contentCtrl as content" id="contentArea">
 
@@ -25,15 +26,20 @@
                         </button>
 
                         <button type="button" class="btn btn-default btn-outline navbar-toggle" id="modebtn">
-                          <span class="glyphicon glyphicon-adjust" > </span>
+                            <span class="glyphicon glyphicon-adjust"> </span>
                         </button>
                         <a class="navbar-brand" href="#">TotalMedia</a>
+                        <p id="loggedin"></p>
 
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="#">Home</a></li>
-                            <li><a><input type="text" placeholder="Search.."></a></li>
+                            <li>
+                                <a>
+                                    <input type="text" placeholder="Search..">
+                                </a>
+                            </li>
                             <li><a href="#" id="uploadbtn">Upload</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -51,6 +57,7 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="active"><a href="#" id="loginbtn">Sign in/register<span class="sr-only">(current)</span></a></li>
+                            <li class="active"><a href="#" id="logoutbtn">Logout<span class="sr-only">(current)</span></a></li>
                             <li><a href="#">About TotalMedia</a></li>
                         </ul>
                     </div>
@@ -61,95 +68,62 @@
             <!--Navigation end -->
             <!-- Alerts -->
             <div class="alert alert-success fade in " data-dismiss="alert" id="upSuccess">
-              <strong>Upload successful!</strong>
+                <strong>Upload successful!</strong>
             </div>
 
             <div class="alert alert-danger fade in " data-dismiss="alert" id="upFailed">
-              <strong>Upload failed!</strong> Please check that all the inputs are proper.
+                <strong>Upload failed!</strong> Please check that all the inputs are proper.
             </div>
 
             <div class="alert alert-success fade in " data-dismiss="alert" id="registerSuccess">
-              <strong>User created!</strong> You are now logged in!
+                <strong>User created!</strong> You are now logged in!
             </div>
 
             <div class="alert alert-info fade in navbar-fixed-top" data-dismiss="alert" id="outofpics">
-              <strong>There are no more pictures!</strong> Check for new content later!
+                <strong>There are no more pictures!</strong> Check for new content later!
             </div>
-          <!-- Start of the content container-->
-            <div class="container-fluid" >
-            <div class="container" id="contentArea">
-              <div class="row " id="contentsrow">
-                <div class="col-md-12" id="contents">
+            <!-- Start of the content container-->
+            <div class="container-fluid">
+                <div class="container" id="contentArea">
+                    <div class="row " id="contentsrow">
+                        <strong ng-model="gallerySize"> Gallery size:{{ gallerySize }}</strong>
+                        <div class="col-md-12" id="contents" ng-repeat="pic in images track by $index">
+                            <div ng-if="pic.type == 'image'">
+                                <img ng-src="{{ pic.path }}" width="100%" height="100%">
 
-                  <!-- Images inserted by javascript to this div </p>-->
+                                <p> {{$index +1}}. {{ pic.title }}</p>
+                                <p>uploader: {{pic.uploader}} </p>
+                            </div>
+                            <div ng-if="pic.type == 'video'">
+                                <video width='100%' height='100%' controls>
+                                    <source ng-src='{{ trustSrc(pic.path) }}' type='{{ pic.mimeType }}'>
+                                </video>
+
+                                <p>{{$index +1}}. {{ pic.title }}</p>
+                                <p>uploader: {{pic.uploader}} </p>
+                            </div>
+                            <div ng-if="pic-type == 'audio'">
+                                <audio controls>
+                                    <source ng-src='{{ pic.path }}' type='{{ pic.type }}'>
+                                </audio>
+                                <p> {{$index +1}}. {{ pic.title }}</p>
+                                <p>uploader: {{pic.uploader}} </p>
+                            </div>
+                        </div>
+
+
+                        <button type="button" class="btn btn-primary btn-block container-fluid" ng-click="showMore()" id="showMore">Show 10 more images </button>
+                        <br>
+                    </div>
                 </div>
-                <button type="button" class="btn btn-primary btn-block" ng-click="showMore()" id="showMore">Show 10 more images </button><br>
-              </div>
-            </div>
             </div>
         </div>
 
     </div>
 
-    <!-- Popup Modal content -->
-    <!-- Upload pop-up -->
-<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-controller="uploadCtrl">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Upload a file</h4>
-      </div>
-      <div class="modal-body">
-         <form id="uploadForm">
-           <input type="file" name="file" onchange="angular.element(this).scope().setMediaFile(this)"><br>
-           <input type="text" name="title" maxlength="25" placeholder="Title" ><br>
-           <input type="text" name="description" placeholder="Description"><br>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <!--Empty -->
-        <button  class="btn btn-default" ng-click="uploadImage()" data-dismiss="modal">Upload</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-    <!-- Login popup -->
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-controller="loginCtrl">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title login" id="myModalLabel">Sign in</h4>
-        <h4 class="modal-title registration" id="myModalLabel">Register user</h4>
-      </div>
-      <div class="modal-body">
-        <div id="login" class="login">
-           <form id="loginForm">
-             <input type="text" name="username" value="" placeholder="Username" ><br>
-             <input type="password" name="password" value="" placeholder="Password"><br>
-          </form>
-        </div>
-         <div id="register" class="registration">
-           <form id="registerForm">
-             <input type="text" name="username" value="" placeholder="Username" id="rusername"><br>
-             <input type="password" name="password" value="" placeholder="Password" id="rpassword"><br>
-             <input type="text" name="email" value="" placeholder="E-mail address" id="remail">
-          </form>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <a href="#" class="login pull-left" id="regislink"> Don't have an account yet? Click here to register! </a>
-        <a href="#" class="registration pull-left" id="loginlink"> Already have an account? Sign in here! </a>
-        <button  class="btn btn-default registration" ng-click="registerUser()" data-dismiss="modal">Register</button>
-        <button  class="btn btn-default login" ng-click="signIn()" data-dismiss="modal">Sign in</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-    <!-- PopupModal content end-->
+    <!-- Direct the modals -->
+    <login-Modal> </login-Modal>
+    <upload-Modal> </upload-Modal>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
@@ -161,10 +135,16 @@
 
     <!-- Include My App's JS file(s)-->
     <script src="scripts/script.js"></script>
-    <script src="scripts/controllers/contentCtrl.js"></script>
-    <script src="scripts/controllers/uploadCtrl.js"></script>
-    <script src="scripts/controllers/loginCtrl.js"></script>
+
+    <!-- Controllers -->
+    <script src="scripts/controllers/contentController.js"></script>
+    <script src="scripts/controllers/loginController.js"></script>
+    <script src="scripts/controllers/uploadController.js"></script>
+
+    <!-- Directives -->
     <script src="scripts/directives/scrollDetector.js"></script>
+    <script src="scripts/directives/uploadModal.js"></script>
+    <script src="scripts/directives/loginModal.js"></script>
 
 </body>
 
