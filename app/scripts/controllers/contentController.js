@@ -13,7 +13,7 @@ angular.module('theApp')
 
     $scope.trustSrc = function(src) {
     return $sce.trustAsResourceUrl(src);
-  }
+  };
 
     $.showImages = function () {
 
@@ -26,7 +26,7 @@ angular.module('theApp')
             for (var i = 0; i < 10; i++) {
                 imagesCount += 1;
 
-                if (response.data[i] == null) {
+                if (response.data[i] === null) {
                     // break out of the if-else when no media files are found
                     break;
                 } else {
@@ -48,20 +48,20 @@ angular.module('theApp')
             angular.element(document.getElementById('contents')).append(response.data);
         });
 
-    }
+    };
 
-    $scope.showMore = function () {
+    $scope.showMore = function (amount) {
 
         $http({
             method: 'GET',
             url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/files'
         }).then(function successCallback(response) {
-            var newValue = imagesCount + 10;
+            var newValue = imagesCount + amount;
 
             for (var i = imagesCount; i < newValue; i++) {
 
                 imagesCount += 1;
-                if (response.data[i] == null) {
+                if (response.data[i] === null) {
                     $('#outofpics').show();
                     $('#showMore').hide();
                     setTimeout(function(){
@@ -84,7 +84,7 @@ angular.module('theApp')
 
         });
 
-    }
+    };
 
     $.getUsers = function() {
         $http({
@@ -103,6 +103,6 @@ angular.module('theApp')
         });
 
 
-    }
+    };
 
 });

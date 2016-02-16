@@ -1,34 +1,39 @@
 'use strict';
 
 angular.module('theApp')
-	.directive('scrollDetector', function ($window) {
-	    /* Scroll detector */
-	    return function (scope) {
-	        scope.hideNav = false;
-	        var position = $(window).scrollTop();
-	        //console.log("position: " + position);
-	        angular.element($window).bind('scroll', function () {
+    .directive('scrollDetector', function ($window) {
+        /* Scroll detector */
+        return {
+            restrict: 'A',
+            scope: true,
+            link: link
+        };
 
-	            /* Detect scroll direction: */
-	            var scroll = $(window).scrollTop();
-	            //console.log("scroll: " + scroll);
+        function link(scope, element, attrs) {
+            scope.hideNav = false;
+            var position = $(window).scrollTop();
+            angular.element($window).bind('scroll', function () {
 
-	            if (scroll > position) {
-	                //console.log("scrolling down");
-	                scope.hideNav = true;
-	            } else {
-	                //console.log("scrolling up");
-	                scope.hideNav = false;
-	            }
-	            position = scroll;
-
-	            /* Detect scroll offset: */
-	            if (this.pageYOffset >= 100) {
-	                /*  */
-	            } else {
-	                /*  */
-	            }
-	            scope.$apply();
-	        });
-	    };
-	})
+                var windowHeight = "innerHeight" in window ? window.innerHeight : document.offsetHeight;
+                var body = document.body,
+                    html = document.documentElement;
+                var docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+                var windowBottom = windowHeight + window.pageYOffset;
+                /* Detect scroll direction: */
+                scope.scroll = $(window).scrollTop();
+                if (scope.scroll > position) {
+                    // scrolling down
+                    scope.hideNav = true;
+                    if (windowBottom >= docHeight) {
+                        /* Scroll reached the bottom */
+                        scope.$apply(attrs.reachedBottom);
+                    }
+                } else {
+                    // scrolling up
+                    scope.hideNav = false;
+                }
+                position = scope.scroll;
+                scope.$apply();
+            });
+        }
+    });

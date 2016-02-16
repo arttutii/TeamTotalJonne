@@ -10,12 +10,12 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 
-<body ng-app="theApp" >
+<body ng-app="theApp" ng-controller="contentCtrl as content">
     <div class="container-fluid header" id="thePage">
-        <div class="container" ng-controller="contentCtrl as content" id="contentArea">
+        <div class="container" id="contentArea" scroll-detector reached-bottom="showMore(1)">
 
             <!-- Navigation bar start-->
-            <nav class="navbar navbar-default navbar-inverse navbar-fixed-top " id="navi" ng-hide="hideNav">
+            <nav class="navbar navbar-default navbar-inverse navbar-fixed-top " id="navi">
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" id="hamburger">
@@ -51,6 +51,8 @@
                                     <li class="dropdown-header">Nav header</li>
                                     <li><a href="#">Separated link</a></li>
                                     <li><a href="#">One more separated link</a></li>
+                                    <li><a href="#">scope.scroll: {{ scroll }} </a></li>
+                                    <li><a href="#">scope.hideNav: {{ hideNav }} </a></li>
                                 </ul>
                             </li>
 
@@ -112,7 +114,7 @@
                         </div>
 
 
-                        <button type="button" class="btn btn-primary btn-block container-fluid" ng-click="showMore()" id="showMore">Show 10 more images </button>
+                        <button type="button" class="btn btn-primary btn-block container-fluid" ng-click="showMore(10)" id="showMore">Show more</button>
                         <br>
                     </div>
                 </div>
