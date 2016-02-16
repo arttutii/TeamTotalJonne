@@ -29,7 +29,6 @@
                             <span class="glyphicon glyphicon-adjust"> </span>
                         </button>
                         <a class="navbar-brand" href="#">TotalMedia</a>
-                        <p id="loggedin"></p>
 
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
@@ -50,6 +49,9 @@
                                     <li role="separator" class="divider"></li>
                                     <li class="dropdown-header">Nav header</li>
                                     <li><a href="#">Separated link</a></li>
+                                    <li>
+                                        <a href="#" id="loggedin"></a>
+                                    </li>
                                     <li><a href="#">One more separated link</a></li>
                                     <li><a href="#">scope.scroll: {{ scroll }} </a></li>
                                     <li><a href="#">scope.hideNav: {{ hideNav }} </a></li>
@@ -88,6 +90,7 @@
             <div class="container-fluid">
                 <div class="container" id="contentArea">
                     <div class="row " id="contentsrow">
+                        <mediaitem></mediaitem>
                         <strong ng-model="gallerySize"> Gallery size:{{ gallerySize }}</strong>
                         <div class="col-md-12" id="contents" ng-repeat="pic in images track by $index">
                             <div ng-if="pic.type == 'image'">
@@ -147,6 +150,7 @@
     <script src="scripts/directives/scrollDetector.js"></script>
     <script src="scripts/directives/uploadModal.js"></script>
     <script src="scripts/directives/loginModal.js"></script>
+    <script src="scripts/directives/mediaitem.js"></script>
 
 </body>
 
