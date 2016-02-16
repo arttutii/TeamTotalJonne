@@ -3,7 +3,7 @@
 angular.module('theApp')
 	.controller('contentCtrl', function ($scope, $http, $sce) {
     // variable to use in counting images, how many to show at once
-    var imagesCount = 0;
+    $scope.moreImages = 10;
     // array for having the usernames of media uploaders at hand 
     var userArray = [];
     // array for images to show on site
@@ -11,11 +11,24 @@ angular.module('theApp')
     // gallery size to show on site
     $scope.gallerySize = 0;
 
+    // function to make video elements show
     $scope.trustSrc = function(src) {
     return $sce.trustAsResourceUrl(src);
   }
 
-    $.showImages = function () {
+    // function to show about page
+    $scope.aboutPage = function() {
+
+        $('#contentsrow').hide();
+        $('.about').show();
+        $('#hamburger').click();
+
+    } 
+
+    $scope.showImages = function() {
+
+        $('#contentsrow').show();
+        $('.about').hide();
 
         $http({
             method: 'GET',
@@ -23,8 +36,8 @@ angular.module('theApp')
         }).then(function successCallback(response) { 
             $scope.gallerySize = response.data.length;
             
-            for (var i = 0; i < 10; i++) {
-                imagesCount += 1;
+            for (var i = 0; i < response.data.length; i++) {
+                
 
                 if (response.data[i] == null) {
                     // break out of the if-else when no media files are found
@@ -42,7 +55,7 @@ angular.module('theApp')
                 } 
             }
             //console.log(response.data);
-            //console.log($scope.images);
+            console.log($scope.images);
 
         }, function errorCallback(response) {
             angular.element(document.getElementById('contents')).append(response.data);
@@ -51,39 +64,13 @@ angular.module('theApp')
     }
 
     $scope.showMore = function () {
+            $scope.moreImages += 10;
 
-        $http({
-            method: 'GET',
-            url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/files'
-        }).then(function successCallback(response) {
-            var newValue = imagesCount + 10;
+    }
 
-            for (var i = imagesCount; i < newValue; i++) {
-
-                imagesCount += 1;
-                if (response.data[i] == null) {
-                    $('#outofpics').show();
-                    $('#showMore').hide();
-                    setTimeout(function(){
-                        $('#outofpics').click();
-                    }, 6000);
-                    break;
-                } else {
-                    var imgobj = {
-                    path: 'http://util.mw.metropolia.fi/uploads/' + response.data[i].path,
-                    title: response.data[i].title,
-                    type: response.data[i].type,
-                    uploader: userArray[response.data[i].userId]
-                    };
-                    $scope.images.push(imgobj);
-                }
-            }
-
-        }, function errorCallback(response) {
-            angular.element(document.getElementById('contents')).append(response.data);
-
-        });
-
+    // function to call showimages in the DOM ready
+    $.getImages = function() {
+        $scope.showImages();
     }
 
     $.getUsers = function() {

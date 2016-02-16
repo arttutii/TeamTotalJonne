@@ -19,13 +19,6 @@ $(document).ready(function () {
         location.reload();
     });
 
-    $(".loginputs").keyup(function(event){
-    if(event.keyCode == 13){
-        console.log("weqwe");
-        $("#signinbtn").click();
-    }
-    });
-
 
     // Check if user is logged in
 
@@ -52,6 +45,7 @@ $(document).ready(function () {
             $('#modebtn').css("color", "#888888");
             $('#contents').css("background-color", "#ebebeb");
             $('#contentsrow').css("background-color", "#ebebeb");
+            $('#contentsrow').css("color", "black");
             $('#contents').css("color", "black");
             $('#thePage').css("background-color", "white");
             clicked = true;
@@ -63,6 +57,7 @@ $(document).ready(function () {
             $('#modebtn').css("color", "white");
             $('#contents').css("background-color", "#383838");
             $('#contentsrow').css("background-color", "#383838");
+            $('#contentsrow').css("color", "white");
             $('#contents').css("color", "white");
             $('#thePage').css("background-color", "#222222");
             clicked = false;
@@ -72,7 +67,7 @@ $(document).ready(function () {
     // Get all the users from database
     $.getUsers();
     /* Executing show images*/
-    $.showImages();
+    $.getImages();
 
 
 });

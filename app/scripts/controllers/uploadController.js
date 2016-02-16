@@ -31,7 +31,7 @@ angular.module('theApp')
                 }, 6000);
             $('#hamburger').click();
             angular.element(document.getElementById('contents')).empty();
-            $.showImages();
+            $.getImages();
 
             console.log("file uploaded: " + JSON.stringify(response.data));
         }, function (error) {

@@ -9,6 +9,10 @@ body {
 
 /* Hiding some stuff */
 
+#aboutrow, #about {
+    display:none;
+}
+
 #upSuccess {
     display: none;
 }
@@ -34,6 +38,10 @@ body {
 
 audio {
     width: 100%;
+}
+
+#searchbar {
+    
 }
 
 #modebtn {
