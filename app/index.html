@@ -28,18 +28,12 @@
                         <button type="button" class="btn btn-default btn-outline navbar-toggle" id="modebtn">
                             <span class="glyphicon glyphicon-adjust"> </span>
                         </button>
-                        <a class="navbar-brand" href="#">TotalMedia</a>
-
+                        <a class="navbar-brand" ng-click="showImages()" href="">TotalMedia</a>
                     </div>
+
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="#">Home</a></li>
-                            <li>
-                                <a>
-                                    <input type="text" placeholder="Search..">
-                                </a>
-                            </li>
-                            <li><a href="#" id="uploadbtn">Upload</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
@@ -58,11 +52,17 @@
                                 </ul>
                             </li>
 
+                            <li class="active">
+                                <a>
+                                    <input id="searchbar" placeholder="Search.." ng-model="searchBar">
+                                </a>
+                            </li>
+                            <li><a href="#" id="uploadbtn">Upload</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="active"><a href="#" id="loginbtn">Sign in/register<span class="sr-only">(current)</span></a></li>
                             <li class="active"><a href="#" id="logoutbtn">Logout<span class="sr-only">(current)</span></a></li>
-                            <li><a href="#">About TotalMedia</a></li>
+                            <li><a href="#" ng-click="aboutPage()">About TotalMedia</a></li>
                         </ul>
                     </div>
                     <!--/.nav-collapse -->
@@ -90,9 +90,9 @@
             <div class="container-fluid">
                 <div class="container" id="contentArea">
                     <div class="row " id="contentsrow">
-                        <mediaitem></mediaitem>
+
                         <strong ng-model="gallerySize"> Gallery size:{{ gallerySize }}</strong>
-                        <div class="col-md-12" id="contents" ng-repeat="pic in images track by $index">
+                        <div class="col-md-12" id="contents" ng-repeat="pic in images | filter: searchBar | limitTo: moreImages">
                             <div ng-if="pic.type == 'image'">
                                 <img ng-src="{{ pic.path }}" width="100%" height="100%">
 
@@ -107,9 +107,9 @@
                                 <p>{{$index +1}}. {{ pic.title }}</p>
                                 <p>uploader: {{pic.uploader}} </p>
                             </div>
-                            <div ng-if="pic-type == 'audio'">
+                            <div ng-if="pic.type == 'audio'">
                                 <audio controls>
-                                    <source ng-src='{{ pic.path }}' type='{{ pic.type }}'>
+                                    <source ng-src='{{ trustSrc(pic.path) }}' type='{{ pic.mimeType }}'>
                                 </audio>
                                 <p> {{$index +1}}. {{ pic.title }}</p>
                                 <p>uploader: {{pic.uploader}} </p>
@@ -120,37 +120,46 @@
                         <button type="button" class="btn btn-primary btn-block container-fluid" ng-click="showMore(10)" id="showMore">Show more</button>
                         <br>
                     </div>
+                    <div class="row about" id="aboutrow">
+
+                        <button class="btn btn-primary about" ng-click="showImages()">Back to gallery </button>
+                        <div class="col-md-12" id="about">
+
+
+                        </div>
+
+
+                    </div>
                 </div>
             </div>
+
         </div>
 
-    </div>
+        <!-- Direct the modals -->
+        <login-Modal> </login-Modal>
+        <upload-Modal> </upload-Modal>
 
-    <!-- Direct the modals -->
-    <login-Modal> </login-Modal>
-    <upload-Modal> </upload-Modal>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- Include angular files & plugins -->
+        <script src="../bower_components/angular/angular.js"></script>
 
-    <!-- Include angular files & plugins -->
-    <script src="../bower_components/angular/angular.js"></script>
+        <!-- Include My App's JS file(s)-->
+        <script src="scripts/script.js"></script>
 
-    <!-- Include My App's JS file(s)-->
-    <script src="scripts/script.js"></script>
+        <!-- Controllers -->
+        <script src="scripts/controllers/contentController.js"></script>
+        <script src="scripts/controllers/loginController.js"></script>
+        <script src="scripts/controllers/uploadController.js"></script>
 
-    <!-- Controllers -->
-    <script src="scripts/controllers/contentController.js"></script>
-    <script src="scripts/controllers/loginController.js"></script>
-    <script src="scripts/controllers/uploadController.js"></script>
-
-    <!-- Directives -->
-    <script src="scripts/directives/scrollDetector.js"></script>
-    <script src="scripts/directives/uploadModal.js"></script>
-    <script src="scripts/directives/loginModal.js"></script>
-    <script src="scripts/directives/mediaitem.js"></script>
+        <!-- Directives -->
+        <script src="scripts/directives/scrollDetector.js"></script>
+        <script src="scripts/directives/uploadModal.js"></script>
+        <script src="scripts/directives/loginModal.js"></script>
+        <script src="scripts/directives/mediaitem.js"></script>
 
 </body>
 

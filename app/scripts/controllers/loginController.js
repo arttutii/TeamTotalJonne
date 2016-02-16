@@ -29,7 +29,7 @@ angular.module('theApp')
 	    };
 
 	    $scope.signIn = function (uName, pWord) {
-	        // palikka koodi >_> ashamed of myself
+	        // FIX THIS WITH USING NG-MODELS ON INPUT FIELDS
 
 	        if (uName == null){
 	            uName = $('#lusername').val();
@@ -91,16 +91,17 @@ angular.module('theApp')
 
 	    }
 
+
+
+	// enter-keypress for inputfields
     $(".loginputs").keyup(function(event){
     if(event.keyCode == 13){
-        console.log("weqwe");
         $("#signinbtn").click();
     }
     });
 
     $(".reginputs").keyup(function(event){
     if(event.keyCode == 13){
-        console.log("weqwe");
         $("#registerbtn").click();
     }
     });
