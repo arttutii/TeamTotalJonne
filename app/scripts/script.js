@@ -1,31 +1,11 @@
 angular.module('theApp', [])
 
 $(document).ready(function () {
-    // Hide some things
-
-    $('#logoutbtn').hide();
-
-    // Click functions
-
-    $("#uploadbtn").click(function () {
-        $("#uploadModal").modal();
-    });
-
-    $("#loginbtn").click(function () {
-        $("#loginModal").modal();
-    });
-    $("#logoutbtn").click(function () {
-        localStorage.clear();
-        location.reload();
-    });
-
 
     // Check if user is logged in
 
     if (localStorage.getItem("userID") != null) {
         $('#loggedin').append('logged in as: ' + localStorage.getItem("username"));
-        $('#loginbtn').hide();
-        $('#logoutbtn').show();
         console.log("user logged in");
     } else {
         console.log("user not logged in");

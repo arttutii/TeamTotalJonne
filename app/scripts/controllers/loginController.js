@@ -2,77 +2,83 @@
 
 angular.module('theApp')
 	.controller('loginCtrl', function ($scope, $http, $httpParamSerializer) {
-	    $scope.user = $('#lusername').val();
-	    $scope.pass = $('#lpassword').val();
+	    // variables for inputs
+	    	$scope.username;
+	    	$scope.password;
 
 	    $scope.registerUser = function () {
 
-	        $http({
-	          method: 'POST',
-	          url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/register',
-	          headers: {'Content-Type' : 'application/x-www-form-urlencoded'},
-	          data: $httpParamSerializer({
-	                  username: $('#rusername').val(),
-	                  email: $('#remail').val(),
-	                  password: $('#rpassword').val()
-	                })
-	        }).then(function (response) {
-	            $scope.signIn($('#rusername').val(), $('#rpassword').val());
-	            $('#registerSuccess').show();
-	            $('#hamburger').click();
+	    	// check if user exists
+	        if ($scope.userExistance($('#rusername').val()) == "false"){ 
+		        $http({
+		          method: 'POST',
+		          url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/register',
+		          headers: {'Content-Type' : 'application/x-www-form-urlencoded'},
+		          data: $httpParamSerializer({
+		                  username: $('#rusername').val(),
+		                  email: $('#remail').val(),
+		                  password: $('#rpassword').val()
+		                })
+		        }).then(function (response) {
+		            $('#registerSuccess').show();
+		            $('#hamburger').click();
+		            $scope.signIn($('#rusername').val(), $('#rpassword').val());
+		            console.log("Registration success?: " + response.data);
 
-	            console.log("Registration success?: \n" + response.data);
-	        }, function (error) {
-	            // to do = alert that username already exists
-	            console.log("oh dog: " + error.data);
-	        });
+		        }, function (error) {
+		            console.log("register error: " + error.data);
+		        });
+	        } else { 
+	        	console.log("username unavailable");
+	        }
+
+	        
 	    };
+
+	    $scope.disabled = function() {
+	    	$scope.buttondisabled = true;
+
+	    	if ($('#lusername').val().length > 1 && $('#lpassword').val().length > 1 ){
+	    		$scope.buttondisabled = false;
+	    	} else {
+	    		$scope.buttondisabled = true;
+	    	}
+	    }
 
 	    $scope.signIn = function (uName, pWord) {
 	        // FIX THIS WITH USING NG-MODELS ON INPUT FIELDS
 
 	        if (uName == null){
-	            uName = $('#lusername').val();
-	            pWord = $('#lpassword').val();
+	            uName = $scope.username;
+	            pWord = $scope.password;
 	        }
 
-	        // check if user exists
-	        $http({
+	        	//log user in
+	            $http({
 	              method: 'POST',
-	              url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/user/exists',
+	              url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/login',
 	              headers: {'Content-Type' : 'application/x-www-form-urlencoded'},
 	              data: $httpParamSerializer({
-	                      username: uName
+	                      username: uName,
+	                      password: pWord
 	                    })
 	            }).then(function (response) {
-	                //if user is found
-	                if (JSON.stringify(response.data.userFound) == "true") {
-	                    //log user in
-	                    $http({
-	                      method: 'POST',
-	                      url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/login',
-	                      headers: {'Content-Type' : 'application/x-www-form-urlencoded'},
-	                      data: $httpParamSerializer({
-	                              username: uName,
-	                              password: pWord
-	                            })
-	                    }).then(function (response) {
-	                        
-	                        localStorage.setItem("userID", response.data.userId);
-	                        localStorage.setItem("username", uName);
-	                        location.reload();
-
-	                        console.log("Login success?: " + JSON.stringify(response.data));
-	                    }, function (error) {
-	                        console.log("login oh dog: " + error.data);
-	                    });
+	                
+	                if (response.data.status == "login ok"){
+	                	localStorage.setItem("userID", response.data.userId);
+	                	localStorage.setItem("username", uName);
+	                	location.reload();
 	                } else {
-	                    console.log("what " + JSON.stringify(response.data));
+	               		console.log(JSON.stringify(response.data));
+	               		// clear fields, notify button
+	               		$('.loginputs').val('');
+	               		$scope.disabled();
 	                }
+   
 	            }, function (error) {
-	                console.log("user check oh dog: " + error.data);
+	                console.log("login oh dog: " + error.data);
 	            });
-
+	              
 	    };
 
 	    // variable and function for showing signin/register
@@ -91,19 +97,17 @@ angular.module('theApp')
 
 	    }
 
+		// enter-keypress for inputfields 
+	    $(".loginputs").keyup(function(event){
+	    if(event.keyCode == 13){ 
+	        $("#signinbtn").click();
+	    }
+	    });
 
-
-	// enter-keypress for inputfields 
-    $(".loginputs").keyup(function(event){
-    if(event.keyCode == 13){
-        $("#signinbtn").click();
-    }
-    });
-
-    $(".reginputs").keyup(function(event){
-    if(event.keyCode == 13){
-        $("#registerbtn").click();
-    }
-    });
+	    $(".reginputs").keyup(function(event){
+	    if(event.keyCode == 13){
+	        $("#registerbtn").click();
+	    }
+	    });
 
 	});

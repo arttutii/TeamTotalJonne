@@ -13,8 +13,15 @@ angular.module('theApp')
 
     // function to make video elements show
     $scope.trustSrc = function(src) {
-    return $sce.trustAsResourceUrl(src);
-  }
+        return $sce.trustAsResourceUrl(src);
+    }
+
+
+    if (localStorage.getItem("userID") != null){
+        $scope.userLogged = true;
+    } else {
+        $scope.userLogged = false;
+    }
 
     // function to show about page
     $scope.aboutPage = function() {
@@ -38,7 +45,6 @@ angular.module('theApp')
             
             for (var i = 0; i < response.data.length; i++) {
                 
-
                 if (response.data[i] == null) {
                     // break out of the if-else when no media files are found
                     break;
@@ -49,23 +55,40 @@ angular.module('theApp')
                     title: response.data[i].title,
                     type: response.data[i].type,
                     mimetype: response.data[i].mimeType,
-                    uploader: userArray[response.data[i].userId]
+                    uploader: userArray[response.data[i].userId -1]
                     };
                     $scope.images.push(imgobj);
                 } 
             }
             //console.log(response.data);
-            console.log($scope.images);
+            //console.log($scope.images);
 
         }, function errorCallback(response) {
-            angular.element(document.getElementById('contents')).append(response.data);
+            console.log(response.data);
         });
 
     }
 
     $scope.showMore = function () {
             $scope.moreImages += 10;
+    }
+    $scope.showTen = function () {
+            location.reload(true);
+            window.scrollTo(0, 0);
+            $scope.moreImages = 10;
+    }
 
+    $scope.userLogout = function() {
+        localStorage.clear();
+        location.reload();
+    }
+
+    $scope.uploadModal = function() {
+        $("#uploadModal").modal();
+    }
+
+    $scope.loginModal = function() {
+        $("#loginModal").modal();
     }
 
     // function to call showimages in the DOM ready
@@ -85,10 +108,9 @@ angular.module('theApp')
             
             
         }, function errorCallback(response) {
-            angular.element(document.getElementById('contents')).append(response.data);
+            console.log(response.data);
 
         });
-
 
     }
 

@@ -13,7 +13,7 @@ angular.module('theApp')
 
         var fd = new FormData(document.getElementById('uploadForm'));
         if (localStorage.getItem('username') != null){
-            fd.append('user', (localStorage.getItem('userID')-1));
+            fd.append('user', (localStorage.getItem('userID')));
         
         fd.append('type', $scope.type);
         fd.append('mime-type', $scope.mimeType);
@@ -30,15 +30,17 @@ angular.module('theApp')
                     $('#upSuccess').click();
                 }, 6000);
             $('#hamburger').click();
-            angular.element(document.getElementById('contents')).empty();
             $.getImages();
 
             console.log("file uploaded: " + JSON.stringify(response.data));
         }, function (error) {
-            $('#upFailed').show();
+              $('#upFailed').fadeIn();
+            setTimeout(function(){
+                    $('#upFailed').click();
+                }, 6000);
             console.log("oh dog: " + error.data);
         });
-        }else {
+        } else {
             console.log("user not logged in, can't upload media");
         };
     };

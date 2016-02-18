@@ -31,19 +31,19 @@
                         <button type="button" class="btn btn-default btn-outline navbar-toggle" id="modebtn"> 
                           <span class="glyphicon glyphicon-adjust" > </span>
                         </button>
-                        <a class="navbar-brand" ng-click="showImages()" href="">TotalMedia</a>
+                        <a class="navbar-brand" ng-click="showTen()" href="">TotalMedia</a>
+                        <a class="navbar-brand"><input id="searchbar" placeholder="Search.." ng-model="searchBar"></a>
                         <p id="loggedin"></p>
 
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a><input id="searchbar" placeholder="Search.." ng-model="searchBar"></a></li>
-                            <li><a href="#" id="uploadbtn">Upload</a></li>
+                            <li><a href="#" id="uploadbtn" ng-show="userLogged" ng-click="uploadModal()">Upload</a></li>
                            
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="active"><a href="#" id="loginbtn">Sign in/register<span class="sr-only">(current)</span></a></li>
-                            <li class="active"><a href="#" id="logoutbtn">Logout<span class="sr-only">(current)</span></a></li>
+                            <li class="active"><a href="#" id="loginbtn" ng-hide="userLogged" ng-click="loginModal()">Sign in/register<span class="sr-only">(current)</span></a></li>
+                            <li class="active"><a href="#" id="logoutbtn" ng-show="userLogged" ng-click="userLogout()">Logout<span class="sr-only">(current)</span></a></li>
                             <li><a href="#" ng-click="aboutPage()">About TotalMedia</a></li>
                         </ul>
                     </div>
@@ -105,10 +105,8 @@
 
                  <button class="btn btn-primary about" ng-click="showImages()">Back to gallery </button>
                 <div class="col-md-12" id="about" >
-                  
-                    
+                                      
                 </div>
-
 
               </div>
             </div>
