@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('theApp')
-    .controller('contentController', function ($scope, $uibModal, $http, $log, $sce) {
+    .controller('ContentController', function ($scope, $uibModal, $http, $log, $sce) {
         // variable to use in counting images, how many to show at once
         $scope.moreImages = 10;
         // array for having the usernames of media uploaders at hand
@@ -15,6 +15,13 @@ angular.module('theApp')
         $scope.trustSrc = function (src) {
             return $sce.trustAsResourceUrl(src);
         };
+
+
+        if (localStorage.getItem("userID") !== null) {
+            $scope.userLogged = true;
+        } else {
+            $scope.userLogged = false;
+        }
 
         // function to show about page
         $scope.aboutPage = function () {
@@ -48,28 +55,40 @@ angular.module('theApp')
                             title: response.data[i].title,
                             type: response.data[i].type,
                             mimetype: response.data[i].mimeType,
-                            uploader: userArray[response.data[i].userId]
+                            uploader: userArray[response.data[i].userId - 1]
                         };
                         $scope.images.push(imgobj);
                     }
                 }
-                //console.log(response.data);
-                $log.info($scope.images);
+                //$log.info(response.data);
+                //$log.info($scope.images);
 
             }, function errorCallback(response) {
-                angular.element(document.getElementById('contents')).append(response.data);
+                $log.info(response.data);
             });
 
         };
 
+        $scope.showMore = function () {
+            $scope.moreImages += 10;
+        };
+        $scope.showTen = function () {
+            location.reload(true);
+            window.scrollTo(0, 0);
+            $scope.moreImages = 10;
+        };
 
-        $scope.showMore = function (amount) {
-            if (amount !== null) {
-                $scope.moreImages += amount;
-            } else {
-                $scope.moreImages += 10;
-            }
+        $scope.userLogout = function () {
+            localStorage.clear();
+            location.reload();
+        };
 
+        $scope.uploadModal = function () {
+            $("#uploadModal").modal();
+        };
+
+        $scope.loginModal = function () {
+            $("#loginModal").modal();
         };
 
         // function to call showimages in the DOM ready
@@ -78,25 +97,23 @@ angular.module('theApp')
         };
 
         $.getUsers = function () {
-            $http({
-                method: 'GET',
-                url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/users'
-            }).then(function successCallback(response) {
+                $http({
+                    method: 'GET',
+                    url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/users'
+                }).then(function successCallback(response) {
 
-                for (var i = 0; i < response.data.length; i++) {
-                    userArray[i] = (response.data[i].username);
-                }
-
-
-            }, function errorCallback(response) {
-                angular.element(document.getElementById('contents')).append(response.data);
-
-            });
+                    for (var i = 0; i < response.data.length; i++) {
+                        userArray[i] = (response.data[i].username);
+                    }
 
 
-        };
+                }, function errorCallback(response) {
+                    $log.info(response.data);
 
-        /* function for instantiating modal displays */
+                });
+
+            };
+            /* function for instantiating modal displays */
         $scope.showModal = function (pic) {
             $log.info(pic);
             var modalInstance = $uibModal.open({
@@ -121,4 +138,5 @@ angular.module('theApp')
             });
 
         };
+
     });

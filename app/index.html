@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 
-<body ng-app="theApp" ng-controller="contentController as content">
+<body ng-app="theApp" ng-controller="ContentController as content">
 
     <!-- Direct the modals -->
     <login-Modal> </login-Modal>
@@ -33,7 +33,11 @@
                         <button type="button" class="btn btn-default btn-outline navbar-toggle" id="modebtn">
                             <span class="glyphicon glyphicon-adjust"> </span>
                         </button>
-                        <a class="navbar-brand" ng-click="showImages()" href="">TotalMedia</a>
+                        <a class="navbar-brand" ng-click="showTen()" href="">TotalMedia</a>
+                        <a class="navbar-brand">
+                            <input id="searchbar" placeholder="Search.." ng-model="searchBar">
+                        </a>
+                        <p id="loggedin"></p>
                     </div>
 
                     <div id="navbar" class="navbar-collapse collapse">
@@ -56,17 +60,11 @@
                                     <li><a href="#">scope.hideNav: {{ hideNav }} </a></li>
                                 </ul>
                             </li>
-
-                            <li class="active">
-                                <a>
-                                    <input id="searchbar" placeholder="Search.." ng-model="searchBar">
-                                </a>
-                            </li>
-                            <li><a href="#" id="uploadbtn">Upload</a></li>
+                            <li><a href="#" id="uploadbtn" ng-show="userLogged" ng-click="uploadModal()">Upload</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="active"><a href="#" id="loginbtn">Sign in/register<span class="sr-only">(current)</span></a></li>
-                            <li class="active"><a href="#" id="logoutbtn">Logout<span class="sr-only">(current)</span></a></li>
+                            <li class="active"><a href="#" id="loginbtn" ng-hide="userLogged" ng-click="loginModal()">Sign in/register<span class="sr-only">(current)</span></a></li>
+                            <li class="active"><a href="#" id="logoutbtn" ng-show="userLogged" ng-click="userLogout()">Logout<span class="sr-only">(current)</span></a></li>
                             <li><a href="#" ng-click="aboutPage()">About TotalMedia</a></li>
                         </ul>
                     </div>
@@ -95,59 +93,51 @@
             <div class="container-fluid">
                 <div class="container" id="contentArea">
                     <div class="row " id="contentsrow">
-                        <a href="#" ng-click="showModal(lg)">show modal</a>
-                        <strong ng-model="gallerySize"> Gallery size:{{ gallerySize }}</strong>
                         <mediaitem ng-repeat="pic in images | filter: searchBar | limitTo: moreImages"></mediaitem>
-
                         <button type="button" class="btn btn-primary btn-block container-fluid" ng-click="showMore(10)" id="showMore">Show more</button>
                         <br>
                     </div>
                     <div class="row about" id="aboutrow">
-
                         <button class="btn btn-primary about" ng-click="showImages()">Back to gallery </button>
                         <div class="col-md-12" id="about">
 
-
                         </div>
-
 
                     </div>
                 </div>
             </div>
 
-        </div>
 
+            <!-- Include angular files & plugins -->
+            <script src="../bower_components/angular/angular.js"></script>
 
-        <!-- Include angular files & plugins -->
-        <script src="../bower_components/angular/angular.js"></script>
+            <!-- angular ui bootstrap -->
+            <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 
-        <!-- angular ui bootstrap -->
-        <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="../bower_components/jquery/dist/jquery.min.js"></script>
-
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <!-- replaced with angular ui bootstrap!
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <!-- replaced with angular ui bootstrap!
         <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         -->
 
 
-        <!-- Include My App's JS file(s)-->
-        <script src="scripts/script.js"></script>
+            <!-- Include My App's JS file(s)-->
+            <script src="scripts/script.js"></script>
 
-        <!-- Controllers -->
-        <script src="scripts/controllers/contentController.js"></script>
-        <script src="scripts/controllers/loginController.js"></script>
-        <script src="scripts/controllers/uploadController.js"></script>
-        <script src="scripts/controllers/ModalInstanceController.js"></script>
+            <!-- Controllers -->
+            <script src="scripts/controllers/ContentController.js"></script>
+            <script src="scripts/controllers/LoginController.js"></script>
+            <script src="scripts/controllers/UploadController.js"></script>
+            <script src="scripts/controllers/ModalInstanceController.js"></script>
 
-        <!-- Directives -->
-        <script src="scripts/directives/scrollDetector.js"></script>
-        <script src="scripts/directives/uploadModal.js"></script>
-        <script src="scripts/directives/loginModal.js"></script>
-        <script src="scripts/directives/mediaitem.js"></script>></script>
-        <script src="scripts/directives/myModalContent.js"></script>
+            <!-- Directives -->
+            <script src="scripts/directives/scrollDetector.js"></script>
+            <script src="scripts/directives/uploadModal.js"></script>
+            <script src="scripts/directives/loginModal.js"></script>
+            <script src="scripts/directives/mediaitem.js"></script></script>
+            <script src="scripts/directives/myModalContent.js"></script>
 
 </body>
 
