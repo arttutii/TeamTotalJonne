@@ -1,8 +1,8 @@
 angular.module('theApp')
-    .directive('mediaitem', function () {
+    .directive('myModalContent', function () {
         return {
             replace: true,
             restrict: 'E',
-            templateUrl: 'views/mediaitem.html'
+            templateUrl: 'views/myModalContent.html'
         };
     });

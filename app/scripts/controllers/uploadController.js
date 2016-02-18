@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('theApp')
-	.controller('uploadCtrl', function ($scope, $http) {
+	.controller('uploadCtrl', function ($scope, $http, $log) {
 
     /* Get the file type */
     $scope.setMediaFile = function (element) {
@@ -12,7 +12,7 @@ angular.module('theApp')
     $scope.uploadImage = function () {
 
         var fd = new FormData(document.getElementById('uploadForm'));
-        if (localStorage.getItem('username') != null){
+        if (localStorage.getItem('username') !== null){
             fd.append('user', (localStorage.getItem('userID')-1));
 
         fd.append('type', $scope.type);
@@ -33,14 +33,14 @@ angular.module('theApp')
             angular.element(document.getElementById('contents')).empty();
             $.getImages();
 
-            console.log("file uploaded: " + JSON.stringify(response.data));
+            $log.info("file uploaded: " + JSON.stringify(response.data));
         }, function (error) {
             $('#upFailed').show();
-            console.log("oh dog: " + error.data);
+            $log.info("oh dog: " + error.data);
         });
         }else {
-            console.log("user not logged in, can't upload media");
-        };
+            $log.info("user not logged in, can't upload media");
+        }
     };
 
 

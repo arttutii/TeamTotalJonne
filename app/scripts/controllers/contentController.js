@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('theApp')
-    .controller('contentCtrl', function ($scope, $http, $sce) {
+    .controller('contentController', function ($scope, $uibModal, $http, $log, $sce) {
         // variable to use in counting images, how many to show at once
         $scope.moreImages = 10;
         // array for having the usernames of media uploaders at hand
@@ -54,7 +54,7 @@ angular.module('theApp')
                     }
                 }
                 //console.log(response.data);
-                console.log($scope.images);
+                $log.info($scope.images);
 
             }, function errorCallback(response) {
                 angular.element(document.getElementById('contents')).append(response.data);
@@ -96,4 +96,29 @@ angular.module('theApp')
 
         };
 
+        /* function for instantiating modal displays */
+        $scope.showModal = function (pic) {
+            $log.info(pic);
+            var modalInstance = $uibModal.open({
+                scope: $scope,
+                templateUrl: 'views/mediaitemModal.html',
+                controller: 'ModalInstanceController',
+                size: 'lg',
+                resolve: {
+                    images: function () {
+                        return $scope.images;
+                    },
+                    pic: function () {
+                        return pic;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+                $scope.selected = selectedItem;
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+
+        };
     });

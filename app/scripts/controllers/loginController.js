@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('theApp')
-	.controller('loginCtrl', function ($scope, $http, $httpParamSerializer) {
+	.controller('loginCtrl', function ($scope, $http, $httpParamSerializer, $log) {
 	    $scope.user = $('#lusername').val();
 	    $scope.pass = $('#lpassword').val();
 
@@ -21,17 +21,17 @@ angular.module('theApp')
 	            $('#registerSuccess').show();
 	            $('#hamburger').click();
 
-	            console.log("Registration success?: \n" + response.data);
+	            $log.info("Registration success?: \n" + response.data);
 	        }, function (error) {
 	            // to do = alert that username already exists
-	            console.log("oh dog: " + error.data);
+	            $log.info("oh dog: " + error.data);
 	        });
 	    };
 
 	    $scope.signIn = function (uName, pWord) {
 	        // FIX THIS WITH USING NG-MODELS ON INPUT FIELDS
 
-	        if (uName == null){
+	        if (uName === null){
 	            uName = $('#lusername').val();
 	            pWord = $('#lpassword').val();
 	        }
@@ -62,15 +62,15 @@ angular.module('theApp')
 	                        localStorage.setItem("username", uName);
 	                        location.reload();
 
-	                        console.log("Login success?: " + JSON.stringify(response.data));
+	                        $log.info("Login success?: " + JSON.stringify(response.data));
 	                    }, function (error) {
-	                        console.log("login oh dog: " + error.data);
+	                        $log.info("login oh dog: " + error.data);
 	                    });
 	                } else {
-	                    console.log("what " + JSON.stringify(response.data));
+	                    $log.info("what " + JSON.stringify(response.data));
 	                }
 	            }, function (error) {
-	                console.log("user check oh dog: " + error.data);
+	                $log.info("user check oh dog: " + error.data);
 	            });
 
 	    };
@@ -89,7 +89,7 @@ angular.module('theApp')
         		clicked = true;
 	    	}
 
-	    }
+	    };
 
 
 

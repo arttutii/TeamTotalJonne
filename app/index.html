@@ -10,7 +10,12 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 
-<body ng-app="theApp" ng-controller="contentCtrl as content">
+<body ng-app="theApp" ng-controller="contentController as content">
+
+    <!-- Direct the modals -->
+    <login-Modal> </login-Modal>
+    <upload-Modal> </upload-Modal>
+
     <div class="container-fluid header" id="thePage">
         <div class="container" id="contentArea" scroll-detector reached-bottom="showMore(1)">
 
@@ -90,32 +95,9 @@
             <div class="container-fluid">
                 <div class="container" id="contentArea">
                     <div class="row " id="contentsrow">
-
+                        <a href="#" ng-click="showModal(lg)">show modal</a>
                         <strong ng-model="gallerySize"> Gallery size:{{ gallerySize }}</strong>
-                        <div class="col-md-12" id="contents" ng-repeat="pic in images | filter: searchBar | limitTo: moreImages">
-                            <div ng-if="pic.type == 'image'">
-                                <img ng-src="{{ pic.path }}" width="100%" height="100%">
-
-                                <p> {{$index +1}}. {{ pic.title }}</p>
-                                <p>uploader: {{pic.uploader}} </p>
-                            </div>
-                            <div ng-if="pic.type == 'video'">
-                                <video width='100%' height='100%' controls>
-                                    <source ng-src='{{ trustSrc(pic.path) }}' type='{{ pic.mimeType }}'>
-                                </video>
-
-                                <p>{{$index +1}}. {{ pic.title }}</p>
-                                <p>uploader: {{pic.uploader}} </p>
-                            </div>
-                            <div ng-if="pic.type == 'audio'">
-                                <audio controls>
-                                    <source ng-src='{{ trustSrc(pic.path) }}' type='{{ pic.mimeType }}'>
-                                </audio>
-                                <p> {{$index +1}}. {{ pic.title }}</p>
-                                <p>uploader: {{pic.uploader}} </p>
-                            </div>
-                        </div>
-
+                        <mediaitem ng-repeat="pic in images | filter: searchBar | limitTo: moreImages"></mediaitem>
 
                         <button type="button" class="btn btn-primary btn-block container-fluid" ng-click="showMore(10)" id="showMore">Show more</button>
                         <br>
@@ -135,17 +117,21 @@
 
         </div>
 
-        <!-- Direct the modals -->
-        <login-Modal> </login-Modal>
-        <upload-Modal> </upload-Modal>
-
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="../bower_components/jquery/dist/jquery.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
         <!-- Include angular files & plugins -->
         <script src="../bower_components/angular/angular.js"></script>
+
+        <!-- angular ui bootstrap -->
+        <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <!-- replaced with angular ui bootstrap!
+        <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        -->
+
 
         <!-- Include My App's JS file(s)-->
         <script src="scripts/script.js"></script>
@@ -154,12 +140,14 @@
         <script src="scripts/controllers/contentController.js"></script>
         <script src="scripts/controllers/loginController.js"></script>
         <script src="scripts/controllers/uploadController.js"></script>
+        <script src="scripts/controllers/ModalInstanceController.js"></script>
 
         <!-- Directives -->
         <script src="scripts/directives/scrollDetector.js"></script>
         <script src="scripts/directives/uploadModal.js"></script>
         <script src="scripts/directives/loginModal.js"></script>
-        <script src="scripts/directives/mediaitem.js"></script>
+        <script src="scripts/directives/mediaitem.js"></script>></script>
+        <script src="scripts/directives/myModalContent.js"></script>
 
 </body>
 

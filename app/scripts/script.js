@@ -1,4 +1,4 @@
-angular.module('theApp', []);
+angular.module('theApp', ['ui.bootstrap']);
 
 $(document).ready(function () {
     // Hide some things
