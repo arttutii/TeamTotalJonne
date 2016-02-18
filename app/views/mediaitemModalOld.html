@@ -1,0 +1,30 @@
+<div class="modal fade" id="mediaitemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"> {{ pic.title }} by: {{pic.uploader}} </h4>
+            </div>
+            <div class="modal-body">
+                <h1>modal body</h1>
+                <div ng-if="pic.type == 'image'">
+                    <img ng-src="{{ pic.path }}" width="100%" height="100%">
+                </div>
+                <div ng-if="pic.type == 'video'">
+                    <video width='100%' height='100%' controls>
+                        <source ng-src='{{ trustSrc(pic.path) }}' type='{{ pic.mimeType }}'>
+                    </video>
+                </div>
+                <div ng-if="pic.type == 'audio'">
+                    <audio controls>
+                        <source ng-src='{{ trustSrc(pic.path) }}' type='{{ pic.mimeType }}'>
+                    </audio>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- Commenting section? -->
+                <p>commenting section</p>
+            </div>
+        </div>
+    </div>
+</div>
