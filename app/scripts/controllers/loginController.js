@@ -9,30 +9,32 @@ angular.module('theApp')
         $scope.registerUser = function () {
 
             // check if user exists
-            if ($scope.userExistance($('#rusername').val()) == "false") {
-                $http({
-                    method: 'POST',
-                    url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/register',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    data: $httpParamSerializer({
-                        username: $('#rusername').val(),
-                        email: $('#remail').val(),
-                        password: $('#rpassword').val()
-                    })
-                }).then(function (response) {
+            $http({
+                method: 'POST',
+                url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/register',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                data: $httpParamSerializer({
+                    username: $('#rusername').val(),
+                    email: $('#remail').val(),
+                    password: $('#rpassword').val()
+                })
+            }).then(function (response) {
+                if (response.data.status == "ok") {
                     $('#registerSuccess').show();
                     $('#hamburger').click();
                     $scope.signIn($('#rusername').val(), $('#rpassword').val());
                     $log.info("Registration success?: " + response.data);
+                } else {
+                    //
+                    $('.loginputs').val('');
+                    $log.info(JSON.stringify(response.data));
+                }
 
-                }, function (error) {
-                    $log.info("register error: " + error.data);
-                });
-            } else {
-                $log.info("username unavailable");
-            }
+            }, function (error) {
+                $log.info("register error: " + error.data);
+            });
         };
 
         $scope.disabled = function () {
@@ -63,6 +65,7 @@ angular.module('theApp')
                     password: pWord
                 })
             }).then(function (response) {
+                $log.info($scope.username + " " + $scope.password + " " + JSON.stringify(response.data));
                 if (response.data.status == "login ok") {
                     localStorage.setItem("userID", response.data.userId);
                     localStorage.setItem("username", uName);
