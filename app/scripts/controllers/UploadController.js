@@ -9,6 +9,7 @@ angular.module('theApp')
             $scope.type = $scope.mimeType.substr(0, 5);
         };
 
+
         $scope.uploadImage = function () {
 
             var fd = new FormData(document.getElementById('uploadForm'));

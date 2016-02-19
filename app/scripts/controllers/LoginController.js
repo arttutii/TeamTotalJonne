@@ -6,10 +6,10 @@ angular.module('theApp')
         $scope.username;
         $scope.password;
 
-        $scope.registerUser = function () {
+        // variable for disabling signin button
+        $scope.buttondisabled = true;
 
-            // check if user exists
-            if ($scope.userExistance($('#rusername').val()) == "false") {
+        $scope.registerUser = function () {
                 $http({
                     method: 'POST',
                     url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/register',
@@ -22,21 +22,22 @@ angular.module('theApp')
                         password: $('#rpassword').val()
                     })
                 }).then(function (response) {
-                    $('#registerSuccess').show();
-                    $('#hamburger').click();
-                    $scope.signIn($('#rusername').val(), $('#rpassword').val());
-                    $log.info("Registration success?: " + response.data);
 
+                    if (response.data.status == "ok"){
+                        $('#registerSuccess').show();
+                        $('#hamburger').click();
+                        $scope.signIn($('#rusername').val(), $('#rpassword').val());
+                        $log.info("Registration success?: " + response.data);
+                    } else {
+                        $log.info(response.data);
+                    }
+                    
                 }, function (error) {
                     $log.info("register error: " + error.data);
                 });
-            } else {
-                $log.info("username unavailable");
-            }
         };
 
-        $scope.disabled = function () {
-            $scope.buttondisabled = true;
+        $scope.disabled = function () {           
 
             if ($('#lusername').val().length > 1 && $('#lpassword').val().length > 1) {
                 $scope.buttondisabled = false;
@@ -45,39 +46,39 @@ angular.module('theApp')
             }
         };
 
-        $scope.signIn = function (uName, pWord) {
-            if (uName === null) {
+         $scope.signIn = function (uName, pWord) {
+
+            if (uName == null){
                 uName = $scope.username;
                 pWord = $scope.password;
             }
 
-            //log user in
-            $http({
-                method: 'POST',
-                url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/login',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                data: $httpParamSerializer({
-                    username: uName,
-                    password: pWord
-                })
-            }).then(function (response) {
-                if (response.data.status == "login ok") {
-                    localStorage.setItem("userID", response.data.userId);
-                    localStorage.setItem("username", uName);
-                    location.reload();
-                } else {
-                    $log.info(JSON.stringify(response.data));
-                    // clear fields, notify button
-                    $('.loginputs').val('');
-                    $scope.disabled();
-                }
-
-            }, function (error) {
-                $log.info("login oh dog: " + error.data);
-            });
-
+                //log user in
+                $http({
+                  method: 'POST',
+                  url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/login',
+                  headers: {'Content-Type' : 'application/x-www-form-urlencoded'},
+                  data: $httpParamSerializer({
+                          username: uName,
+                          password: pWord
+                        })
+                }).then(function (response) {
+                    
+                    if (response.data.status == "login ok"){
+                        localStorage.setItem("userID", response.data.userId);
+                        localStorage.setItem("username", uName);
+                        location.reload();
+                    } else {
+                        console.log(JSON.stringify(response.data));
+                        // clear fields, notify button
+                        $('.loginputs').val('');
+                        $scope.disabled();
+                    }
+   
+                }, function (error) {
+                    console.log("login oh dog: " + error.data);
+                });
+                  
         };
 
         // variable and function for showing signin/register
@@ -99,6 +100,7 @@ angular.module('theApp')
         // enter-keypress for inputfields
         $(".loginputs").keyup(function (event) {
             if (event.keyCode == 13) {
+                $log.info("qwe");
                 $("#signinbtn").click();
             }
         });

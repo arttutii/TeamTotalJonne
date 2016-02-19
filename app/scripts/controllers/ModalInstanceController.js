@@ -1,12 +1,61 @@
 angular.module('theApp')
-    .controller('ModalInstanceController', function ($scope, $uibModalInstance, $log, images, pic) {
+    .controller('ModalInstanceController', function ($httpParamSerializer,$http,$scope, $uibModalInstance, $log, images, pic) {
+        // variables to use for selected media
         $scope.pic = pic;
         $scope.images = images;
         $scope.selectedItem = {
             pic: $scope.images[0]
         };
+        // container for comments for specific item
+        $scope.comments = [];
 
-        $log.info('pic title: ' + pic.title);
+        $scope.getComments = function() {
+
+            $http({
+                method: 'GET',
+                url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/comments/file/' + pic.id
+            }).then(function successCallback(response) {
+
+                for (var i = 0; i < response.data.length; i++) {
+                    if (response.data[i] === null) {
+                        // break out of the if-else when no media files are found
+                        break;
+                    } else {
+                       $scope.comments.push(response.data[i]);
+                    }
+                }
+
+            }, function errorCallback(response) {
+                $log.info(response.data);
+            });
+        };
+
+        $scope.postComment = function() {
+
+            var comment = $scope.comment;
+
+            $http({
+                  method: 'POST',
+                  url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/comment/file/' + pic.id,
+                  headers: {'Content-Type' : 'application/x-www-form-urlencoded'},
+                  data: $httpParamSerializer({
+                          user: localStorage.getItem('userID'),
+                          comment: comment
+                        })
+                }).then(function successCallback(response) {
+
+                    if (response.data.status == "comment added") {
+                        $log.info("comment added!" );
+                        $('#comments').empty();
+                        $scope.getComments();
+                    } else {
+                        $log.info("comment not added, check fields");
+                    }
+
+            }, function errorCallback(response) {
+                $log.info(response.data);
+            });
+        };
 
         $scope.ok = function () {
             $uibModalInstance.close($scope.selectedItem.pic);
@@ -15,5 +64,10 @@ angular.module('theApp')
         $scope.cancel = function () {
             $uibModalInstance.dismiss('cancel ');
         };
+
+
+        // get the comments for selected media
+        $scope.getComments();
+
 
     });

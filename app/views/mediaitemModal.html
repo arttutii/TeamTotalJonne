@@ -4,9 +4,17 @@
     </div>
     <div class="modal-body">
         <img ng-src="{{ pic.path }}" width="100%" height="100%"> </a>
+
+        <h1> Comments </h1><br>
+        <h3 ng-show="userLogged">Type a comment: </h3>
+        <textarea style="width:300px; height:100px;" ng-model="comment" ng-show="userLogged"> </textarea> 
+         <button type="submit" ng-click="postComment()" class="btn btn-default" ng-show="userLogged">Send</button> <br>
+        <div id="comments" ng-repeat="comment in comments"> 
+        <p style="border: solid 1px green; margin: 5px;">{{comment.username}}: {{comment.comment}} </p>
+        
+        </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        <button class="btn btn-primary" type="button" ng-click="ok()">Back to gallery</button>
     </div>
 </div>

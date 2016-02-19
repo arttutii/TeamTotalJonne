@@ -52,6 +52,7 @@ angular.module('theApp')
                         // create an image object which holds data for each image
                         var imgobj = {
                             path: 'http://util.mw.metropolia.fi/uploads/' + response.data[i].path,
+                            id: response.data[i].fileId,
                             title: response.data[i].title,
                             type: response.data[i].type,
                             mimetype: response.data[i].mimeType,
@@ -70,7 +71,7 @@ angular.module('theApp')
         };
 
         $scope.showMore = function () {
-            $scope.moreImages += 10;
+            $scope.moreImages += 2;
         };
         $scope.showTen = function () {
             location.reload(true);

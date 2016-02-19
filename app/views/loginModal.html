@@ -8,9 +8,16 @@
       </div>
       <div class="modal-body">
         <div id="login" class="login">
-           <form id="loginForm">
-             <input class="loginputs" type="text" name="username"  id="lusername" placeholder="Username" ng-model="username" ng-change="disabled()" ><br>
-             <input class="loginputs" type="password" name="password" id="lpassword" ng-model="password" ng-change="disabled()" placeholder="Password"><br>
+          <form id="loginForm" >
+            <label class="col-sm-2 control-label">Username</label>
+            <div class="col-sm-10" >
+              <input class="loginputs form-control" type="text" name="username"  id="lusername" ng-model="username" ng-change="disabled()" >
+            </div>
+            <label class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+               <input class="loginputs form-control" type="password" name="password" id="lpassword" ng-model="password" ng-change="disabled()">
+            </div>
+            
           </form>
         </div>
          <div id="register" class="registration">
