@@ -2,12 +2,10 @@
 
 angular.module('theApp')
     .controller('LoginController', function ($scope, $http, $httpParamSerializer, $log) {
-        // variables for inputs
-        $scope.username;
-        $scope.password;
-
-        // variable for disabling signin button
-        $scope.buttondisabled = true;
+        
+        // variables for disabling signin and register buttons
+        $scope.lbuttondisabled = true;
+        $scope.rbuttondisabled = true;
 
         $scope.registerUser = function () {
                 $http({
@@ -26,31 +24,61 @@ angular.module('theApp')
                     if (response.data.status == "ok"){
                         $('#registerSuccess').show();
                         $('#hamburger').click();
-                        $scope.signIn($('#rusername').val(), $('#rpassword').val());
-                        $log.info("Registration success?: " + response.data);
+                        $('#loginModal').modal('hide');
+                        
+                        setTimeout(function () {
+                            $scope.signIn($('#rusername').val(), $('#rpassword').val());
+                        }, 3000);
+                        
                     } else {
                         $log.info(response.data);
+                        if (response.data.error == "username already exists"){
+                            $('#userExists').fadeIn();
+                            $('#rusername').focus();
+                            $log.info("username already exists, choose another username");
+                        } else {
+                            $log.info(response.data);
+                        }
+                        
                     }
                     
                 }, function (error) {
-                    $log.info("register error: " + error.data);
+                    $log.info("check your inputs " + error.data);
                 });
         };
 
-        $scope.disabled = function () {           
+        // variables for login inputs
+        $scope.lusername;
+        $scope.lpassword;
 
-            if ($('#lusername').val().length > 1 && $('#lpassword').val().length > 1) {
-                $scope.buttondisabled = false;
+        $scope.loginDisabled = function () {           
+
+            if ($('#lusername').val().length >= 1 && $('#lpassword').val().length >= 1 ) {
+                $scope.lbuttondisabled = false;
             } else {
-                $scope.buttondisabled = true;
+                $scope.lbuttondisabled = true;
+            }
+        };
+
+        // variables for register inputs
+        $scope.rusername;
+        $scope.rpassword;
+        $scope.remail;
+
+        $scope.registerDisabled = function () {           
+
+            if ($('#rusername').val().length >= 1 && $('#rpassword').val().length >= 1 && $('#remail').val().length >= 1) {
+                $scope.rbuttondisabled = false;
+            } else {
+                $scope.rbuttondisabled = true;
             }
         };
 
          $scope.signIn = function (uName, pWord) {
 
             if (uName == null){
-                uName = $scope.username;
-                pWord = $scope.password;
+                uName = $scope.lusername;
+                pWord = $scope.lpassword;
             }
 
                 //log user in
@@ -72,7 +100,7 @@ angular.module('theApp')
                         console.log(JSON.stringify(response.data));
                         // clear fields, notify button
                         $('.loginputs').val('');
-                        $scope.disabled();
+                        $scope.loginDisabled();
                     }
    
                 }, function (error) {
@@ -100,14 +128,13 @@ angular.module('theApp')
         // enter-keypress for inputfields
         $(".loginputs").keyup(function (event) {
             if (event.keyCode == 13) {
-                $log.info("qwe");
-                $("#signinbtn").click();
+                $scope.signIn();
             }
         });
 
         $(".reginputs").keyup(function (event) {
             if (event.keyCode == 13) {
-                $("#registerbtn").click();
+                $scope.registerUser();
             }
         });
     });

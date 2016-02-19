@@ -16,6 +16,10 @@ body {
     display: none;
 }
 
+#userExists {
+    display: none;
+}
+
 #upFailed {
     display: none;
 }

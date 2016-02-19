@@ -30,6 +30,20 @@ angular.module('theApp')
             });
         };
 
+        $scope.getDescription = function () {
+
+            $http({
+                method: 'GET',
+                url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/file/' + pic.id
+            }).then(function successCallback(response) {
+                $scope.description = response.data.description;
+                $log.info(response.data);
+
+            }, function errorCallback(response) {
+                $log.info(response.data);
+            });
+        }
+
         $scope.postComment = function() {
 
             var comment = $scope.comment;

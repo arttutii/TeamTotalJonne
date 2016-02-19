@@ -11,28 +11,40 @@
           <form id="loginForm" >
             <label class="col-sm-2 control-label">Username</label>
             <div class="col-sm-10" >
-              <input class="loginputs form-control" type="text" name="username"  id="lusername" ng-model="username" ng-change="disabled()" >
+              <input class="loginputs form-control" type="text" name="username" placeholder="Username" id="lusername" ng-model="lusername" ng-change="loginDisabled()" >
             </div>
             <label class="col-sm-2 control-label">Password</label>
             <div class="col-sm-10">
-               <input class="loginputs form-control" type="password" name="password" id="lpassword" ng-model="password" ng-change="disabled()">
+               <input class="loginputs form-control" type="password" name="password" placeholder="Password" id="lpassword" ng-model="lpassword" ng-change="loginDisabled()">
             </div>
             
           </form>
         </div>
          <div id="register" class="registration">
+            <div class="alert alert-danger fade in " data-dismiss="alert" id="userExists">
+                <strong>Username already exists!</strong> Please choose another username.
+            </div>
            <form id="registerForm">
-             <input class="reginputs" type="text" name="username" placeholder="Username" id="rusername" ><br>
-             <input class="reginputs" type="password" name="password" placeholder="Password" id="rpassword"><br>
-             <input class="reginputs" type="text" name="email" placeholder="E-mail address" id="remail">
+           <label class="col-sm-2 control-label">Username</label>
+            <div class="col-sm-10" >
+              <input class="reginputs form-control" type="text" name="username" placeholder="Username" id="rusername" ng-model="rusername" ng-change="registerDisabled()">
+            </div>
+             <label class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10" >
+              <input class="reginputs form-control" type="password" name="password" placeholder="Password" id="rpassword" ng-model="rpassword" ng-change="registerDisabled()">
+            </div>
+             <label class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-10" >
+              <input class="reginputs form-control" type="text" name="email" placeholder="E-mail address" id="remail" ng-model="remail" ng-change="registerDisabled()">
+            </div>
           </form>
         </div>
       </div>
       <div class="modal-footer">
         <a href="#" class="login pull-left" id="regislink" ng-click="hideRegis()"> Don't have an account yet? Click here to register! </a>
         <a href="#" class="registration pull-left" id="loginlink" ng-click="hideRegis()"> Already have an account? Sign in here! </a>
-        <button id="registerbtn" class="btn btn-default registration" ng-click="registerUser()" data-dismiss="modal">Register</button>
-        <button id="signinbtn" class="btn btn-default login" ng-click="signIn()" data-dismiss="modal" ng-disabled="buttondisabled" >Sign in</button>
+        <button id="registerbtn" class="btn btn-default registration" ng-click="registerUser()" ng-disabled="rbuttondisabled" >Register</button>
+        <button id="signinbtn" class="btn btn-default login" ng-click="signIn()" data-dismiss="modal" ng-disabled="lbuttondisabled" >Sign in</button>
       </div>
     </div>
   </div>
