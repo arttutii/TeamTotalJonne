@@ -52,6 +52,7 @@ angular.module('theApp')
                         // create an image object which holds data for each image
                         var imgobj = {
                             path: 'http://util.mw.metropolia.fi/uploads/' + response.data[i].path,
+                            large: 'http://util.mw.metropolia.fi/uploads/' + response.data.thumbnails.large + '.png',
                             title: response.data[i].title,
                             type: response.data[i].type,
                             mimetype: response.data[i].mimeType,
