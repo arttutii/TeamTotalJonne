@@ -42,9 +42,8 @@ $(document).ready(function () {
         }
 
     });
-    // Get all the users from database
+    // Get all the users and media objects from database
     $.getUsers();
-    /* Executing show images*/
-    $.getImages();
+    $.getMediaitems();
 
 });
