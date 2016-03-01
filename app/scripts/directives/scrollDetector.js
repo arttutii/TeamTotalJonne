@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('theApp')
-    .directive('scrollDetector', function ($window) {
+    .directive('scrollDetector', function ($window, $log) {
         /* Scroll detector */
         return {
             restrict: 'A',
@@ -19,18 +19,27 @@ angular.module('theApp')
                     html = document.documentElement;
                 var docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
                 var windowBottom = windowHeight + window.pageYOffset;
+                $log.info('winH: ' + windowHeight);
+                $log.info('docH: ' + docHeight);
+                $log.info('winB: ' + windowBottom);
+                $log.info('bodH: ' + body.scrollHeight);
+                $log.info('bOSH: ' + body.offsetHeight);
+                $log.info('htCH: ' + html.clientHeight);
+                $log.info('hOSH: ' + html.offsetHeight);
                 /* Detect scroll direction: */
                 scope.scroll = $(window).scrollTop();
                 if (scope.scroll > position) {
                     // scrolling down
-                    scope.hideNav = true;
+                    // scope.hideNav = true;
+                    // $("#navi").slideUp("slow");
                     if (windowBottom >= docHeight) {
                         /* Scroll reached the bottom */
                         scope.$apply(attrs.reachedBottom);
                     }
                 } else {
                     // scrolling up
-                    scope.hideNav = false;
+                    // scope.hideNav = false;
+                    // $("#navi").slideDown("slow");
                 }
                 position = scope.scroll;
                 scope.$apply();

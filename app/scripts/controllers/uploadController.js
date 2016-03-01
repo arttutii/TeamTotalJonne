@@ -4,12 +4,12 @@ angular.module('theApp')
     .controller('UploadController', function ($scope, $http, $log) {
 
         /* Get the file type */
-        $scope.setMediaFile = function (element) {
+        $scope.setMediaitem = function (element) {
             $scope.mimeType = element.files[0].type;
             $scope.type = $scope.mimeType.substr(0, 5);
         };
 
-        $scope.uploadImage = function () {
+        $scope.uploadItem = function () {
 
             var fd = new FormData(document.getElementById('uploadForm'));
 
@@ -30,7 +30,7 @@ angular.module('theApp')
                         $('#upSuccess').click();
                     }, 6000);
                     $('#hamburger').click();
-                    $.getImages();
+                    $.getMediaitems();
 
                     $log.info("file uploaded: " + JSON.stringify(response.data));
                 }, function (error) {

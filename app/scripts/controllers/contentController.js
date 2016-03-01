@@ -1,15 +1,26 @@
 'use strict';
 
 angular.module('theApp')
-    .controller('ContentController', function ($scope, $uibModal, $http, $log, $sce) {
-        // variable to use in counting images, how many to show at once
-        $scope.moreImages = 10;
+    .controller('ContentController', function ($scope, $rootScope, $uibModal, $http, $log, $sce, $window) {
+        // api url
+        $scope.apiurl = "http://util.mw.metropolia.fi/ImageRekt/api/v2/";
+        // media folder
+        var mediaurl = 'http://util.mw.metropolia.fi/uploads/';
+        // variable to use in counting mediaitems, how many to show at once
+        $scope.moreMediaitems = 10;
         // array for having the usernames of media uploaders at hand
-        var userArray = [];
-        // array for images to show on site
-        $scope.images = [];
+        $scope.users = [];
+        // array for mediaitems to show on site
+        $scope.mediaitems = [];
+        $scope.mediaitem = {};
         // gallery size to show on site
         $scope.gallerySize = 0;
+
+        $scope.user = {};
+
+        $scope.gallery = [];
+
+        $scope.hasRoom = true;
 
         // function to make video elements show
         $scope.trustSrc = function (src) {
@@ -32,37 +43,42 @@ angular.module('theApp')
 
         };
 
-        $scope.showImages = function () {
+        $scope.showMediaitems = function () {
 
             $('#contentsrow').show();
             $('.about').hide();
 
             $http({
                 method: 'GET',
-                url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/files'
+                url: $scope.apiurl.concat("files/"),
             }).then(function successCallback(response) {
+
                 $scope.gallerySize = response.data.length;
+                $scope.mediaitems = response.data;
 
-                for (var i = 0; i < response.data.length; i++) {
-
-                    if (response.data[i] === null) {
-                        // break out of the if-else when no media files are found
-                        break;
+                /* parse source and thumbnail paths */
+                for (var i in $scope.mediaitems) {
+                    if ($scope.mediaitems[i].type !== "video") {
+                        $scope.mediaitems[i].thumbNails.small = mediaurl.concat("thumbs/", "tn160_", $scope.mediaitems[i].path);
+                        $scope.mediaitems[i].thumbNails.medium = mediaurl.concat("thumbs/", "tn320_", $scope.mediaitems[i].path);
+                        $scope.mediaitems[i].thumbNails.large = mediaurl.concat("thumbs/", "tn640_", $scope.mediaitems[i].path);
+                        $scope.mediaitems[i].path = mediaurl.concat($scope.mediaitems[i].path);
                     } else {
-                        // create an image object which holds data for each image
-                        var imgobj = {
-                            path: 'http://util.mw.metropolia.fi/uploads/' + response.data[i].path,
-                            large: 'http://util.mw.metropolia.fi/uploads/' + response.data.thumbnails.large + '.png',
-                            title: response.data[i].title,
-                            type: response.data[i].type,
-                            mimetype: response.data[i].mimeType,
-                            uploader: userArray[response.data[i].userId - 1]
-                        };
-                        $scope.images.push(imgobj);
+                        $scope.mediaitems[i].thumbNails.small = mediaurl.concat("thumbs/", "tn160_", $scope.mediaitems[i].path, ".png");
+                        $scope.mediaitems[i].thumbNails.medium = mediaurl.concat("thumbs/", "tn320_", $scope.mediaitems[i].path, ".png");
+                        $scope.mediaitems[i].thumbNails.large = mediaurl.concat("thumbs/", "tn640_", $scope.mediaitems[i].path, ".png");
+                        $scope.mediaitems[i].path = mediaurl.concat($scope.mediaitems[i].path);
                     }
                 }
-                //$log.info(response.data);
-                //$log.info($scope.images);
+
+                /* create rows of 4 out of the mediaitems array */
+                for (var index = 0, row = -1; index < $scope.mediaitems.length; index++) {
+                    if (index % 4 === 0) {
+                        row++;
+                        $scope.gallery[row] = [];
+                    }
+                    $scope.gallery[row].push($scope.mediaitems[index]);
+                }
 
             }, function errorCallback(response) {
                 $log.info(response.data);
@@ -71,12 +87,13 @@ angular.module('theApp')
         };
 
         $scope.showMore = function () {
-            $scope.moreImages += 10;
+            $scope.moreMediaitems += 10;
         };
+
         $scope.showTen = function () {
             location.reload(true);
             window.scrollTo(0, 0);
-            $scope.moreImages = 10;
+            $scope.moreMediaitems = 10;
         };
 
         $scope.userLogout = function () {
@@ -92,42 +109,38 @@ angular.module('theApp')
             $("#loginModal").modal();
         };
 
-        // function to call showimages in the DOM ready
-        $.getImages = function () {
-            $scope.showImages();
+        // function to call showmediaitems in the DOM ready
+        $.getMediaitems = function () {
+            $scope.showMediaitems();
         };
 
         $.getUsers = function () {
-                $http({
-                    method: 'GET',
-                    url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/users'
-                }).then(function successCallback(response) {
 
-                    for (var i = 0; i < response.data.length; i++) {
-                        userArray[i] = (response.data[i].username);
-                    }
+            $http({
+                method: 'GET',
+                url: $scope.apiurl.concat("users/")
+            }).then(function successCallback(response) {
+                $scope.users = response.data;
+            }, function errorCallback(response) {
+                $log.info(response.data);
+            });
 
+        };
 
-                }, function errorCallback(response) {
-                    $log.info(response.data);
-
-                });
-
-            };
-            /* function for instantiating modal displays */
-        $scope.showModal = function (pic) {
-            $log.info(pic);
+        /* function for instantiating modal displays */
+        $scope.showModal = function (item) {
+            $log.info(item);
             var modalInstance = $uibModal.open({
                 scope: $scope,
                 templateUrl: 'views/mediaitemModal.html',
                 controller: 'ModalInstanceController',
                 size: 'lg',
                 resolve: {
-                    images: function () {
-                        return $scope.images;
+                    mediaitems: function () {
+                        return $scope.mediaitems;
                     },
-                    pic: function () {
-                        return pic;
+                    item: function () {
+                        return item;
                     }
                 }
             });
@@ -138,6 +151,10 @@ angular.module('theApp')
                 $log.info('Modal dismissed at: ' + new Date());
             });
 
+        };
+
+        $scope.loadRow = function () {
+            $log.info('load');
         };
 
     });
