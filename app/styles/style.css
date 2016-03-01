@@ -17,6 +17,10 @@ body {
     display: none;
 }
 
+#userExists {
+    display: none;
+}
+
 #upFailed {
     display: none;
 }
@@ -40,7 +44,9 @@ audio {
     width: 100%;
 }
 
-#searchbar {}
+#searchbar {
+ color: black;
+}
 
 #modebtn {
     height: 35px;

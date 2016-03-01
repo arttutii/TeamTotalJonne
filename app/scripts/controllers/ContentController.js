@@ -87,7 +87,7 @@ angular.module('theApp')
         };
 
         $scope.showMore = function () {
-            $scope.moreMediaitems += 10;
+            $scope.moreMediaitems += 2;
         };
 
         $scope.showTen = function () {

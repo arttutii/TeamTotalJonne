@@ -16,6 +16,11 @@ angular.module('theApp')
             if (localStorage.getItem('username') !== null) {
                 fd.append('user', (localStorage.getItem('userID')));
                 fd.append('type', $scope.type);
+                if ($scope.description !== null) {
+                    fd.append('description', $scope.description);
+                } else {
+                    fd.append('description', "");
+                }
                 fd.append('mime-type', $scope.mimeType);
                 $http.post('http://util.mw.metropolia.fi/ImageRekt/api/v2/upload', fd, {
                     transformRequest: angular.identity,
