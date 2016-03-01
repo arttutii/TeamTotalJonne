@@ -10,12 +10,12 @@
         </div>
         <div ng-if="item.type === 'video'">
             <video controls>
-                <source ng-src="{{ item.path }}" />
+                <source ng-src="{{ trustSrc(item.path) }}" />
             </video>
         </div>
         <div ng-if="item.type === 'audio'">
             <audio controls>
-                <source ng-src='{{ trustSrc(item.path) }}' type='{{ item.mimeType }}'>
+                <source ng-src='{{ trustSrc(item.path) }}' type='{{ item.mimeType }}' />
             </audio>
         </div>
 
