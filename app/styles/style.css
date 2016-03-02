@@ -26,12 +26,16 @@ audio {
     width: 100%;
 }
 
-#searchbar {
- color: black;
-}
-
 #modebtn {
     height: 35px;
+}
+
+.sharebtn {
+    width: 30px;
+}
+
+#loginbtn {
+    color: #ebebeb;
 }
 
 #checkicon {
@@ -53,12 +57,62 @@ audio {
 }
 
 /* Search bar styling*/
+
+input[type=search] {
+    color: black;
+
+    background: #ededed;
+    border: solid 1px #ccc;
+    padding: 9px 10px 9px 32px;
+    width: 55px;
+
+    -webkit-border-radius: 10em;
+    -moz-border-radius: 10em;
+    border-radius: 10em;
+
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    transition: all .5s;
+
+    -webkit-appearance: textfield;
+    -webkit-box-sizing: content-box;
+    font-family: inherit;
+    font-size: 100%;
+}
+
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button {
+    display: none;
+}
+
+@media screen and (max-width: 480px) {
+    input[type=search]:focus {
+        width: 80px;
+    }
+}
+@media screen and (min-width: 680px) {
+    
+    input[type=search]:focus {
+        width: 130px;
+        background-color: #fff;
+        border-color: #6dcff6;
+
+        -webkit-box-shadow: 0 0 5px rgba(109,207,246,.5);
+        -moz-box-shadow: 0 0 5px rgba(109,207,246,.5);
+        box-shadow: 0 0 5px rgba(109,207,246,.5);
+    }
+}
+
+/*#search {
+    width:130px;
+}
+
 .container-1{
-  width: 250px;
+  width: 130px;
   vertical-align: middle;
   white-space: nowrap;
   position: relative;
-}
+
 .container-1 .icon{
   position: absolute;
   top: 50%;
@@ -67,6 +121,8 @@ audio {
   z-index: 1;
   color: #E0F2F1;
 }
+
+
 .container-1 input#search:hover, .container-1 input#search:focus, .container-1 input#search:active{
     outline:none;
     background: #222222;
@@ -75,11 +131,11 @@ audio {
    color: #ffffff;
 }
  
-.container-1 input#search:-moz-placeholder { /* Firefox 18- */
+.container-1 input#search:-moz-placeholder { 
    color: #65737e;  
 }
  
-.container-1 input#search::-moz-placeholder {  /* Firefox 19+ */
+.container-1 input#search::-moz-placeholder {  
    color: #65737e;  
 }
  
@@ -105,6 +161,7 @@ audio {
     -o-transition: background .55s ease;
     transition: background .55s ease;
 }
+*/
 
 /* Media comments area style */
 

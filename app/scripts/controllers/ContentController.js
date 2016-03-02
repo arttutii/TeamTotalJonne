@@ -79,7 +79,7 @@ angular.module('theApp')
                         $scope.gallery[row] = [];
                     }
                     $scope.gallery[row].push($scope.mediaitems[index]);
-                }
+                } 
 
             }, function errorCallback(response) {
                 $log.info(response.data);
@@ -155,6 +155,16 @@ angular.module('theApp')
 
         $scope.loadRow = function () {
             $log.info('load');
+        };
+
+        $scope.focusSearch = function () {
+            $log.info("eyy");
+            $('#signinbtn').fadeOut();
+        };
+
+        $scope.blurSearch = function () {
+            $log.info("ayyyy")
+            $('#signinbtn').fadeIn();
         };
 
     });
