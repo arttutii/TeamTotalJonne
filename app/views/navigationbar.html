@@ -1,0 +1,48 @@
+<nav class="navbar navbar-default navbar-inverse navbar-fixed-top " id="navi">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="btn btn-default btn-outline navbar-toggle" id="modebtn">
+                <span class="glyphicon glyphicon-adjust"> </span>
+            </button>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" id="hamburger">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="glyphicon glyphicon-user"></span>
+                <span class="glyphicon glyphicon-chevron-down"></span>
+            </button>
+            <a class="navbar-brand" ng-click="showTen()" href="">TotalMedia</a>
+
+            <a class="navbar-brand">
+             <div class="box">
+              <div class="container-1">
+                  <span class="icon"><i class="fa fa-search"></i></span>
+                  <input type="search" id="search" placeholder="Search.." ng-model="searchBar">
+              </div>
+             </div>
+                
+            </a>
+            <p id="loggedin"></p>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" id="loggedin"></a></li>
+                        <li><a href="#">scope.scroll: {{ scroll }} </a></li>
+                        <li><a href="#">scope.hideNav: {{ hideNav }} </a></li>
+                    </ul>
+                </li>
+                <li><a href="#" id="uploadbtn" ng-show="userLogged" ng-click="uploadModal()">Upload</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="#" id="loginbtn" ng-hide="userLogged" ng-click="loginModal()">Sign in/register<span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="#" id="logoutbtn" ng-show="userLogged" ng-click="userLogout()">Logout<span class="sr-only">(current)</span></a></li>
+                <li><a href="#" ng-click="aboutPage()">About TotalMedia</a></li>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+    <!--/.container-fluid -->
+</nav>

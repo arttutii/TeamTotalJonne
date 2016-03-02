@@ -5,10 +5,22 @@ angular.module('theApp')
 
         /* Get the file type */
         $scope.setMediaFile = function (element) {
-            $scope.mimeType = element.files[0].type;
-            $scope.type = $scope.mimeType.substr(0, 5);
+            if (element.files[0].type != "undefined"){
+                $scope.mimeType = element.files[0].type;
+                $scope.type = $scope.mimeType.substr(0, 5);
+            } else {
+                $log.info("cant read type");
+            }            
         };
 
+         $scope.upbuttondisabled = true;
+         $scope.uploadDisabled = function () {   
+            if ($('#upTitle').val().length >= 2 ) {
+                $scope.upbuttondisabled = false;
+            } else {
+                $scope.upbuttondisabled = true;
+            }
+        };
 
         $scope.uploadImage = function () {
 
@@ -20,7 +32,7 @@ angular.module('theApp')
                     if ($scope.description !== null ){
                         fd.append('description', $scope.description);
                     } else {
-                        fd.append('description', "");
+                        fd.append('description', " ");
                     }
                 fd.append('mime-type', $scope.mimeType);
                 $http.post('http://util.mw.metropolia.fi/ImageRekt/api/v2/upload', fd, {
@@ -30,19 +42,29 @@ angular.module('theApp')
                     }
                 }).then(function (response) {
 
-                    //if (response.data) /* equals to object or some other shit tbd --> success } else --> uploadfail*/
+                if (response.data.fileId !== null) {
+                    $('#uploadModal').modal('hide');
                     $('#upSuccess').fadeIn();
                     setTimeout(function () {
-                        $('#upSuccess').click();
+                        $('#upSuccess').fadeOut();
                     }, 6000);
                     $('#hamburger').click();
                     $.getImages();
 
                     $log.info("file uploaded: " + JSON.stringify(response.data));
+
+                } else {
+                    $log.info("upload failed");
+                    $('#upFailed').fadeIn();
+                    setTimeout(function () {
+                        $('#upFailed').fadeOut();
+                    }, 6000);
+                }
+
                 }, function (error) {
                     $('#upFailed').fadeIn();
                     setTimeout(function () {
-                        $('#upFailed').click();
+                        $('#upFailed').fadeOut();
                     }, 6000);
                     console.log("oh dog: " + error.data);
                 });

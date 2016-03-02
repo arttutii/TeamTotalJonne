@@ -51,8 +51,14 @@ angular.module('theApp')
         $scope.lusername;
         $scope.lpassword;
 
-        $scope.loginDisabled = function () {           
 
+        if ($('#lusername').val().length >= 1){
+            $('#loginFormInputs').addClass("has-success");
+        } else {
+            $('#loginFormInputs').removeClass("has-success");
+        }   
+
+        $scope.loginDisabled = function () {   
             if ($('#lusername').val().length >= 1 && $('#lpassword').val().length >= 1 ) {
                 $scope.lbuttondisabled = false;
             } else {
@@ -67,10 +73,50 @@ angular.module('theApp')
 
         $scope.registerDisabled = function () {           
 
-            if ($('#rusername').val().length >= 1 && $('#rpassword').val().length >= 1 && $('#remail').val().length >= 1) {
+            if ($('#rusername').val().length >= 1 && $('#rpassword').val().length >= 1 && $('#remail').val().length >= 1 && $scope.registerUserFound == false) {
                 $scope.rbuttondisabled = false;
             } else {
                 $scope.rbuttondisabled = true;
+            }
+        };
+
+
+
+        $scope.userExistance = function () {
+            $scope.registerUserFound;
+
+            if ($('#rusername').val().length >= 1) {
+                $http({
+                        method: 'POST',
+                        url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/user/exists',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        data: $httpParamSerializer({
+                            username: $('#rusername').val()
+                        })
+                    }).then(function (response) {
+
+                        if (response.data.userFound == true){
+                            $scope.registerUserFound = true;
+                            $('#userRegistration').addClass("has-error");
+                            $('#userRegistration').removeClass("has-success");
+                            $('#userExists').fadeIn();
+                        } else {
+                            $scope.registerUserFound = false;
+                            $('#userRegistration').addClass("has-success");
+                            $('#userRegistration').removeClass("has-error");
+                            $('#userExists').fadeOut();
+
+                        }
+                        
+                    }, function (error) {
+                        $log.info("check your inputs " + error.data);
+                    });
+
+            } else {
+                $('#userRegistration').removeClass("has-success");
+                $('#userRegistration').removeClass("has-error");
             }
         };
 
@@ -136,5 +182,13 @@ angular.module('theApp')
             if (event.keyCode == 13) {
                 $scope.registerUser();
             }
+        });
+
+        $('#rusername').focusout(function() {
+            $scope.userExistance();
+        });
+
+        $(".reginputs").focusout(function() {
+            $scope.registerDisabled();
         });
     });

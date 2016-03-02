@@ -28,6 +28,7 @@ angular.module('theApp')
 
             $('#contentsrow').hide();
             $('.about').show();
+            $('#aboutrow').show();
             $('#hamburger').click();
 
         };
@@ -94,6 +95,7 @@ angular.module('theApp')
 
         // function to call showimages in the DOM ready
         $.getImages = function () {
+            $scope.images = []; 
             $scope.showImages();
         };
 
@@ -106,7 +108,6 @@ angular.module('theApp')
                     for (var i = 0; i < response.data.length; i++) {
                         userArray[i] = (response.data[i].username);
                     }
-
 
                 }, function errorCallback(response) {
                     $log.info(response.data);

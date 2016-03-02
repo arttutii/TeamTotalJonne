@@ -8,34 +8,17 @@ body {
 
 /* Hiding some stuff */
 
-#aboutrow, #about {
+.about {
     display:none;
 }
 
-#upSuccess {
-    display: none;
-}
-
-#userExists {
-    display: none;
-}
-
-#upFailed {
-    display: none;
-}
-
-#registerSuccess {
-    display: none;
-}
-
-#outofpics {
+#upSuccess,#userExists,#upFailed,#registerSuccess,#outofpics {
     display: none;
 }
 
 .registration {
     display: none;
 }
-
 
 /* Modifications of some elements */
 
@@ -51,6 +34,10 @@ audio {
     height: 35px;
 }
 
+#checkicon {
+    right: 10px;
+}
+
 #contentArea {
     width: 75%;
     background-color: #383838;
@@ -60,6 +47,71 @@ audio {
 #thePage {
     background-color: #222222;
 }
+
+/* Search bar styling*/
+.container-1{
+  width: 250px;
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+}
+.container-1 .icon{
+  position: absolute;
+  top: 50%;
+  margin-left: 13px;
+  margin-top: 9px;
+  z-index: 1;
+  color: #E0F2F1;
+}
+.container-1 input#search:hover, .container-1 input#search:focus, .container-1 input#search:active{
+    outline:none;
+    background: #222222;
+  }
+.container-1 input#search::-webkit-input-placeholder {
+   color: #ffffff;
+}
+ 
+.container-1 input#search:-moz-placeholder { /* Firefox 18- */
+   color: #65737e;  
+}
+ 
+.container-1 input#search::-moz-placeholder {  /* Firefox 19+ */
+   color: #65737e;  
+}
+ 
+.container-1 input#search:-ms-input-placeholder {  
+   color: #65737e;  
+}
+
+.container-1 input#search{
+  height: 35px;
+  background: #545454;
+  border: none;
+  font-size: 10pt;
+  float: left;
+  color: #ffffff;
+  padding-left: 45px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  
+    -webkit-transition: background .55s ease;
+    -moz-transition: background .55s ease;
+    -ms-transition: background .55s ease;
+    -o-transition: background .55s ease;
+    transition: background .55s ease;
+}
+
+/* Media comments area style */
+
+.comment-description {
+    background-color: rgba(215, 225, 229,0.4);
+}
+li {
+    list-style-type: none;
+}
+
+
 
 /* cool animation for the nightmode button :D */
 
