@@ -13,44 +13,33 @@
                          </button>
                          -->
 
-            <button type="button" class="btn btn-default btn-outline navbar-toggle">
+            <button type="button" id="signinbtn" class="btn btn-default btn-outline navbar-toggle">
 
-                <a href="#" id="loginbtn">Sign in/register<span class="sr-only">(current)</span></a>
-
-                <a href="#" id="logoutbtn">Logout<span class="sr-only">(current)</span></a>
+                <a href="#" id="loginbtn" ng-hide="userLogged" ng-click="loginModal()">
+                <span class="glyphicon glyphicon-log-in"> </span> Login
+                <span class="sr-only">(current)</span></a>
+                <a href="#" id="logoutbtn" ng-show="userLogged" ng-click="userLogout()">Logout<span class="sr-only">(current)</span></a>
 
             </button>
-            <a class="navbar-brand" ng-click="showTen()" href="">TotalMedia</a>
+            <a class="navbar-brand" ng-click="showTen()" href="">TM</a>
             <a class="navbar-brand">
-                <input id="searchbar" placeholder="Search.." ng-model="searchBar">
+                <div class="box">
+              <div class="container-1">
+                  <span class="icon"><i class="fa fa-search"></i></span>
+                  <input type="search" id="search" ng-focus="focusSearch()" ng-blur="blurSearch()" placeholder="Search.." ng-model="searchBar">
+              </div>
+             </div>
             </a>
         </div>
 
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Home</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li class="dropdown-header">Nav header</li>
-                        <li><a href="#">Separated link</a></li>
-                        <li>
-                            <a href="#" id="loggedin"></a>
-                        </li>
-                        <li><a href="#">One more separated link</a></li>
-                        <li><a href="#">scope.scroll: {{ scroll }} </a></li>
-                        <li><a href="#">scope.hideNav: {{ hideNav }} </a></li>
-                    </ul>
-                </li>
                 <li><a href="#" id="uploadbtn" ng-show="userLogged" ng-click="uploadModal()">Upload</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="#" id="loginbtn" ng-hide="userLogged" ng-click="loginModal()">Sign in/register<span class="sr-only">(current)</span></a></li>
-                <li class="active"><a href="#" id="logoutbtn" ng-show="userLogged" ng-click="userLogout()">Logout<span class="sr-only">(current)</span></a></li>
+                <li class="active"></li>
+                <li class="active"></li>
                 <li><a href="#" ng-click="aboutPage()">About TotalMedia</a></li>
             </ul>
         </div>

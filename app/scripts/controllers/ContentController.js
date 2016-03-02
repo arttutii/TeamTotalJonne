@@ -35,6 +35,7 @@ angular.module('theApp')
 
             $('#contentsrow').hide();
             $('.about').show();
+            $('#aboutrow').show();
             $('#hamburger').click();
 
         };
@@ -65,7 +66,6 @@ angular.module('theApp')
                         $scope.mediaitems[i].path = mediaurl.concat($scope.mediaitems[i].path);
                     }
                 }
-
             }, function errorCallback(response) {
                 $log.info(response.data);
             });
@@ -110,7 +110,6 @@ angular.module('theApp')
             }, function errorCallback(response) {
                 $log.info(response.data);
             });
-
         };
 
         /* function for instantiating modal displays */
@@ -141,6 +140,16 @@ angular.module('theApp')
 
         $scope.loadRow = function () {
             $log.info('load');
+        };
+
+        $scope.focusSearch = function () {
+            $log.info("eyy");
+            $('#signinbtn').fadeOut();
+        };
+
+        $scope.blurSearch = function () {
+            $log.info("ayyyy");
+            $('#signinbtn').fadeIn();
         };
 
     });

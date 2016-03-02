@@ -20,17 +20,37 @@
         </div>
 
         <!-- comments -->
+
         <h4> {{description}} </h4>
 
+        <h3>Share to.. </h3>
+        <a href="http://www.facebook.com/sharer.php?u={{item.path}}" target="_blank">
+        <img class="sharebtn" src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" />
+        </a>
+
+        <a href="http://reddit.com/submit?url={{item.path}}&amp;title={{item.title}}" target="_blank">
+          <img class="sharebtn" src="https://simplesharebuttons.com/images/somacro/reddit.png" alt="Reddit" />
+        </a>
         <h1> Comments </h1>
         <br>
         <h3 ng-show="userLogged">Type a comment: </h3>
-        <textarea style="width:300px; height:100px;" ng-model="comment" ng-show="userLogged"> </textarea>
-        <button type="submit" ng-click="postComment()" class="btn btn-default" ng-show="userLogged">Send</button>
-        <br>
-        <div id="comments" ng-repeat="comment in comments">
-            <p style="border: solid 1px green; margin: 5px;">{{comment.username}}: {{comment.comment}} </p>
-        </div>
+       <textarea id="typeComment" style="width:300px; height:100px;" ng-model="comment" ng-show="userLogged" ng-change="postCommentDisabled()" maxlength="140"> </textarea>
+       <button type="submit" ng-click="postComment()" class="btn btn-default" ng-show="userLogged" ng-disabled="commentbuttondisabled">Send</button> <br>
+
+       <ul>
+         <div id="comments" ng-repeat="comment in comments">
+          <li>
+           <div class="comment-index">
+            <p> {{$index +1}}. </p>
+           </div>
+           <div class="comment-description">
+            <p> {{comment.comment}} </p>
+           </div>
+           <div class="comment-uploader">
+            <span style="font-size:10px;">[{{comment.time}}]</span> by user: {{comment.username}}
+           </div>
+         </div>
+        </ul>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" type="button" ng-click="ok()">Back to gallery</button>
