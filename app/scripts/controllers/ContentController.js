@@ -39,6 +39,7 @@ angular.module('theApp')
 
             $('#contentsrow').hide();
             $('.about').show();
+            $('#aboutrow').show();
             $('#hamburger').click();
 
         };
@@ -124,7 +125,6 @@ angular.module('theApp')
             }, function errorCallback(response) {
                 $log.info(response.data);
             });
-
         };
 
         /* function for instantiating modal displays */

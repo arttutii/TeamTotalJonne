@@ -7,7 +7,8 @@
     <title>TotalMedia</title>
     <!-- Bootstrap -->
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles/style.css">
+    <link href="styles/style.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
 <body ng-app="theApp" ng-controller="ContentController as content">
@@ -27,10 +28,6 @@
                 <strong>Upload successful!</strong>
             </div>
 
-            <div class="alert alert-danger fade in " data-dismiss="alert" id="upFailed">
-                <strong>Upload failed!</strong> Please check that all the inputs are proper.
-            </div>
-
             <div class="alert alert-success fade in " data-dismiss="alert" id="registerSuccess">
                 <strong>User created!</strong> You will be automatically logged in!
             </div>
@@ -41,7 +38,7 @@
 
             <!-- Start of the content container-->
             <div class="container" id="gallery">
-                <mediaitems-row ng-repeat="mediarow in gallery | limitTo: 20"></mediaitems-row>
+                <mediaitems-row ng-repeat="mediarow in gallery | filter: searchBar | limitTo: 20"></mediaitems-row>
                 <div class="row about" id="aboutrow">
                     <button class="btn btn-primary about" ng-click="showMediaitems()">Back to gallery </button>
                     <div class="col-md-12" id="about">

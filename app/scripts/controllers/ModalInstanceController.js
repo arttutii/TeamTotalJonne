@@ -6,8 +6,8 @@ angular.module('theApp')
         $scope.selectedItem = {
             item: $scope.mediaitems[0]
         };
-        // container for comments for specific item
         $scope.comments = [];
+        $scope.description;
 
         $scope.getComments = function () {
 
@@ -36,15 +36,29 @@ angular.module('theApp')
                 method: 'GET',
                 url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/file/' + item.fileId
             }).then(function successCallback(response) {
-                $scope.description = response.data.description;
-                $log.info(response.data);
+                // if no description is given, show description as empty space
+                if (response.data.description != "undefined"){
+                    $scope.description = response.data.description;
+                } else {
+                    $scope.description = "";
+                }
 
             }, function errorCallback(response) {
                 $log.info(response.data);
             });
         };
 
-        $scope.postComment = function () {
+        $scope.commentbuttondisabled = true;
+        $scope.postCommentDisabled = function() {
+
+            if ($('#typeComment').val().length >= 2) {
+                $scope.commentbuttondisabled = false;
+            } else {
+                $scope.commentbuttondisabled = true;
+            }
+        };
+
+        $scope.postComment = function() {
 
             var comment = $scope.comment;
 
@@ -61,15 +75,21 @@ angular.module('theApp')
             }).then(function successCallback(response) {
 
                 if (response.data.status == "comment added") {
-                    $log.info("comment added!");
-                    $('#comments').empty();
+                    $log.info("comment added!" );
+                    $scope.comments = [];
                     $scope.getComments();
+                    $('#typeComment').val('');
                 } else {
                     $log.info("comment not added, check fields");
                 }
 
             }, function errorCallback(response) {
                 $log.info(response.data);
+                if (response.data.error == "comment is missing or too short"){
+
+                } else {
+
+                }
             });
         };
 
@@ -82,8 +102,9 @@ angular.module('theApp')
         };
 
 
-        // get the comments for selected media
+        // get the comments and description for selected media
         $scope.getComments();
+        $scope.getDescription();
 
 
     });
