@@ -4,24 +4,20 @@ angular.module('theApp')
     .controller('ContentController', function ($scope, $rootScope, $uibModal, $http, $log, $sce, $window) {
         // api url
         $scope.apiurl = "http://util.mw.metropolia.fi/ImageRekt/api/v2/";
-        // media folder
+        // api media folder
         var mediaurl = 'http://util.mw.metropolia.fi/uploads/';
         // variable to use in counting mediaitems, how many to show at once
-        $scope.moreMediaitems = 10;
+        $scope.moreMediaitems = 48;
         // array for having the usernames of media uploaders at hand
         $scope.users = [];
         // array for mediaitems to show on site
         $scope.mediaitems = [];
+        // object variable for selecting a single mediaitem
         $scope.mediaitem = {};
-        // gallery size to show on site
-        $scope.gallerySize = 0;
-
+        // object variable for selecting a single user
         $scope.user = {};
-
-        $scope.gallery = [];
-
+        // boolean for detecting that the document hasn't flown over the viewport window
         $scope.hasRoom = true;
-
         // function to make video elements show
         $scope.trustSrc = function (src) {
             return $sce.trustAsResourceUrl(src);
@@ -53,7 +49,6 @@ angular.module('theApp')
                 url: $scope.apiurl.concat("files/"),
             }).then(function successCallback(response) {
 
-                $scope.gallerySize = response.data.length;
                 $scope.mediaitems = response.data;
 
                 /* parse source and thumbnail paths */
@@ -71,15 +66,6 @@ angular.module('theApp')
                     }
                 }
 
-                /* create rows of 4 out of the mediaitems array */
-                for (var index = 0, row = -1; index < $scope.mediaitems.length; index++) {
-                    if (index % 4 === 0) {
-                        row++;
-                        $scope.gallery[row] = [];
-                    }
-                    $scope.gallery[row].push($scope.mediaitems[index]);
-                }
-
             }, function errorCallback(response) {
                 $log.info(response.data);
             });
@@ -87,7 +73,7 @@ angular.module('theApp')
         };
 
         $scope.showMore = function () {
-            $scope.moreMediaitems += 2;
+            $scope.moreMediaitems += 4;
         };
 
         $scope.showTen = function () {

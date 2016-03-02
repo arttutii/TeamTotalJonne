@@ -1,20 +1,22 @@
-<div class="mediaitem">
-    <div ng-if="mediaitem.type === 'image'">
-        <a href="#" ng-click='showModal(mediaitem)'>
-            <div ng-style="{'background-image':'url('+mediaitem.thumbNails.medium+')'}" class="img-thumbnail"></div>
-        </a>
-    </div>
-    <div ng-if="mediaitem.type === 'video'">
-        <a href="#" ng-click='showModal(mediaitem)'>
-            <div ng-style="{'background-image':'url('+mediaitem.thumbNails.medium+')'}" class="img-thumbnail"></div>
-        </a>
-    </div>
-    <div ng-if="mediaitem.type === 'audio'">
-        <audio controls>
-            <source ng-src='{{ trustSrc(mediaitem.path) }}' type='{{ mediaitem.mimeType }}'>
-        </audio>
-        <text-muted>
-            <a href="#" ng-click='showModal(mediaitem)'>{{ mediaitem.title }}</a>
-        </text-muted>
+<div class="mediaitemWrapper">
+    <div class="mediaitem">
+        <div ng-if="mediaitem.type === 'image'">
+            <a href="#" ng-click='showModal(mediaitem)'>
+                <div ng-style="{'background-image':'url('+mediaitem.thumbNails.medium+')'}" class="img-thumbnail"></div>
+            </a>
+        </div>
+        <div ng-if="mediaitem.type === 'video'">
+            <a href="#" ng-click='showModal(mediaitem)'>
+                <div ng-style="{'background-image':'url('+mediaitem.thumbNails.medium+')'}" class="img-thumbnail"></div>
+            </a>
+        </div>
+        <div ng-if="mediaitem.type === 'audio'">
+            <audio controls>
+                <source ng-src='{{ trustSrc(mediaitem.path) }}' type='{{ mediaitem.mimeType }}'>
+            </audio>
+            <text-muted>
+                <a href="#" ng-click='showModal(mediaitem)'>{{ mediaitem.title }}</a>
+            </text-muted>
+        </div>
     </div>
 </div>
