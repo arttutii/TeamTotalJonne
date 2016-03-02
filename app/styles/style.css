@@ -60,10 +60,12 @@ audio {
 
 #maincontent {
     padding: 0;
+    margin: 0;
 }
 
 #thePage {
     background-color: #222222;
+    padding: 0;
 }
 
 
@@ -81,13 +83,12 @@ audio {
     background-color: transparent;
 }
 
-
 /*
 Below is code to adjust the width when navigation bar collapses and
 hamburger menu appears.
 */
 
-@media (max-width: 851px) {
+@media (max-width: 767px) {
     .navbar-header {
         float: none;
     }
@@ -129,24 +130,53 @@ hamburger menu appears.
 /* thumbnail gallery styling */
 #gallery {
     padding: 0;
+    margin: auto;
+    line-height: 0;
+    max-width: 992px;
 }
 
 .mediaitemWrapper {
-    padding: 0;
+    width: 100%;
+    padding: 0.5%;
+    margin: 0;
+    display: inline-block;
 }
 
 .mediaitem {
+    width: 100%;
     padding-bottom: 100%;
     padding-left: 0;
     padding-right: 0;
+    margin: 0;
     position: relative;
 }
 .mediaitem .img-thumbnail {
-    height: 90%;
-    width: 90%;
+    height: 100%;
+    width: 100%;
     position: absolute;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    margin: 5%;
+    margin: 0;
+}
+
+@media screen and (min-width: 480px) and (max-width: 767px) {
+    .mediaitemWrapper {
+        width: 50%;
+        height: 50%;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .mediaitemWrapper {
+        width: 33%;
+        height: 33%;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .mediaitemWrapper {
+        width: 25%;
+        height: 25%;
+    }
 }

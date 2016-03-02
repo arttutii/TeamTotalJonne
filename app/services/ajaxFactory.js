@@ -28,13 +28,17 @@ angular.module("theApp")
             });
         };
 
+        ajaxFunctions.getFile = function (args) {
+            return $http.get(urlBase + "file/" + args);
+        };
+
         ajaxFunctions.fileByUser = function (args) {
             return $http.get(urlBase + "files/user/" + args);
         };
 
         ajaxFunctions.userExists = function (args) {
             return $http.post(urlBase + "user/exists", args);
-        }
+        };
 
         ajaxFunctions.logIn = function (args) {
             return $http.post(urlBase + "login", $httpParamSerializer(args), {
@@ -46,7 +50,7 @@ angular.module("theApp")
 
         ajaxFunctions.getUserById = function (args) {
             return $http.get(urlBase + "user/" + args);
-        }
+        };
 
         return ajaxFunctions;
     });

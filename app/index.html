@@ -17,7 +17,7 @@
     <upload-modal> </upload-modal>
 
     <div class="container-fluid" id="thePage" watch-height>
-        <div class="container" id="maincontent">
+        <div id="maincontent" scroll-detector reached-bottom="showMore()">
 
             <!-- Navigation bar start-->
             <navbar></navbar>
@@ -40,10 +40,9 @@
             </div>
 
             <!-- Start of the content container-->
-            <div class="container" id="gallery">
-                <mediaitems-row ng-repeat="mediarow in gallery | limitTo: 20"></mediaitems-row>
+            <div id="gallery">
+                <mediaitem ng-repeat="mediaitem in mediaitems | filter: searchBar | limitTo: moreMediaitems"></mediaitem>
                 <div class="row about" id="aboutrow">
-                    <button class="btn btn-primary about" ng-click="showMediaitems()">Back to gallery </button>
                     <div class="col-md-12" id="about">
 
                     </div>
