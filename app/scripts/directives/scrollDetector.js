@@ -19,13 +19,6 @@ angular.module('theApp')
                     html = document.documentElement;
                 var docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
                 var windowBottom = windowHeight + window.pageYOffset;
-                $log.info('winH: ' + windowHeight);
-                $log.info('docH: ' + docHeight);
-                $log.info('winB: ' + windowBottom);
-                $log.info('bodH: ' + body.scrollHeight);
-                $log.info('bOSH: ' + body.offsetHeight);
-                $log.info('htCH: ' + html.clientHeight);
-                $log.info('hOSH: ' + html.offsetHeight);
                 /* Detect scroll direction: */
                 scope.scroll = $(window).scrollTop();
                 if (scope.scroll > position) {

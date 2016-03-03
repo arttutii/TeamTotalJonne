@@ -38,8 +38,9 @@ audio {
     color: #ebebeb;
 }
 
-#checkicon {
+#successcheckicon, #errorcheckicon {
     right: 10px;
+    display:none;
 }
 
 #contentArea {
@@ -66,7 +67,7 @@ input[type=search] {
     background: #ededed;
     border: solid 1px #ccc;
     padding: 9px 10px 9px 32px;
-    width: 55px;
+    width: 25px;
 
     -webkit-border-radius: 10em;
     -moz-border-radius: 10em;

@@ -51,13 +51,14 @@ angular.module('theApp')
         $scope.lusername;
         $scope.lpassword;
 
-
+        // check for styling the login input fields
         if ($('#lusername').val().length >= 1){
             $('#loginFormInputs').addClass("has-success");
         } else {
             $('#loginFormInputs').removeClass("has-success");
         }   
 
+        // function to disable the login button
         $scope.loginDisabled = function () {   
             if ($('#lusername').val().length >= 1 && $('#lpassword').val().length >= 1 ) {
                 $scope.lbuttondisabled = false;
@@ -71,6 +72,7 @@ angular.module('theApp')
         $scope.rpassword;
         $scope.remail;
 
+        // function to disable the register button
         $scope.registerDisabled = function () {           
 
             if ($('#rusername').val().length >= 1 && $('#rpassword').val().length >= 1 && $('#remail').val().length >= 1 && $scope.registerUserFound == false) {
@@ -79,8 +81,6 @@ angular.module('theApp')
                 $scope.rbuttondisabled = true;
             }
         };
-
-
 
         $scope.userExistance = function () {
             $scope.registerUserFound;
@@ -99,11 +99,13 @@ angular.module('theApp')
 
                         if (response.data.userFound == true){
                             $scope.registerUserFound = true;
+                            $('#errorcheckicon').show();
                             $('#userRegistration').addClass("has-error");
                             $('#userRegistration').removeClass("has-success");
                             $('#userExists').fadeIn();
                         } else {
                             $scope.registerUserFound = false;
+                            $('#successcheckicon').show();
                             $('#userRegistration').addClass("has-success");
                             $('#userRegistration').removeClass("has-error");
                             $('#userExists').fadeOut();
@@ -115,6 +117,9 @@ angular.module('theApp')
                     });
 
             } else {
+                $('#successcheckicon').hide();
+                $('#errorcheckicon').hide();
+                $('#userExists').fadeOut();
                 $('#userRegistration').removeClass("has-success");
                 $('#userRegistration').removeClass("has-error");
             }

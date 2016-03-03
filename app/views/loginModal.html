@@ -25,9 +25,9 @@
            <label class="col-sm-2 control-label">Username</label>
             <div class="col-sm-10" id="userRegistration" >
               <input class="reginputs form-control" type="text" name="username" placeholder="Username" id="rusername" ng-model="rusername" ng-change="registerDisabled()" autocomplete="off" autocorrect="off" autocapitalize="off">
-            <span id="checkicon" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-hide="registerUserFound"></span>
+            <span id="successcheckicon" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-hide="registerUserFound"></span>
             <span id="inputSuccess2Status" class="sr-only">(success)</span>
-            <span id="checkicon" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="registerUserFound"></span>
+            <span id="errorcheckicon" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="registerUserFound"></span>
             <span id="inputError2Status" class="sr-only">(error)</span>
             </div>
              <label class="col-sm-2 control-label">Password</label>
