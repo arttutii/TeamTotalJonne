@@ -102,7 +102,6 @@ angular.module('theApp')
         };
 
         $.getUsers = function () {
-
             $http({
                 method: 'GET',
                 url: $scope.apiurl.concat("users/")
@@ -144,13 +143,11 @@ angular.module('theApp')
         };
 
         $scope.focusSearch = function () {
-            $log.info("eyy");
             $('#loginbtn').fadeOut();
             $('#signinbtn').hide();
         };
 
         $scope.blurSearch = function () {
-            $log.info("ayyyy")
             $('#loginbtn').fadeIn();
             $('#signinbtn').show();
         };

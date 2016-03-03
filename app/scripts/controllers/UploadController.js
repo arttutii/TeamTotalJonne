@@ -10,11 +10,11 @@ angular.module('theApp')
                 $scope.type = $scope.mimeType.substr(0, 5);
             } else {
                 $log.info("cant read type");
-            }            
+            }
         };
 
          $scope.upbuttondisabled = true;
-         $scope.uploadDisabled = function () {   
+         $scope.uploadDisabled = function () {
             if ($('#upTitle').val().length >= 2 ) {
                 $scope.upbuttondisabled = false;
             } else {

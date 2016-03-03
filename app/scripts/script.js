@@ -46,4 +46,7 @@ $(document).ready(function () {
     $.getUsers();
     $.getMediaitems();
 
+    $("a.modalLink").click(function (e) {
+        e.preventDefault();
+    });
 });

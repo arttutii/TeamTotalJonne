@@ -2,7 +2,7 @@
 
 angular.module('theApp')
     .controller('LoginController', function ($scope, $http, $httpParamSerializer, $log) {
-        
+
         // variables for disabling signin and register buttons
         $scope.lbuttondisabled = true;
         $scope.rbuttondisabled = true;
@@ -25,11 +25,11 @@ angular.module('theApp')
                         $('#registerSuccess').show();
                         $('#hamburger').click();
                         $('#loginModal').modal('hide');
-                        
+
                         setTimeout(function () {
                             $scope.signIn($('#rusername').val(), $('#rpassword').val());
                         }, 3000);
-                        
+
                     } else {
                         $log.info(response.data);
                         if (response.data.error == "username already exists"){
@@ -39,9 +39,9 @@ angular.module('theApp')
                         } else {
                             $log.info(response.data);
                         }
-                        
+
                     }
-                    
+
                 }, function (error) {
                     $log.info("check your inputs " + error.data);
                 });
@@ -56,7 +56,7 @@ angular.module('theApp')
             $('#loginFormInputs').addClass("has-success");
         } else {
             $('#loginFormInputs').removeClass("has-success");
-        }   
+        }
 
         // function to disable the login button
         $scope.loginDisabled = function () {   
@@ -71,11 +71,11 @@ angular.module('theApp')
         $scope.rusername;
         $scope.rpassword;
         $scope.remail;
-
+        
         // function to disable the register button
-        $scope.registerDisabled = function () {           
+        $scope.registerDisabled = function () {
 
-            if ($('#rusername').val().length >= 1 && $('#rpassword').val().length >= 1 && $('#remail').val().length >= 1 && $scope.registerUserFound == false) {
+            if ($('#rusername').val().length >= 1 && $('#rpassword').val().length >= 1 && $('#remail').val().length >= 1 && $scope.registerUserFound === false) {
                 $scope.rbuttondisabled = false;
             } else {
                 $scope.rbuttondisabled = true;
@@ -97,7 +97,7 @@ angular.module('theApp')
                         })
                     }).then(function (response) {
 
-                        if (response.data.userFound == true){
+                        if (response.data.userFound === true){
                             $scope.registerUserFound = true;
                             $('#errorcheckicon').show();
                             $('#userRegistration').addClass("has-error");
@@ -111,7 +111,7 @@ angular.module('theApp')
                             $('#userExists').fadeOut();
 
                         }
-                        
+
                     }, function (error) {
                         $log.info("check your inputs " + error.data);
                     });
@@ -127,7 +127,7 @@ angular.module('theApp')
 
          $scope.signIn = function (uName, pWord) {
 
-            if (uName == null){
+            if (uName === null){
                 uName = $scope.lusername;
                 pWord = $scope.lpassword;
             }
@@ -142,7 +142,7 @@ angular.module('theApp')
                           password: pWord
                         })
                 }).then(function (response) {
-                    
+
                     if (response.data.status == "login ok"){
                         localStorage.setItem("userID", response.data.userId);
                         localStorage.setItem("username", uName);
@@ -153,11 +153,11 @@ angular.module('theApp')
                         $('.loginputs').val('');
                         $scope.loginDisabled();
                     }
-   
+
                 }, function (error) {
                     console.log("login oh dog: " + error.data);
                 });
-                  
+
         };
 
         // variable and function for showing signin/register

@@ -1,4 +1,4 @@
-<div>
+<div id="mediaitemModal">
     <div class="modal-header">
         <h3 class="modal-title">{{ item.title }} by {{ users[item.userId -1].username }}</h3>
     </div>
@@ -34,11 +34,11 @@
         <h1> Comments </h1>
         <br>
         <h3 ng-show="userLogged">Type a comment: </h3>
-       <textarea id="typeComment" style="width:300px; height:100px;" ng-model="comment" ng-show="userLogged" ng-change="postCommentDisabled()" maxlength="140"> </textarea> 
+       <textarea id="typeComment" style="width:300px; height:100px;" ng-model="comment" ng-show="userLogged" ng-change="postCommentDisabled()" maxlength="140"> </textarea>
        <button type="submit" ng-click="postComment()" class="btn btn-default" ng-show="userLogged" ng-disabled="commentbuttondisabled">Send</button> <br>
-        
+
        <ul>
-         <div id="comments" ng-repeat="comment in comments">   
+         <div id="comments" ng-repeat="comment in comments">
           <li>
            <div class="comment-index">
             <p> {{$index +1}}. </p>

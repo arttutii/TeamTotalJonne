@@ -1,22 +1,38 @@
 <div class="mediaitemWrapper">
     <div class="mediaitem">
         <div ng-if="mediaitem.type === 'image'">
-            <a href="#" ng-click='showModal(mediaitem)'>
+            <a href="#/" ng-click='showModal(mediaitem)'>
                 <div ng-style="{'background-image':'url('+mediaitem.thumbNails.medium+')'}" class="img-thumbnail"></div>
             </a>
         </div>
         <div ng-if="mediaitem.type === 'video'">
-            <a href="#" ng-click='showModal(mediaitem)'>
-                <div ng-style="{'background-image':'url('+mediaitem.thumbNails.medium+')'}" class="img-thumbnail"></div>
+            <a href="#/" ng-click='showModal(mediaitem)'>
+                <div ng-style="{'background-image':'url('+mediaitem.thumbNails.medium+')'}" class="img-thumbnail">
+                    <span class="leveler"></span>
+                    <div class="tnBadge">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </div>
+                </div>
             </a>
         </div>
         <div ng-if="mediaitem.type === 'audio'">
-            <audio controls>
-                <source ng-src='{{ trustSrc(mediaitem.path) }}' type='{{ mediaitem.mimeType }}'>
-            </audio>
-            <text-muted>
-                <a href="#" ng-click='showModal(mediaitem)'>{{ mediaitem.title }}</a>
-            </text-muted>
+            <a href="#/" ng-click="showModal(mediaitem)">
+                <div class="img-thumbnail">
+                    <span class="leveler"></span>
+                    <div class="tnBadge">
+                        <span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span>
+                    </div>
+                    <div class="tnTitle elementLabel">
+                        <h4>{{ mediaitem.title }}</h4>
+                    </div>
+                    <div class="tnInfo elementLabel">
+                        <audio controls>
+                            <source ng-src='{{ trustSrc(mediaitem.path) }}' type='{{ mediaitem.mimeType }}'>
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+            </a>
         </div>
     </div>
 </div>
