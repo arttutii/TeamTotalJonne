@@ -38,6 +38,12 @@ audio {
     color: #ebebeb;
 }
 
+
+#loginbtn2, #logoutbtn2 {
+    display: block;
+}
+
+
 #successcheckicon, #errorcheckicon {
     right: 10px;
     display:none;
@@ -196,6 +202,11 @@ hamburger menu appears.
 */
 
 @media (max-width: 767px) {
+
+    #loginbtn2, #logoutbtn2 {
+    display: none;
+    }
+    
     .navbar-header {
         float: none;
     }

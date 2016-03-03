@@ -47,10 +47,6 @@ angular.module('theApp')
                 });
         };
 
-        // variables for login inputs
-        $scope.lusername;
-        $scope.lpassword;
-
         // check for styling the login input fields
         if ($('#lusername').val().length >= 1){
             $('#loginFormInputs').addClass("has-success");
@@ -59,7 +55,7 @@ angular.module('theApp')
         }
 
         // function to disable the login button
-        $scope.loginDisabled = function () {   
+        $scope.loginDisabled = function () {  
             if ($('#lusername').val().length >= 1 && $('#lpassword').val().length >= 1 ) {
                 $scope.lbuttondisabled = false;
             } else {
@@ -67,11 +63,6 @@ angular.module('theApp')
             }
         };
 
-        // variables for register inputs
-        $scope.rusername;
-        $scope.rpassword;
-        $scope.remail;
-        
         // function to disable the register button
         $scope.registerDisabled = function () {
 
@@ -127,11 +118,6 @@ angular.module('theApp')
 
          $scope.signIn = function (uName, pWord) {
 
-            if (uName === null){
-                uName = $scope.lusername;
-                pWord = $scope.lpassword;
-            }
-
                 //log user in
                 $http({
                   method: 'POST',
@@ -179,7 +165,7 @@ angular.module('theApp')
         // enter-keypress for inputfields
         $(".loginputs").keyup(function (event) {
             if (event.keyCode == 13) {
-                $scope.signIn();
+                $scope.signIn($scope.lusername, $scope.lpassword);
             }
         });
 
