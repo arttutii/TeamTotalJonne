@@ -30,19 +30,18 @@ angular.module('theApp')
             $scope.userLogged = false;
         }
 
-        // function to show about page
-        $scope.aboutPage = function () {
 
-            $('#contentsrow').hide();
-            $('.about').show();
-            $('#aboutrow').show();
-            $('#hamburger').click();
-
+        $scope.mySubmissions = function() {
+            $('#search').focus();
+            $('#search').val(localStorage.getItem('username'));
+            if(window.innerWidth < 767) {
+                $('#hamburger').click();
+            }
         };
 
         $scope.showMediaitems = function () {
 
-            $('#contentsrow').show();
+            $('#allmedia').show();
             $('.about').hide();
 
             $http({
@@ -143,13 +142,11 @@ angular.module('theApp')
         };
 
         $scope.focusSearch = function () {
-            $('#loginbtn').fadeOut();
-            $('#signinbtn').hide();
+            $('#loginbtnContainer').fadeOut();
         };
 
         $scope.blurSearch = function () {
-            $('#loginbtn').fadeIn();
-            $('#signinbtn').show();
+            $('#loginbtnContainer').fadeIn();
         };
 
     });
