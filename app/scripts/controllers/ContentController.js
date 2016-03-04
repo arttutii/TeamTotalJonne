@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('theApp')
-    .controller('ContentController', function ($scope, $rootScope, $uibModal, $http, $log, $sce, $window) {
+    .controller('ContentController', function ($scope, $rootScope, $uibModal, $http, $log, $sce, $window, $document) {
         // api url
         $scope.apiurl = "http://util.mw.metropolia.fi/ImageRekt/api/v2/";
         // api media folder
@@ -18,6 +18,8 @@ angular.module('theApp')
         $scope.user = {};
         // boolean for detecting that the document hasn't flown over the viewport window
         $scope.hasRoom = true;
+        // reference to body element for showModal()
+        var bodyRef = angular.element($document[0].body);
         // function to make video elements show
         $scope.trustSrc = function (src) {
             return $sce.trustAsResourceUrl(src);
@@ -113,11 +115,12 @@ angular.module('theApp')
 
         /* function for instantiating modal displays */
         $scope.showModal = function (item) {
-            $log.info(item);
+            bodyRef.addClass('modal-open');
             var modalInstance = $uibModal.open({
                 scope: $scope,
                 templateUrl: 'views/mediaitemModal.html',
                 controller: 'ModalInstanceController',
+                windowClass: 'mediaitemModal',
                 size: 'lg',
                 resolve: {
                     mediaitems: function () {
@@ -130,6 +133,7 @@ angular.module('theApp')
             });
 
             modalInstance.result.then(function (selectedItem) {
+                bodyRef.removeClass('modal-open');
                 $scope.selected = selectedItem;
             }, function () {
                 $log.info('Modal dismissed at: ' + new Date());
