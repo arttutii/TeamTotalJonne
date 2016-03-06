@@ -20,6 +20,9 @@
                         <label for="lpassword" class="control-label">Password</label>
                         <input class="loginputs form-control" type="password" name="password" placeholder="Password" id="lpassword" ng-model="lpassword" ng-change="loginDisabled()">
                     </form>
+                    <div class="alert alert-danger fade in " id="wrongUser">
+                        <strong>Wrong username or password!</strong> Please check your inputs or register an account from link below.
+                    </div>
                 </div>
 
                 <div id="register" class="registration">

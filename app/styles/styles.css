@@ -223,6 +223,7 @@ button.close {
 #userExists,
 #upFailed,
 #registerSuccess,
+#wrongUser,
 #outofItems {
   display: none;
 }

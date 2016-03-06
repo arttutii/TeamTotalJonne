@@ -28,7 +28,7 @@
         <div class="social">
 
             <!-- sharing -->
-            <form class="form-inline"></form>
+            <form class="form-inline">
             <a href="http://www.facebook.com/sharer.php?u={{item.path}}" target="_blank">
                 <img class="sharebtn" src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" />
             </a>
@@ -45,6 +45,10 @@
                 </div>
                 <div class="form-group">
                     <button type="submit" id="postCommentButton" ng-click="postComment()" class="btn btn-primary" ng-show="userLogged" ng-disabled="commentComposer.$invalid">Send<span ng-show="loadingComments" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></button>
+                    <button type="button" id="likebtn" ng-show="userLogged" ng-click="favouriteMedia()" class="btn btn-default btn-outline">
+                    <span align="right" ng-hide="fileLiked" class="glyphicon glyphicon-thumbs-up">Favourite</span>
+                    <span align="right" ng-show="fileLiked" class="glyphicon glyphicon-thumbs-down">Unfavourite</span>
+                    </button>
                 </div>
             </form>
             <br>

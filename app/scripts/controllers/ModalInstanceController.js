@@ -8,6 +8,7 @@ angular.module('theApp')
         };
         $scope.comments = [];
         $scope.description;
+        $scope.favourites = [];
 
         $scope.getComments = function () {
 
@@ -46,6 +47,84 @@ angular.module('theApp')
             }, function errorCallback(response) {
                 $log.info(response.data);
             });
+        };
+
+        $scope.getFavourites = function() {
+            $http({
+                    method: 'GET',
+                    url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/likes/user/' + localStorage.getItem('userID')
+                }).then(function successCallback(response) {
+
+                    for (var i = 0; i < response.data.length; i++) {
+                        if (response.data[i] === null) {
+                            // break out of the if-else when no media files are found
+                            break;
+                        } else {
+                            $scope.favourites.push(response.data[i]);
+                        }
+                    }
+                    
+                }, function errorCallback(response) {
+                    $log.info(response.data);
+                });
+
+        };
+
+        $scope.favouriteButtonShow = function() {
+            
+            if ($scope.favourite != null) {
+                $scope.fileLiked = true;
+            } else {
+                $scope.fileLiked = false;
+            }
+
+        };
+        
+        $scope.favouriteMedia = function() {
+            
+            $scope.getFavourites();
+            $scope.favourite;
+
+            // look for favourite media in favourites
+            
+            for (var i = 0; i < $scope.favourites.length; i++){
+                if ($scope.favourites[i].fileId == item.fileId) {
+                    $scope.favourite = $scope.favourites[i].fileId;
+                } else {
+                    // nothing
+                }
+            }
+            $log.info($scope.favourite);
+
+            if ($scope.favourite == null){
+                $log.info("favouriting item");
+                $scope.favourite = item.fileId;
+                $http({
+                    method: 'GET',
+                    url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/like/' + item.fileId + "/" + localStorage.getItem('userID')
+                }).then(function successCallback(response) {
+                    $scope.fileLiked = true;
+                    $scope.favouriteButtonShow();
+                    
+                }, function errorCallback(response) {
+                    $log.info(response.data);
+                });
+            } else {
+                $log.info("unfavouriting item");
+                $scope.favourite = 1;
+                $http({
+                    method: 'GET',
+                    url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/unlike/' + item.fileId + "/" + localStorage.getItem('userID')
+                }).then(function successCallback(response) {
+                    $scope.fileLiked = false;
+                    $scope.favouriteButtonShow();
+                    
+                    
+                }, function errorCallback(response) {
+                    $log.info(response.data);
+                });
+            }
+
         };
 
         $scope.postComment = function () {
@@ -100,6 +179,7 @@ angular.module('theApp')
         // get the comments and description for selected media
         $scope.getComments();
         $scope.getDescription();
+        $scope.getFavourites();
 
 
     });
