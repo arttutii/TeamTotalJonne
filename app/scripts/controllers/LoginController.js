@@ -57,6 +57,7 @@ angular.module('theApp')
         // function to disable the login button
         $scope.loginDisabled = function () {  
             if ($('#lusername').val().length >= 1 && $('#lpassword').val().length >= 1 ) {
+                $('#wrongUser').fadeOut();
                 $scope.lbuttondisabled = false;
             } else {
                 $scope.lbuttondisabled = true;
@@ -138,6 +139,8 @@ angular.module('theApp')
                         // clear fields, notify button
                         $('.loginputs').val('');
                         $scope.loginDisabled();
+                        $('#wrongUser').fadeIn();
+                        
                     }
 
                 }, function (error) {
