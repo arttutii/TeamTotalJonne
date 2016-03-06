@@ -28,6 +28,7 @@ angular.module('theApp')
 
         if (localStorage.getItem("userID") !== null) {
             $scope.userLogged = true;
+            $scope.loggedUser = localStorage.getItem("username");
         } else {
             $scope.userLogged = false;
         }
