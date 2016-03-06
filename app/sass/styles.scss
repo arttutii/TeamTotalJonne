@@ -41,13 +41,15 @@ body {
     margin: auto;
 }
 
-.navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+.navbar>.container .navbar-brand,
+.navbar>.container-fluid .navbar-brand {
     margin: 0px;
 }
 
 .navbar-brand img {
     display: inline;
 }
+
 
 /*.navbar default .navbar-nav li {
     display: inline-block;
@@ -192,6 +194,20 @@ button.close {
 .social {
     max-width: 350px;
     margin: auto;
+}
+
+    .commentWrapper {
+
+    }
+
+.itemMetadata {
+    background-color: lighten($brand-basecolor, 50%);
+    margin: -10px -15px;
+    padding: 0 15px;
+}
+
+.comment {
+    margin: 20px 0 0 0;
 }
 
 .about {

@@ -50,17 +50,19 @@
             <br>
 
             <!-- posted comments -->
-            <div class="list-group">
+            <div class="list-group commentSection">
 
                 <a href="#/" class="list-group-item" data-toggle="collapse" data-target="#comments" data-parent="#commentMenu">
                     <span class="label label-info">{{ comments.length }}</span> Comments
                 </a>
 
                 <div id="comments" class="sublinks collapse">
-                    <div class="list-group-item" ng-repeat="comment in comments">
-                        <h5>{{ comment.username }}</h5>
-                        <p>{{ comment.comment }}</p>
-                        <p><small>{{ comment.time }}</small></p>
+                    <div class="list-group-item commentWrapper" ng-repeat="comment in comments">
+                        <div class="clearfix itemMetadata">
+                            <h5 class="pull-left">{{ comment.username }}</h5>
+                            <h5 class="pull-right"><small>{{ comment.time }}</small></h5>
+                        </div>
+                        <p class="comment">{{comment.comment}}</p>
                     </div>
                 </div>
 
