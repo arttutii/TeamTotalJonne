@@ -1,0 +1,63 @@
+<nav class="navbar navbar-default navbar-fixed-top" id="navi">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" ng-show="userLogged" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" id="hamburger">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <!-- <button type="button" class="btn btn-default btn-outline navbar-toggle" id="modebtn">
+                         <span class="glyphicon glyphicon-adjust"> </span>
+                         </button>
+                         -->
+
+            <div id="loginbtnContainer">
+
+                <button type="button" id="signinbtn" ng-hide="userLogged" ng-click="loginModal()" class="btn btn-default btn-outline navbar-toggle">
+                    <a href="#/" id="loginbtn">
+                        <span class="glyphicon glyphicon-log-in"> </span> Login
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </button>
+
+                <button type="button" id="logoutbtn" ng-show="userLogged" ng-click="userLogout()" class="btn btn-default btn-outline navbar-toggle">
+                    <a href="#/" id="logoutbtn">
+                        <span class="glyphicon glyphicon-log-out"> </span> Logout
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </button>
+
+            </div>
+
+
+            <a class="navbar-brand" id="searchBox">
+                <div class="box" id="searchContainer">
+                    <div class="container-1">
+                        <span class="icon" id="searchIcon"><i class="fa fa-search"></i></span>
+                        <input type="search" id="search" ng-focus="focusSearch()" ng-blur="blurSearch()" placeholder="Search.." ng-model="searchBar">
+                    </div>
+                </div>
+            </a>
+
+            <a class="navbar-brand" ng-click="goHome()" href="">
+                <object type="image/svg+xml" data="images/tmlogo.svg" width="100%" height="100%">TotalMedia</object>
+            </a>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" id="uploadbtn" ng-show="userLogged" ng-click="uploadModal()">Upload</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" id="loginbtn2" ng-hide="userLogged" ng-click="loginModal()"><span class="glyphicon glyphicon-log-in"> </span> Login
+                <span class="sr-only">(current)</span></a></li>
+                <li><a href="#" id="logoutbtn2" ng-show="userLogged" ng-click="userLogout()">Logout<span class="sr-only">(current)</span></a> </li>
+                <li ng-show="userLogged"><a href="#" ng-click="mySubmissions()">Your Submissions</a></li>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+    <!--/.container-fluid -->
+</nav>

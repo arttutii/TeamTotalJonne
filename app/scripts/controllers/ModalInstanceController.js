@@ -37,7 +37,7 @@ angular.module('theApp')
                 url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/file/' + item.fileId
             }).then(function successCallback(response) {
                 // if no description is given, show description as empty space
-                if (response.data.description != "undefined"){
+                if (response.data.description != "undefined") {
                     $scope.description = response.data.description;
                 } else {
                     $scope.description = "";
@@ -48,20 +48,11 @@ angular.module('theApp')
             });
         };
 
-        $scope.commentbuttondisabled = true;
-        $scope.postCommentDisabled = function() {
+        $scope.postComment = function () {
+            $scope.loadingComments = true;
+            var comment = $scope.composedComment;
 
-            if ($('#typeComment').val().length >= 2) {
-                $scope.commentbuttondisabled = false;
-            } else {
-                $scope.commentbuttondisabled = true;
-            }
-        };
-
-        $scope.postComment = function() {
-
-            var comment = $scope.comment;
-
+            $log.info($scope.composedComment);
             $http({
                 method: 'POST',
                 url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/comment/file/' + item.fileId,
@@ -73,19 +64,23 @@ angular.module('theApp')
                     comment: comment
                 })
             }).then(function successCallback(response) {
-
+                $scope.loadingComments = false;
                 if (response.data.status == "comment added") {
-                    $log.info("comment added!" );
+                    $log.info("comment added!");
                     $scope.comments = [];
                     $scope.getComments();
                     $('#typeComment').val('');
+                    $scope.composedComment = null;
+                    $("#comments").collapse("show");
                 } else {
                     $log.info("comment not added, check fields");
                 }
 
+                $("#postCommentButton").removeClass("active");
+
             }, function errorCallback(response) {
                 $log.info(response.data);
-                if (response.data.error == "comment is missing or too short"){
+                if (response.data.error == "comment is missing or too short") {
 
                 } else {
 

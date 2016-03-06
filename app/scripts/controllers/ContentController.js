@@ -36,9 +36,6 @@ angular.module('theApp')
         $scope.mySubmissions = function() {
             $('#search').focus();
             $('#search').val(localStorage.getItem('username'));
-            if(window.innerWidth < 767) {
-                $('#hamburger').click();
-            }
         };
 
         $scope.showMediaitems = function () {
@@ -78,10 +75,9 @@ angular.module('theApp')
             $scope.moreMediaitems += 4;
         };
 
-        $scope.showTen = function () {
+        $scope.goHome = function () {
             location.reload(true);
             window.scrollTo(0, 0);
-            $scope.moreMediaitems = 10;
         };
 
         $scope.userLogout = function () {
@@ -136,7 +132,6 @@ angular.module('theApp')
                 bodyRef.removeClass('modal-open');
                 $scope.selected = selectedItem;
             }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
             });
 
         };

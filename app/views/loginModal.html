@@ -1,22 +1,27 @@
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-controller="LoginController">
     <div class="modal-dialog modal-md" role="document" ng-controller="LoginController">
         <div class="modal-content">
+
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title login" id="myModalLabel">Sign in</h4>
                 <h4 class="modal-title registration" id="myModalLabel">Register user</h4>
             </div>
+
             <div class="modal-body">
+
                 <div id="login" class="login">
                     <form id="loginForm" class="form-group">
                         <label for="lusername" class="control-label">Username</label>
                         <div id="loginFormInputs">
                             <input class="loginputs form-control" type="text" name="username" placeholder="Username" id="lusername" ng-model="lusername" ng-change="loginDisabled()" autocomplete="off" autocorrect="off" autocapitalize="off">
                         </div>
+                        <br>
                         <label for="lpassword" class="control-label">Password</label>
                         <input class="loginputs form-control" type="password" name="password" placeholder="Password" id="lpassword" ng-model="lpassword" ng-change="loginDisabled()">
                     </form>
                 </div>
+
                 <div id="register" class="registration">
                     <form id="registerForm">
                         <label for="rusername" class="control-label">Username</label>
@@ -38,12 +43,16 @@
                         <strong>Username already exists!</strong> Please choose another username.
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="login pull-left" id="regislink" ng-click="hideRegis()"> Don't have an account yet? Click here to register! </a>
-                <a href="#" class="registration pull-left" id="loginlink" ng-click="hideRegis()"> Already have an account? Sign in here! </a>
+
                 <button id="registerbtn" class="btn btn-default registration" ng-click="registerUser()" ng-disabled="rbuttondisabled">Register</button>
                 <button id="signinbtn" class="btn btn-default login" ng-click="signIn(lusername,lpassword)" ng-disabled="lbuttondisabled">Sign in</button>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <a href="#" class="login pull-left" id="regislink" ng-click="hideRegis()"> Don't have an account yet? Click here to register! </a>
+                <a href="#" class="registration pull-left" id="loginlink" ng-click="hideRegis()"> Already have an account? Sign in here! </a>
 
             </div>
         </div>

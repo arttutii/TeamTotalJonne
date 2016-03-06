@@ -9,7 +9,7 @@ angular.module('theApp')
                 $scope.mimeType = element.files[0].type;
                 $scope.type = $scope.mimeType.substr(0, 5);
             } else {
-                $log.info("cant read type");
+                $log.info("unknown file type");
             }
         };
 
