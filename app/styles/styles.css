@@ -58,11 +58,9 @@ body {
   display: inline;
 }
 
-/* line 52, ../sass/styles.scss */
-.navbar-nav li {
-  display: inline-block;
-}
-
+/*.navbar default .navbar-nav li {
+    display: inline-block;
+}*/
 /* line 56, ../sass/styles.scss */
 .navbar .navbar-nav li a {
   color: #ffffff;
