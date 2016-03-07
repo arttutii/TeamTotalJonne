@@ -25,7 +25,7 @@
                 <li class="dropdown pull-right" ng-if="userLogged">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-user"></span><b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a>Logged in as: {{ loggedUser }}</a></li>
+                        <li ng-if="userLogged"><a>Logged in as: {{ loggedUser.username }}</a></li>
                         <li>
                             <a href="#/" ng-click="mySubmissions()">My Submissions</a>
                         </li>

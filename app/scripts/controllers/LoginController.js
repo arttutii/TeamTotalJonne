@@ -8,55 +8,61 @@ angular.module('theApp')
         $scope.rbuttondisabled = true;
 
         $scope.registerUser = function () {
-                $http({
-                    method: 'POST',
-                    url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/register',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    data: $httpParamSerializer({
-                        username: $('#rusername').val(),
-                        email: $('#remail').val(),
-                        password: $('#rpassword').val()
-                    })
-                }).then(function (response) {
+            $http({
+                method: 'POST',
+                url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/register',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                data: $httpParamSerializer({
+                    username: $('#rusername').val(),
+                    email: $('#remail').val(),
+                    password: $('#rpassword').val()
+                })
+            }).then(function (response) {
 
-                    if (response.data.status == "ok"){
-                        $('#registerSuccess').show();
-                        $('#hamburger').click();
-                        $('#loginModal').modal('hide');
+                if (response.data.status == "ok") {
+                    $('#registerSuccess').show();
+                    $('#hamburger').click();
+                    $('#loginModal').modal('hide');
 
-                        setTimeout(function () {
-                            $scope.signIn($('#rusername').val(), $('#rpassword').val());
-                        }, 3000);
+                    $http.get('http://util.mw.metropolia.fi/ImageRekt/api/v2/user/' + response.data.userId).then(
+                        function successCallback(response) {
+                            $scope.loggedUser = response.data;
+                            $log.info($scope.loggedUser);
+                        });
 
+                    setTimeout(function () {
+                        $scope.signIn($('#rusername').val(), $('#rpassword').val());
+                    }, 3000);
+
+                } else {
+                    $log.info(response.data);
+                    if (response.data.error == "username already exists") {
+                        $('#userExists').fadeIn();
+                        $('#rusername').focus();
+                        $log.info("username already exists, choose another username");
                     } else {
                         $log.info(response.data);
-                        if (response.data.error == "username already exists"){
-                            $('#userExists').fadeIn();
-                            $('#rusername').focus();
-                            $log.info("username already exists, choose another username");
-                        } else {
-                            $log.info(response.data);
-                        }
-
                     }
 
-                }, function (error) {
-                    $log.info("check your inputs " + error.data);
-                });
+                }
+
+            }, function (error) {
+                $log.info("check your inputs " + error.data);
+            });
         };
 
         // check for styling the login input fields
-        if ($('#lusername').val().length >= 1){
+        if ($('#lusername').val().length >= 1) {
             $('#loginFormInputs').addClass("has-success");
         } else {
             $('#loginFormInputs').removeClass("has-success");
         }
 
         // function to disable the login button
-        $scope.loginDisabled = function () {  
-            if ($('#lusername').val().length >= 1 && $('#lpassword').val().length >= 1 ) {
+        $scope.loginDisabled = function () {
+            if ($('#lusername').val().length >= 1 && $('#lpassword').val().length >= 1) {
                 $('#wrongUser').fadeOut();
                 $scope.lbuttondisabled = false;
             } else {
@@ -79,34 +85,34 @@ angular.module('theApp')
 
             if ($('#rusername').val().length >= 1) {
                 $http({
-                        method: 'POST',
-                        url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/user/exists',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        data: $httpParamSerializer({
-                            username: $('#rusername').val()
-                        })
-                    }).then(function (response) {
+                    method: 'POST',
+                    url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/user/exists',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    data: $httpParamSerializer({
+                        username: $('#rusername').val()
+                    })
+                }).then(function (response) {
 
-                        if (response.data.userFound === true){
-                            $scope.registerUserFound = true;
-                            $('#errorcheckicon').show();
-                            $('#userRegistration').addClass("has-error");
-                            $('#userRegistration').removeClass("has-success");
-                            $('#userExists').fadeIn();
-                        } else {
-                            $scope.registerUserFound = false;
-                            $('#successcheckicon').show();
-                            $('#userRegistration').addClass("has-success");
-                            $('#userRegistration').removeClass("has-error");
-                            $('#userExists').fadeOut();
+                    if (response.data.userFound === true) {
+                        $scope.registerUserFound = true;
+                        $('#errorcheckicon').show();
+                        $('#userRegistration').addClass("has-error");
+                        $('#userRegistration').removeClass("has-success");
+                        $('#userExists').fadeIn();
+                    } else {
+                        $scope.registerUserFound = false;
+                        $('#successcheckicon').show();
+                        $('#userRegistration').addClass("has-success");
+                        $('#userRegistration').removeClass("has-error");
+                        $('#userExists').fadeOut();
 
-                        }
+                    }
 
-                    }, function (error) {
-                        $log.info("check your inputs " + error.data);
-                    });
+                }, function (error) {
+                    $log.info("check your inputs " + error.data);
+                });
 
             } else {
                 $('#successcheckicon').hide();
@@ -117,35 +123,42 @@ angular.module('theApp')
             }
         };
 
-         $scope.signIn = function (uName, pWord) {
+        $scope.signIn = function (uName, pWord) {
 
-                //log user in
-                $http({
-                  method: 'POST',
-                  url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/login',
-                  headers: {'Content-Type' : 'application/x-www-form-urlencoded'},
-                  data: $httpParamSerializer({
-                          username: uName,
-                          password: pWord
-                        })
-                }).then(function (response) {
+            //log user in
+            $http({
+                method: 'POST',
+                url: 'http://util.mw.metropolia.fi/ImageRekt/api/v2/login',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                data: $httpParamSerializer({
+                    username: uName,
+                    password: pWord
+                })
+            }).then(function (response) {
 
-                    if (response.data.status == "login ok"){
-                        localStorage.setItem("userID", response.data.userId);
-                        localStorage.setItem("username", uName);
-                        location.reload();
-                    } else {
-                        console.log(JSON.stringify(response.data));
-                        // clear fields, notify button
-                        $('.loginputs').val('');
-                        $scope.loginDisabled();
-                        $('#wrongUser').fadeIn();
-                        
-                    }
+                if (response.data.status == "login ok") {
+                    localStorage.setItem("userID", response.data.userId);
+                    localStorage.setItem("username", uName);
+                    $http.get('http://util.mw.metropolia.fi/ImageRekt/api/v2/user/' + response.data.userId).then(
+                        function successCallback(response) {
+                            $scope.loggedUser = response.data;
+                            $log.info($scope.loggedUser);
+                        });
+                    location.reload();
+                } else {
+                    $log.error(JSON.stringify(response.data));
+                    // clear fields, notify button
+                    $('.loginputs').val('');
+                    $scope.loginDisabled();
+                    $('#wrongUser').fadeIn();
 
-                }, function (error) {
-                    console.log("login oh dog: " + error.data);
-                });
+                }
+
+            }, function (error) {
+                $log.error("login oh dog: " + error.data);
+            });
 
         };
 
@@ -178,11 +191,11 @@ angular.module('theApp')
             }
         });
 
-        $('#rusername').focusout(function() {
+        $('#rusername').focusout(function () {
             $scope.userExistance();
         });
 
-        $(".reginputs").focusout(function() {
+        $(".reginputs").focusout(function () {
             $scope.registerDisabled();
         });
     });

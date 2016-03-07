@@ -12,12 +12,14 @@ angular.module('theApp')
         $scope.users = [];
         // array for mediaitems to show on site
         $scope.mediaitems = [];
+        // array for starred mediaitems by user logged in
+        $scope.starredMediaitems = [];
         // object variable for selecting a single mediaitem
         $scope.mediaitem = {};
         // object variable for selecting a single user
         $scope.user = {};
-        // boolean for detecting that the document hasn't flown over the viewport window
-        $scope.hasRoom = true;
+        // object variable the user currently logged in
+        //$scope.loggedUser = {};
         // reference to body element for showModal()
         var bodyRef = angular.element($document[0].body);
         // function to make video elements show
@@ -25,46 +27,64 @@ angular.module('theApp')
             return $sce.trustAsResourceUrl(src);
         };
 
-
         if (localStorage.getItem("userID") !== null) {
+            $http.get($scope.apiurl.concat("user/", localStorage.getItem("userID"))).then(
+                function successCallback(response) {
+                    $scope.loggedUser = response.data;
+                });
+
             $scope.userLogged = true;
-            $scope.loggedUser = localStorage.getItem("username");
         } else {
+            $scope.loggedUser = {};
             $scope.userLogged = false;
         }
+        var parseThumbnails = function (array) {
+            /* parse source and thumbnail paths */
+            for (var i = 0; i < array.length; i++) {
+                if (array[i].type !== "video") {
+                    array[i].thumbNails.small = mediaurl.concat("thumbs/", "tn160_", array[i].path);
+                    array[i].thumbNails.medium = mediaurl.concat("thumbs/", "tn320_", array[i].path);
+                    array[i].thumbNails.large = mediaurl.concat("thumbs/", "tn640_", array[i].path);
+                    array[i].path = mediaurl.concat(array[i].path);
+                    array[i].uploader = $scope.users[array[i].userId - 1];
+                } else {
+                    array[i].thumbNails.small = mediaurl.concat("thumbs/", "tn160_", array[i].path, ".png");
+                    array[i].thumbNails.medium = mediaurl.concat("thumbs/", "tn320_", array[i].path, ".png");
+                    array[i].thumbNails.large = mediaurl.concat("thumbs/", "tn640_", array[i].path, ".png");
+                    array[i].path = mediaurl.concat(array[i].path);
+                }
+            }
+            return array;
+        };
 
-
-        $scope.mySubmissions = function() {
+        $scope.mySubmissions = function () {
             $('#search').focus();
             $('#search').val(localStorage.getItem('username'));
         };
 
-        $scope.showMediaitems = function () {
+        $scope.userSubmissions = function (userid) {
+            $http.get($scope.apiurl.concat("files/user/", userid)).then(
+                function (response) {
+                    $scope.mediaitems = parseThumbnails(response.data);
+                    $log.info(response);
+                });
+        };
 
-            $('#allmedia').show();
-            $('.about').hide();
+        $scope.showMediaitems = function () {
 
             $http({
                 method: 'GET',
                 url: $scope.apiurl.concat("files/"),
             }).then(function successCallback(response) {
 
-                $scope.mediaitems = response.data;
+                $scope.mediaitems = parseThumbnails(response.data);
 
-                /* parse source and thumbnail paths */
-                for (var i in $scope.mediaitems) {
-                    if ($scope.mediaitems[i].type !== "video") {
-                        $scope.mediaitems[i].thumbNails.small = mediaurl.concat("thumbs/", "tn160_", $scope.mediaitems[i].path);
-                        $scope.mediaitems[i].thumbNails.medium = mediaurl.concat("thumbs/", "tn320_", $scope.mediaitems[i].path);
-                        $scope.mediaitems[i].thumbNails.large = mediaurl.concat("thumbs/", "tn640_", $scope.mediaitems[i].path);
-                        $scope.mediaitems[i].path = mediaurl.concat($scope.mediaitems[i].path);
-                        $scope.mediaitems[i].uploader = $scope.users[$scope.mediaitems[i].userId -1];
-                    } else {
-                        $scope.mediaitems[i].thumbNails.small = mediaurl.concat("thumbs/", "tn160_", $scope.mediaitems[i].path, ".png");
-                        $scope.mediaitems[i].thumbNails.medium = mediaurl.concat("thumbs/", "tn320_", $scope.mediaitems[i].path, ".png");
-                        $scope.mediaitems[i].thumbNails.large = mediaurl.concat("thumbs/", "tn640_", $scope.mediaitems[i].path, ".png");
-                        $scope.mediaitems[i].path = mediaurl.concat($scope.mediaitems[i].path);
-                    }
+                if ($scope.userLogged) {
+                    $http.get($scope.apiurl.concat("likes/user/", localStorage.getItem("userID"))).then(
+                        function successCallback(response) {
+                            $scope.starredMediaitems = response.data;
+                        }
+                    );
                 }
             }, function errorCallback(response) {
                 $log.info(response.data);
@@ -83,6 +103,7 @@ angular.module('theApp')
 
         $scope.userLogout = function () {
             localStorage.clear();
+            $scope.loggedUser = {};
             location.reload();
         };
 
@@ -125,6 +146,9 @@ angular.module('theApp')
                     },
                     item: function () {
                         return item;
+                    },
+                    apiurl: function () {
+                        return $scope.apiurl;
                     }
                 }
             });
@@ -132,8 +156,7 @@ angular.module('theApp')
             modalInstance.result.then(function (selectedItem) {
                 bodyRef.removeClass('modal-open');
                 $scope.selected = selectedItem;
-            }, function () {
-            });
+            }, function () {});
 
         };
 

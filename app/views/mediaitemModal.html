@@ -29,12 +29,12 @@
 
             <!-- sharing -->
             <form class="form-inline">
-            <a href="http://www.facebook.com/sharer.php?u={{item.path}}" target="_blank">
-                <img class="sharebtn" src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" />
-            </a>
-            <a href="http://reddit.com/submit?url={{item.path}}&amp;title={{item.title}}" target="_blank">
-                <img class="sharebtn" src="https://simplesharebuttons.com/images/somacro/reddit.png" alt="Reddit" />
-            </a>
+                <a href="http://www.facebook.com/sharer.php?u={{item.path}}" target="_blank">
+                    <img class="sharebtn" src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" />
+                </a>
+                <a href="http://reddit.com/submit?url={{item.path}}&amp;title={{item.title}}" target="_blank">
+                    <img class="sharebtn" src="https://simplesharebuttons.com/images/somacro/reddit.png" alt="Reddit" />
+                </a>
             </form>
             <br>
 
@@ -45,10 +45,11 @@
                 </div>
                 <div class="form-group">
                     <button type="submit" id="postCommentButton" ng-click="postComment()" class="btn btn-primary" ng-show="userLogged" ng-disabled="commentComposer.$invalid">Send<span ng-show="loadingComments" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></button>
-                    <button type="button" id="likebtn" ng-show="userLogged" ng-click="favouriteMedia()" class="btn btn-default btn-outline">
+                    <!--<button type="button" id="likebtn" ng-show="userLogged" ng-click="favouriteMedia()" class="btn btn-default btn-outline">
                     <span align="right" ng-hide="fileLiked" class="glyphicon glyphicon-thumbs-up">Favourite</span>
                     <span align="right" ng-show="fileLiked" class="glyphicon glyphicon-thumbs-down">Unfavourite</span>
-                    </button>
+                    </button>-->
+                    <button type="button" ng-click="toggleStar(item.fileId)" class="btn btn-primary"><span class="glyphicon glyphicon-star" aria-hidden="true" ng-if="item.starred"></span><span class="glyphicon glyphicon-star" aria-hidden="true" ng-if="!item.starred"></span></button>
                 </div>
             </form>
             <br>
